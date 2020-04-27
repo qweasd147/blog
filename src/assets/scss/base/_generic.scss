@@ -31,28 +31,28 @@ h6 {
 h1 {
   font-size: $typographic-base-font-size * 2.5;
   @include line-height(2);
-  @include margin-top(4);
+  @include margin-top(1.5);
   @include margin-bottom(1);
 }
 
 h2 {
   font-size: $typographic-base-font-size * 1.6875;
   @include line-height(1.5);
-  @include margin-top(2);
+  @include margin-top(1.5);
   @include margin-bottom(.5);
 }
 
 h3 {
   font-size: $typographic-base-font-size * 1.375;
   @include line-height(1);
-  @include margin-top(2);
+  @include margin-top(1);
   @include margin-bottom(.5);
 }
 
 h4 {
   font-size: $typographic-base-font-size * 1.2;
   @include line-height(1);
-  @include margin-top(1.5);
+  @include margin-top(1);
   @include margin-bottom(.5);
 }
 
@@ -127,7 +127,6 @@ p {
 blockquote {
   padding: 0;
   font-style: italic;
-  text-align: center;
 }
 
 figure {
@@ -166,4 +165,42 @@ figcaption {
     float: left;
   }
 
+}
+body :not(pre)>code[class*=language-]{
+  background-color: rgba(27,31,35,.05);
+}
+body pre[class*=language-]{
+  background-color: black;
+}
+body :not(pre)>code[class*=language-]{
+  color: black;
+}
+body pre[class*=language-]{ 
+  color: white;
+}
+
+body {
+ 
+  &:not(pre)>code[class*=language-]{
+    background-color: rgba(27,31,35,.05);
+  }
+  &pre[class*=language-]{
+    background-color: black;
+  }
+  &:not(pre)>code[class*=language-]{
+    color: black;
+  }
+  &pre[class*=language-]{ 
+    color: white;
+  }
+}
+
+table {
+  width: 100%;
+  border-top: 1px solid #444444;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid #444444;
+  padding: 10px;
 }
