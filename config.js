@@ -2,7 +2,7 @@
 
 module.exports = {
   url: 'https://lumen.netlify.com',
-  pathPrefix: '/',
+  pathPrefix: '/blog-code',
   title: 'Blog by joohyung',
   subtitle: '',
   copyright: '© All rights reserved.',
@@ -37,7 +37,7 @@ module.exports = {
     photo: '',
     bio: '',
     contacts: {
-      email: '',
+      email: 'qweasd_147@naver.com',
       facebook: '',
       telegram: '',
       twitter: '',

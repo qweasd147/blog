@@ -5,8 +5,8 @@ template: "post"
 draft: false
 category: "javascript"
 tags:
-  - "thread"
-  - "java"
+  - "js"
+  - "closure"
   - "scope"
 description: "private, scope등 개념을 활용, 변수의 유효범위를 늘린다."
 ---

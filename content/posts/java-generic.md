@@ -5,7 +5,6 @@ template: "post"
 draft: false
 category: "java"
 description: "타입의 정확성과 유연함을 갖춰야 할때"
-socialImage: "/media/image-3.jpg"
 ---
 
 # Generics.
