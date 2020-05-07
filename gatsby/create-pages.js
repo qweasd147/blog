@@ -27,6 +27,12 @@ const createPages = async ({ graphql, actions }) => {
     component: path.resolve('./src/templates/categories-list-template.js')
   });
 
+  // custom template을 구지 안써도 될꺼같지만 일단 사용
+  createPage({
+    path: '/skills',
+    component: path.resolve('./src/templates/custom-skills-template.js')
+  });
+
   // Posts and pages from markdown
   const result = await graphql(`
     {

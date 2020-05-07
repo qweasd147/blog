@@ -29,7 +29,7 @@ module.exports = {
     },
     {
       label: 'Skill',
-      path: '/pages/skills'
+      path: '/skills'
     }
   ],
   author: {
