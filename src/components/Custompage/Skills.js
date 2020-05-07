@@ -30,6 +30,10 @@ const Skills = () => {
                   <li>
                     <span>String Security</span>
                   </li>
+                  <h5 className={styles['skills__subtitle']}>NodeJS</h5>
+                  <li>
+                    <span>es8</span>
+                  </li>
                 </ul>
               </div>
               <div className={styles['skills']}>

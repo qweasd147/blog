@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  url: 'https://lumen.netlify.com',
-  pathPrefix: '/blog-code',
+  url: 'https://qweasd147.github.io',
+  pathPrefix: '/',
   title: 'Blog by joohyung',
   subtitle: '',
   copyright: '© All rights reserved.',
@@ -13,24 +13,24 @@ module.exports = {
   menu: [
     {
       label: '전체',
-      path: '/'
+      path: '/',
     },
     {
       label: 'Java',
-      path: '/category/java'
+      path: '/category/java',
     },
     {
       label: 'Javascript',
-      path: '/category/javascript'
+      path: '/category/javascript',
     },
     {
       label: 'Etc',
-      path: '/category/etc'
+      path: '/category/etc',
     },
     {
       label: 'Skill',
-      path: '/skills'
-    }
+      path: '/skills',
+    },
   ],
   author: {
     name: 'Kim joohyung',
@@ -52,6 +52,6 @@ module.exports = {
       codepen: '',
       youtube: '',
       soundcloud: '',
-    }
-  }
+    },
+  },
 };
