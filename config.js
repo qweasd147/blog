@@ -2,7 +2,7 @@
 
 module.exports = {
   url: 'https://qweasd147.github.io',
-  pathPrefix: '/',
+  pathPrefix: '/blog',
   title: 'Blog by joohyung',
   subtitle: '',
   copyright: '© All rights reserved.',
