@@ -1,0 +1,29 @@
+name: deploy blog
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install. use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2.5.0
+        env:
+          PERSONAL_TOKEN: ${{secrets.PERSONAL_TOKEN}}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./public
+          SCRIPT_MODE: true

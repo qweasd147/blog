@@ -16,7 +16,7 @@
     "test:coverage": "jest --coverage --config ./jest/jest-config.js",
     "test:watch": "jest --watch --config ./jest/jest-config.js"
   },
-  "repository": "https://github.com/qweasd147/blog-code",
+  "repository": "https://github.com/qweasd147/blog",
   "author": "joohyung <qweasd_147@naver.com>",
   "license": "MIT",
   "keywords": [

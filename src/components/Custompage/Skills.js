@@ -28,7 +28,7 @@ const Skills = () => {
                     <span>Spring boot</span>
                   </li>
                   <li>
-                    <span>String Security</span>
+                    <span>Spring Security</span>
                   </li>
                   <h5 className={styles['skills__subtitle']}>NodeJS</h5>
                   <li>
