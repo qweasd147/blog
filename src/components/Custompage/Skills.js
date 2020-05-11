@@ -23,12 +23,24 @@ const Skills = () => {
                 <h3 className={styles['skills__header']}>BackEnd</h3>
                 <ul>
                   <h5 className={styles['skills__subtitle']}>Java</h5>
+                  <li>
+                    <span>Java 8</span>
+                  </li>
+                  <li>
+                    <span>RxJava(현재 공부중)</span>
+                  </li>
                   <h5 className={styles['skills__subtitle']}>Spring</h5>
                   <li>
                     <span>Spring boot</span>
                   </li>
                   <li>
                     <span>Spring Security</span>
+                  </li>
+                  <li>
+                    <span>Spring Security OAuth2</span>
+                  </li>
+                  <li>
+                    <span>Web Flux(현재 공부중)</span>
                   </li>
                   <h5 className={styles['skills__subtitle']}>NodeJS</h5>
                   <li>
