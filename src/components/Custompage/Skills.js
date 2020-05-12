@@ -85,6 +85,7 @@ const Skills = () => {
                   <h5 className={styles['skills__subtitle']}>S3</h5>
                   <h5 className={styles['skills__subtitle']}>SES</h5>
                   <h5 className={styles['skills__subtitle']}>DynamoDB</h5>
+                  <h5 className={styles['skills__subtitle']}>ECR</h5>
                 </ul>
               </div>
               <div className={styles['skills']}>
@@ -105,9 +106,22 @@ const Skills = () => {
                 </ul>
               </div>
               <div className={styles['skills']}>
+                <h3 className={styles['skills__header']}>FrondEnd</h3>
+                <ul>
+                  <h5 className={styles['skills__subtitle']}>React</h5>
+                  <li>
+                    <span>코드만 읽을 수 있는 수준</span>
+                  </li>
+                  <h5 className={styles['skills__subtitle']}>JQuery</h5>
+                </ul>
+              </div>
+              <div className={styles['skills']}>
                 <h3 className={styles['skills__header']}>Etc</h3>
                 <ul>
                   <h5 className={styles['skills__subtitle']}>docker</h5>
+                  <li>
+                    <span>docker-compose</span>
+                  </li>
                   <h5 className={styles['skills__subtitle']}>버전관리</h5>
                   <li>
                     <span>Git</span>
