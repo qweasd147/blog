@@ -1,0 +1,48 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/mixins';
+
+$up-button-size: 50px;
+
+.sides {
+  @include margin-bottom(1);
+
+  &-button {
+    color: $color-base;
+    background-color: white;
+    &:hover,
+    &:focus {
+      color: $color-primary;
+    }
+    padding: 0;
+    margin: 4px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    height: $up-button-size;
+    width: $up-button-size;
+    line-height: $up-button-size;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px solid $color-gray-bg;
+    position: fixed;
+    right: 15px;
+    bottom: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+
+    &-hide {
+      bottom: -120px !important;
+    }
+  }
+}
+
+@include breakpoint-md {
+  .sides {
+    &-button {
+      right: 10px;
+      bottom: 100px;
+      right: 70px;
+    }
+  }
+}
