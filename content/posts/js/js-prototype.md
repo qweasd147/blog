@@ -100,7 +100,9 @@ foo.__proto__ === Foo.Prototype; //true
 
 #### 1. 모든 함수는 생성 시 Prototype 프로퍼티가 생성되며, Prototype 프로퍼티 안에는 constructor 라는 프로퍼티가 생긴다.
 
-#### 2. 생성 된 constructor는 자기 함수 원형을 담고 있다(`Foo.prototype.constructor === Foo`).
+#### 2. 생성 된 constructor는 자기 함수 원형을 담고 있다
+
+`Foo.prototype.constructor === Foo`
 
 #### 3. Constructor와 해당 함수는 서로 환형 참조를 이루고 있다.
 

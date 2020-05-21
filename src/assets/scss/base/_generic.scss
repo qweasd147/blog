@@ -173,15 +173,26 @@ figcaption {
 }
 
 body {
-  :not(pre) > code[class*='language-'] {
-    background-color: rgba(27, 31, 35, 0.05);
+  :not(pre) {
+    > code.language-text {
+      background-color: rgba(27, 31, 35, 0.05);
+      color: black;
+      &::selection {
+        background-color: #d2d8fb;
+      }
+      max-width: 100%;
+      display: inline-block;
+      white-space: inherit;
+    }
   }
+
   pre[class*='language-'],
   code[class*='language-'] {
     background-color: black;
     color: #dcdcdc;
     ::selection {
       background-color: #d2d8fb;
+      color: white;
     }
   }
   .token.atrule,
@@ -191,9 +202,6 @@ body {
   }
   .token.punctuation {
     color: #dcdcdc;
-  }
-  :not(pre) > code[class*='language-'] {
-    color: black;
   }
 }
 
