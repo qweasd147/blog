@@ -18,12 +18,12 @@ const SideButton = ({ buttonText, refTarget }: Props) => {
   const [isShow, setIsShow] = useState(false);
 
   const handleScroll = () => {
-    const currentY = window?.scrollY;
+    const windowBottomY = window?.scrollY + window?.innerHeight;
 
-    if (!Number.isInteger(currentY)) return;
+    if (!Number.isInteger(windowBottomY)) return;
 
     const documentY = refTarget.current.clientHeight;
-    const currentPercent = (currentY / documentY) * 100;
+    const currentPercent = (windowBottomY / documentY) * 100;
 
     if (currentPercent > 80) {
       setIsShow(true);
