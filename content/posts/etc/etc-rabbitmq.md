@@ -60,7 +60,44 @@ exchange와 queue를 연동(실질적인 Routing key 패턴과 exchange를 연�
 가상 주소로, 라우팅 시 필요한 key값이다.
 예를 들어 '`Routing Key`값이 `r1`이면 `Exchange1`로 가라' 이런식으로 라우팅 하는데 사용
 
+# 3. DLX(Dead Latter Exchanges)
+
+> 메세지 처리 과정에서 에러가 발생한 메세지를 관리할 exchange
+
+만약 메세지를 처리 중 에러가 발생하는 경우가 발생 할 수도 있다.`RabbitMQ`의 기본 셋팅은 메세지 처리중 에러가 발생하면 다시 큐로 집어넣고 다시 메세지 처리를 시도하게 된다.
+근데 만약 절대 처리할 수 없는 메세지라면? 재처리 과정이 무한하게 반복될 것이다. 이런 케이스를 막기위해 만약 에러가 발생한다면 아래와 같이 처리되도록 유도한다.
+
+1. 메세지 처리 중 에러 발생
+2. n번 재시도
+3. 그래도 실패 시, 처리가 불가능 한 메세지라 판단하고 DLX로 보냄
+4. 실패 전용 큐로 해당 메세지로 보낸 후 처리
+
+메세지 처리 시도 회수와 dlx 정보는 메세지의 헤더에 담겨지고, `DLX`에서 이러한 메세지들을 처리할 목적의 큐로 보내도록 셋팅해놓는다.
+보통 이러한 메세지는 메세지 정보와 알림 정보만 개발자에게 알려주도록 셋팅한다(정상적인 처리가 불가능하니까).
+
+`Spring Boot` + `RabbitMQ` 조합에선 프로퍼티 파일에서 큐를 정의할 때 아래와 같이 쉽게 셋팅이 가능하다.
+
+큐 셋팅
+
+```java
+  @Bean
+  public Queue queue() {
+
+      final Map<String, Object> args = new HashMap<>();
+
+      args.put("x-dead-letter-exchange", "dlx exchange 이름");
+      args.put("x-dead-letter-routing-key", "실패 라우팅 키");
+      args.put("x-message-ttl", 2000); //2초
+
+      return new Queue(QUEUE_NAME, true, false, false, args);
+  }
+```
+
+위와 같이 셋팅 시, ttl(Time to Live)값을 넘기는 메세지는 `DLX`로 보내지게 된다.
+
 # 추가 설명 예정사항(TODO)
 
 1. Exchange 종류 및 routing
-2. DLX(+실패 처리 전략)
+2. 메세지 구조(헤더 정보 위주)
+3. TTL 좀 더 자세히 설명
+4. 메세지 실패 처리(retry interceptor)
