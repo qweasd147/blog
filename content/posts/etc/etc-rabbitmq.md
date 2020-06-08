@@ -75,7 +75,11 @@ exchange와 queue를 연동(실질적인 Routing key 패턴과 exchange를 연�
 메세지 처리 시도 회수와 dlx 정보는 메세지의 헤더에 담겨지고, `DLX`에서 이러한 메세지들을 처리할 목적의 큐로 보내도록 셋팅해놓는다.
 보통 이러한 메세지는 메세지 정보와 알림 정보만 개발자에게 알려주도록 셋팅한다(정상적인 처리가 불가능하니까).
 
-`Spring Boot` + `RabbitMQ` 조합에선 프로퍼티 파일에서 큐를 정의할 때 아래와 같이 쉽게 셋팅이 가능하다.
+## 3.1 TTL(Time to live)
+
+`TTL`은 큐에 머무를 수 있는 시간을 제한하는 것으로, 너무 오래된 큐를 방치하는것을 막을 수 있다.
+
+`Spring Boot` + `RabbitMQ` 조합에선 큐를 정의할 때 아래와 같이 쉽게 셋팅이 가능하다.
 
 큐 셋팅
 
@@ -93,11 +97,40 @@ exchange와 queue를 연동(실질적인 Routing key 패턴과 exchange를 연�
   }
 ```
 
-위와 같이 셋팅 시, ttl(Time to Live)값을 넘기는 메세지는 `DLX`로 보내지게 된다.
+위와 같이 셋팅 시, ttl(Time to Live)값을 넘기는 메세지는 `DLX(dlx exchange 이름)`로 보내지게 된다.
+
+## 3.2 retry interceptor
+
+`TTL`에 의해 발생되는 에러 말고 메세지를 처리하다가 발생하는 에러 셋팅을 하고 싶으면 `RetryInterceptor`를 구현해서 리스너에 셋팅하면 된다.
+(근데 `Message Queue`전체로 봤을땐 그냥 `exchange`랑 `routing-key`만 바꿔서 셋팅하는거다)
+
+```java
+  @Bean
+  public SimpleRabbitListenerContainerFactory listenerContainerFactory(ConnectionFactory connectionFactory){
+
+    final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+    factory.setConnectionFactory(connectionFactory);
+    factory.setDefaultRequeueRejected(false);
+    factory.setMessageConverter(messageConverter());
+    factory.setChannelTransacted(true);
+    factory.setAdviceChain(RetryInterceptorBuilder
+            .stateless()
+            .maxAttempts(1)
+            //.recoverer(new RepublishMessageRecoverer(rabbitTemplate, "에러용 exchange 이름", "실패 큐 이름"))
+            .recoverer(new RabbitMqExceptionHandler())
+            .backOffOptions(1000, 2.0, 10000)
+            .build());
+
+    return factory;
+  }
+```
+
+위 셋팅 처럼 실패 시 재시도 횟수(`maxAttempts`) 및 재시도 간격(`backOffOptions`)을 정의 할 수 있고, 실질적인 메세지 실패 처리는 `RejectAndDontRequeueRecoverer` Class를 구현체를
+`recoverer`에 셋팅하면 된다. 라이브러리에서 기본제공되는 `RepublishMessageRecoverer` 클래스도 있긴 하다. 또 간단한게 셋팅하고 싶으면 `properties`로 셋팅이 가능하긴 한데 java로 구현하는게 익숙하니까 pass
+
+참고 사항으로 메세지 처리 중 `AmqpRejectAndDontRequeueException`에러가 발생하면 더이상 재시도 하지 않고 메세지를 소비하고 끝내게 된다.
 
 # 추가 설명 예정사항(TODO)
 
 1. Exchange 종류 및 routing
 2. 메세지 구조(헤더 정보 위주)
-3. TTL 좀 더 자세히 설명
-4. 메세지 실패 처리(retry interceptor)
