@@ -25,10 +25,11 @@ const SideButton = ({ buttonText, refTarget }: Props) => {
     const documentY = refTarget.current.clientHeight;
     const currentPercent = (windowBottomY / documentY) * 100;
 
-    if (currentPercent > 80) {
-      setIsShow(true);
-    } else {
+    // 전체 문서 길이가 너무 짧으면 버튼 그냥 생략
+    if (currentPercent < 20 || currentPercent < 80) {
       setIsShow(false);
+    } else {
+      setIsShow(true);
     }
   };
 
