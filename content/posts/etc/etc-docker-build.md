@@ -1,5 +1,5 @@
 ---
-title: 'Docker - build cache(작업중)'
+title: 'Docker - build cache'
 date: '2020-06-24T01:14:51.261Z'
 template: 'post'
 draft: false
@@ -106,7 +106,85 @@ CMD ["java", "-jar", "build/libs/auth-server-1.0.0.jar"]
 
 ## 1.2 Docker file 개선
 
-TODO
+**주의!**
+`Spring boot` 어플리케이션 내에서 설정을 변경하여 기본 빌드 후, jar파일을 압축 분리하여 불필요한 소스파일을 제거하도록 변경하였다.
+
+```sh
+FROM openjdk:8-jdk-slim as builder
+
+ENV APP_HOME=/app/java
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradlew .
+COPY gradlew.bat .
+COPY gradle .
+RUN ./gradlew build || return 0
+
+COPY . .
+RUN ./gradlew build
+
+FROM openjdk:8-jre-slim
+
+RUN mkdir -p /app/java
+WORKDIR /app/java
+
+COPY --from=builder /app/java/build/unpack/lib BOOT-INF/lib
+COPY --from=builder /app/java/build/unpack/app .
+
+CMD ["java", "-Duser.timezone=Asia/Seoul", "-Dfile.encoding=utf-8", "org.springframework.boot.loader.JarLauncher"]
+```
+
+우선 첫번째로 빌드환경과 실행환경을 분리하였다.
+
+1. 빌드 시 `openjdk:8-jdk-slim`환경에서 분리 후 실행 시 `openjdk:8-jre-slim` 환경에서 실행하도록 분리하였다.
+
+   > 실행 시 `docker container`에 jdk는 불필요하기 때문이다.
+
+2. 소스를 COPY 하기 전, 연관 dependencies 다운로드 유도
+   > `RUN ./gradlew build || return 0` 이 명령어가 실행 시 소스 파일이 없기 때문에 실패할 것이다. 실패 하더라도 계속 진행하기 위해 `return 0`를 통해 억지로 스크립트를 진행 시킨다.
+   > 이렇게 하는 이유는 연관 `라이브러리를 미리 다운로드 받는 이미지 레어어`, `소스 파일을 빌드하는 이미지 레이어`를 분리하기 위해서 이다. 이렇게 하면 `라이브러리를 미리 다운로드 받는 이미지 레어어`는
+   > 레이어 캐시가 적용되기 떄문이다.
+
+이런 작업을 한 이후에 첫 도커 빌드를 한 이후, `build.gradle` 파일 변경없이 소스파일만 변경 후 빌드 해보면
+
+```sh
+Step 1/18 : FROM openjdk:8-jdk-slim as builder
+ ---> 41fd53971008
+Step 2/18 : ENV APP_HOME=/app/java
+ ---> Using cache
+ ---> ba835b60d6fe
+Step 3/18 : RUN mkdir -p $APP_HOME
+ ---> Using cache
+ ---> de95b45175d5
+Step 4/18 : WORKDIR $APP_HOME
+ ---> Using cache
+ ---> 92cafae54301
+Step 5/18 : COPY build.gradle .
+ ---> Using cache
+ ---> f86985388e5b
+Step 6/18 : COPY settings.gradle .
+ ---> Using cache
+ ---> b3deb0b0f8b4
+Step 7/18 : COPY gradlew .
+ ---> Using cache
+ ---> d52fb4bffbb4
+Step 8/18 : COPY gradlew.bat .
+ ---> Using cache
+ ---> 6b599b33aa5f
+Step 9/18 : COPY gradle .
+ ---> Using cache
+ ---> ffbc4cb71957
+Step 10/18 : RUN ./gradlew build -x test || return 0
+ ---> Using cache
+ ---> f2a311fdd13f
+Step 11/18 : COPY . .
+ ---> 9717040224fe
+```
+
+이런식으로 `Using cache`를 통해 원하는 부분까지 캐시가 적중됬음을 알수 있다.
 
 ## 2. React (create-react-app)
 
