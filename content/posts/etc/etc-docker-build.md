@@ -188,11 +188,56 @@ Step 11/18 : COPY . .
 
 ## 2. React (create-react-app)
 
-`react`는 `Spring boot` 어플리케이션보단 단순하다. 연관 라이브러리 다운로드를 직접 명령할 수 있기 때문에(install) 분리가 쉽다.
+여기서 설명한 cra 코드는 [docker-cra](https://github.com/qweasd147/StudyNote/tree/master/docker/dockerfile/cra/docker-sample) 여기서 확인 가능
+
+`react`는 `Spring boot` 어플리케이션보단 단순하다. 연관 라이브러리 다운로드를 직접 명령할 수 있기 때문에(`install`) 분리가 쉽다.
 
 소스 관련해서 레이어 분리 및 캐싱 유도는 아래와 같이 나눈다.
 
 1. 연관 라이브러리 install(`npm install` or `yarn install`)
 2. 소스 번들링(cra에서 build 스크립트 실행)
 
-TODO
+```sh
+...
+
+RUN mkdir -p /app/react/app
+WORKDIR /app/react/app
+
+# install에 필요한 파일 복사
+COPY package.json .                    # 1
+COPY yarn.lock .                       # 2
+
+RUN yarn install --frozen-lockfile     # 3
+COPY . .                               # 4
+RUN yarn build                         # 5
+
+...
+```
+
+`1~3` 과정처럼 소스 전체를 copy하는게 아니라, 연관 `dependency`를 먼저 다운로드 받고, 그 이후에 전체 소스를 카피하고 빌드하는 방법이다(`4~5`).
+이렇게 하면 `package.json`파일이 바뀌지 않는 한, `1~3` 과정이 캐싱되어 다음에 빌드 할땐 더욱 빠르게 빌드가 가능하다.
+
+```sh
+Step 1/15 : FROM node:14.4.0-alpine3.10 as builder
+ ---> 85fb5475404d
+Step 2/15 : RUN mkdir -p /app/react/app
+ ---> Using cache
+ ---> 8bfc805888ec
+Step 3/15 : WORKDIR /app/react/app
+ ---> Using cache
+ ---> 843e9c640fdf
+Step 4/15 : COPY package.json .
+ ---> Using cache
+ ---> 7d0537613a99
+Step 5/15 : COPY yarn.lock .
+ ---> Using cache
+ ---> 29a9f82b6f1b
+Step 6/15 : RUN yarn install --frozen-lockfile
+ ---> Using cache
+ ---> 55c71c78b339
+Step 7/15 : COPY . .
+ ---> b0db46f509a1
+Step 8/15 : RUN yarn build
+```
+
+이런식으로 `Using cache` 된걸 확인 가능하다.
