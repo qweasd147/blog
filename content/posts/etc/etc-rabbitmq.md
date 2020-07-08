@@ -130,7 +130,42 @@ exchange와 queue를 연동(실질적인 Routing key 패턴과 exchange를 연�
 
 참고 사항으로 메세지 처리 중 `AmqpRejectAndDontRequeueException`에러가 발생하면 더이상 재시도 하지 않고 메세지를 소비하고 끝내게 된다.
 
+# 4. 메세지 구조
+
+기본적으로 메세지 구조는 `header` + `body` 형태를 가진다. `body`는 주고받는 메세지 정보를 가지고 있고, `header`에는 어느곳에서 왔는지, `DLX`라면 에러 관련된 정보도 함께 담고 있다.
+
+아래 내용은 일부로 `consumer`를 구성하지 않고 `TTL` 시간만큼 지났을때 수신되는 메세지의 헤더정보를 확인해 보려는 목적으로 구현한 내용이다.
+
+```java
+
+  //DLX 전용 consumer 메소드
+  public void failConsumer(Message message){
+
+    Item item = (Item) messageConverter.fromMessage(message);
+    Map<String, Object> header = message.getMessageProperties().getHeaders();
+
+    String exchangeName = (String) header.get("x-first-death-exchange");
+
+    List<Map<String, Object>>xDeath = (List)header.get("x-death");
+    String firstReason = (String) header.get("x-first-death-reason");
+
+    log.info("타임아웃된 아이템 수신 {}", item);
+
+    log.warn("reason : {}, exchange name : {}", firstReason, exchangeName);
+    log.warn("x-death : {}", xDeath.get(0).toString());
+  }
+```
+
+만약 `DLX` 전용이 아닌 일반 `consumer`라면 헤더 정보가 거의 없을 수도 있지만 `DLX`라면 위 소스에서 에러난 이유, 발생 횟수(`retry count`) 등의 정보를 확인 가능하다.
+
+log 내용 샘플
+
+```
+타임아웃된 아이템 수신 Item(data=data1, number=1, isThrow=false)
+reason : expired, exchange name : demo-queue-name-exchange
+x-death : {reason=expired, count=1, exchange=demo-queue-name-exchange, time=Wed Jul 08 11:15:21 KST 2020, routing-keys=[foo.bar.baz2], queue=demo-queue-name}
+```
+
 # 추가 설명 예정사항(TODO)
 
 1. Exchange 종류 및 routing
-2. 메세지 구조(헤더 정보 위주)
