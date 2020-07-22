@@ -56,19 +56,19 @@ const Skills = () => {
                     <span>Oracle</span>
                   </li>
                   <li>
-                    <span>My SQL</span>
+                    <span>MySQL</span>
                   </li>
                   <li>
                     <span>mariaDB</span>
                   </li>
                 </ul>
                 <ul>
-                  <h5 className={styles['skills__subtitle']}>NO SQL</h5>
+                  <h5 className={styles['skills__subtitle']}>NoSQL</h5>
                   <li>
                     <span>DynamoDB(AWS)</span>
                   </li>
                   <li>
-                    <span>Mongo DB</span>
+                    <span>MongoDB</span>
                   </li>
                   <li>
                     <span>ElasticSearch</span>
@@ -86,6 +86,7 @@ const Skills = () => {
                   <h5 className={styles['skills__subtitle']}>SES</h5>
                   <h5 className={styles['skills__subtitle']}>DynamoDB</h5>
                   <h5 className={styles['skills__subtitle']}>ECR</h5>
+                  <h5 className={styles['skills__subtitle']}>CloudFront</h5>
                 </ul>
               </div>
               <div className={styles['skills']}>
@@ -102,6 +103,9 @@ const Skills = () => {
                   </li>
                   <li>
                     <span>API Gateway</span>
+                  </li>
+                  <li>
+                    <span>X-Ray</span>
                   </li>
                 </ul>
               </div>
