@@ -44,6 +44,12 @@ const Skills = () => {
                   </li>
                   <h5 className={styles['skills__subtitle']}>NodeJS</h5>
                   <li>
+                    <span>Express</span>
+                  </li>
+                  <li>
+                    <span>Koa</span>
+                  </li>
+                  <li>
                     <span>es8</span>
                   </li>
                 </ul>
@@ -61,8 +67,6 @@ const Skills = () => {
                   <li>
                     <span>mariaDB</span>
                   </li>
-                </ul>
-                <ul>
                   <h5 className={styles['skills__subtitle']}>NoSQL</h5>
                   <li>
                     <span>DynamoDB(AWS)</span>
