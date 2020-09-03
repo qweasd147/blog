@@ -14,6 +14,7 @@
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-oauth2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-rabbitmq/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-serverless/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-spring-cloud/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-enum/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-generic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-lambda/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -30,6 +31,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/aws/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/cdn</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/closure</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/cloud</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/cloudfront</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/cognito</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/db</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -48,6 +50,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/lambda</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/messagequeue</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/mq</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/msa</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/nodejs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/nosql</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/oauth</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -73,4 +76,5 @@
 <url> <loc>https://qweasd147.github.io/blog/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/page/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/page/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/page/5</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
