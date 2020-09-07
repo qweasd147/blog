@@ -1,5 +1,5 @@
 ---
-title: 'Spring Cloud'
+title: 'Spring Cloud - 기본 설명'
 date: '2020-09-03T00:55:55.498Z'
 template: 'post'
 draft: false
@@ -57,9 +57,9 @@ MSA는 성능까진 크게 고려하지 않는다. 물론 어느정도 고려 �
 `Spring Cloud`는 이런 MSA 환경에서 각 서비스 간의 통신과 공통 부분 등을 쉽게 구축 및 운영을 도와주는 도구이다. 자주 쓰는 도구로는 아래와 같은 것들이 있다.
 
 1. Zuul (API Gateway)
-2. Hystrix (Circuit Breaker)
-3. Eureka (Discovery Server)
-4. Ribbon (L7 Load Balancing)
+2. Eureka (Discovery Server)
+3. Ribbon (L7 Load Balancing)
+4. Hystrix (Circuit Breaker)
 5. Config Server
 6. Spring Cloud Bus(notify configuration)
 
@@ -77,16 +77,41 @@ zuul:
       url: http://localhost:8082
 ```
 
-예를 들어 위의 설정 처럼 걸어놓으면 클라이언트가 `https://domain/auth/find/me`로 요청을 하면 `auth` 어플리케이션의 `https://domain/find/me`로 연결시켜준다. 물론 `false`면 요청 url 그대로 포워딩 해준다.
+예를 들어 위의 설정 처럼 걸어놓으면 클라이언트가 `https://domain/auth/find/me`로 요청을 하면 `auth` 어플리케이션(`serviceId`)의 `https://localhost:8082/find/me`로 연결시켜준다. 물론 `false`면 요청 url 그대로 포워딩 해준다.
 
 또한 이러한 기능들을 추가로 커스터마이징 할 수 있어 자바 개발자는 정말 친숙하게 사용할 수가 있다.
+
 (`AWS`의 `API Gateway`가 좋은 점은 생략!)
 
 한가지 아쉬운 점은 현재 최신 버전 `spring-cloud-starter-netflix-zuul`을 쓰면 기본 `WAS`로 `Tomcat`을 사용하고 있다. 아무래도 `API Gateway`는 성능적으로 민감 할 수가 있어서 `Tomcat` 보다는 그래도 `Netty`(`undertow`)를 쓰는게 어떨까 싶다.
 
-`Spring cloud Zuul`의 연관 모듈인 `zuul core`라는 녀석이 있는데 이게 `1.x` 버전에선 `Tomcat`을 쓰고, `2.x` 버전에션 `Undertow`를 쓰도록 바뀌어서 WAS를 `Undertow`로 바꾸고 싶으면 `zuul core` 버전을 바꾸던가 아니면 `Tomcat`을 제외 시키고 `Undertow`를 추가하던가 선택하면 된다.
+`Spring cloud Zuul`의 연관 모듈인 `zuul core`라는 녀석이 있는데 이게 `1.x` 버전에선 `Tomcat`을 쓰고, `2.x` 버전에선 `Undertow`를 쓰도록 바뀌어서 WAS를 `Undertow`로 바꾸고 싶으면 `zuul core` 버전을 바꾸던가 아니면 `Tomcat`을 제외 시키고 `Undertow`를 추가하던가 선택하면 된다.
 
-## 2.2 Hystrix (Circuit Breaker)
+## 2.2 Eureka (Discovery Server)
+
+라이브 환경에선 어느정도 트래픽이 많으면 서버 이중화는 흔한 일이다. 단순 서버 인스턴스를 늘리고 해당 서버를 사용하는 다른 서버에 인스턴스 정보를 넘겨주고, 사용하는 쪽에서 적당히 라운드 로빈(로드벨런싱) 해주면 부하 분산을 위한 서버 다중화 작업은 끝나게 된다. 하지만 말은 쉽게 했지만 이러한 작업은 고려할께 많고 각 서버마다 인스턴스가 늘어가면서 모니터링 및 관리가 힘들어 질 수 밖에 없다. 이러한 귀찮은 작업을 Spring Cloud에서 `Discovery Server`역할을 담당하는 Eureka가 하게 된다. 유레카 서버를 올리고 다른 어플리케이션(`Eureka Client`가 된다)에 Eureka 정보를 넣어주면 어플리케이션이 실행 되면서 Eureka로 어플리케이션 정보 및 상태를 넘겨준다. 이런식으로 모인 각 어플리케이션의 인스턴스 정보를 필요한 어플리케이션에 각각 넣어주고(IP 정보 포함) 종료되면 다시 인스턴스 정보를 갱신한다(기본 적으로 30초 마다 인스턴스에 Ping을 날려 상태 점검도 한다).
+
+하지만 이번 공부하면서 유레카는 쓰지 않았다. 이유는 딱히 메리트를 못느껴서 그런데 유레카의 역할은 `Scale in/out`시 인스턴스의 정보, 상태를 모니터링 및 관리를 하는데 내가 `Spring Cloud`를 사용하게 된다면 최종적으로 `Docker` + `Spring Cloud` 조합으로 사용할 것이다.
+
+근데 Docker 생태계(`Docker Swarm`, `Kubernates`) 중엔 이러한 역할을 하는 얘들이 이미 있는데 구지 필요할까 의문이 들었고, 그렇다고 `Docker`를 포기하기엔 잃는게 더 많을꺼라 판단 하였다. `Docker Swarm`이나 `Kubernates`를 사용안하고 순수 `Docker`만 사용한다면 사용하는것도 괜찮을꺼 같긴하다(기술은 필요에 맞춰 도입하면 된다!).
+
+또한 `Eureka client`들, 그니까 다른 서버들은 Eureka 관련 Library에 종속성이 생기게 된다. 만약 다른 어플리케이션을 `Node.js`나 `Django`같은 걸로 만들었을 경우 `Eureka client`로 등록 하려면 외부 라이브러리를 사용해야 하지만 이러한 라이브러리를 제공해주지 않으면 어떻게 해야할지 감도 안잡힌다. 물론 방법이 있을 수도 있지만 그런거 하나하나 알아보는데 시간을 사용하니, 그냥 안쓰고 `Docker` 쓸꺼 같다.
+
+## 2.3 Ribbon (L7 Load Balancing)
+
+> `Load Balancer`는 대표적으로 2가지 종류가 있는데 `L4 Switch`, `L7 Switch` 2 종류가 있다. L4는 `OSI 7Layer`에서 L4 계층, 쉽게 말하면 네트워크 장비로 로드 벨런싱을 하는 것이고, L7은 `Application` 계층으로 로드 벨런싱을 하는 것을 말한다. `L4 Switch`는 가격이 엄청나게 비싸므로 돈없으면 사용하지도 못하거나 아니면 AWS의 `NLB`를 알아보면 되고, 여건이 안되면 결국에 사용해야 할 것은 `L7 Load Balancer` 이다
+
+우선 `Load Balancing`을 하고 싶으면 최소 2개 이상의 서버 인스턴스가 필요하고, 해당 인스턴스의 물리적 접근 주소(IP, Port 번호)를 `Load Balancer`에 제공해야 한다. 이때 `Eureka`와 궁합이 잘 맞는데 위에서 잠깐 설명 하였지만 Eureka는 필요한 곳에 물리적인 서버 목록을 제공해 준다.
+
+#### Ribbon
+
+Load balancing 관련 작업을 관리한다. `timeout`, `retry 정책`등을 설정 가능하고 필요한 서버 목록은 직접 물리적 주소를 적는 방법도 있으나, 그렇게 하면 탄력적으로 주소값을 확보 할 수 없으므로 `Eureka`한테 필요한 서버 목록 리스트를 요청하도록 셋팅도 가능하다.
+
+#### Eureka
+
+주기적으로 헬스 체크를 하여, 현재 활성화 된 서버 인스턴스 목록을 Ribbon에 제공해준다.
+
+## 2.4 Hystrix (Circuit Breaker)
 
 - Circuit Breaker
   - Open & Close
