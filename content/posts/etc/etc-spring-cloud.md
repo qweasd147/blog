@@ -111,13 +111,30 @@ Load balancing 관련 작업을 관리한다. `timeout`, `retry 정책`등을 �
 
 주기적으로 헬스 체크를 하여, 현재 활성화 된 서버 인스턴스 목록을 Ribbon에 제공해준다.
 
+---
+
+Ribbon이 좋긴 하지만 이번 공부엔 절반 정도의 기능만 사용하였다. `timeout`, `retry` 정책 정도만 사용하고 `Load Balancing`작업은 Ribbon이 아닌 docker를 통해서 할 생각이기 때문이다.
+
 ## 2.4 Hystrix (Circuit Breaker)
 
-- Circuit Breaker
-  - Open & Close
-  - fallback
-- request 격리 방법
-  - Thread-Pool
-  - Semaphore
+`Hystix`에서 제공해주는 기능은 대표적으로 `Request Caching`, `장애 전파 방지` 기능이 있다. 이 중 `Request Caching`은 딱히 어려운 내용도 아니고 다른 쪽에서도 많이 사용 할 수 있으니까 Pass하고 추가로 기능은 아니지만 관리 정책으로 request 격리 방식을 지정 할 수가 있다.
 
-TODO
+### Circuit Breaker(요청 차단)
+
+`Circuit Breaker`는 간단히 말해 특정 조건이 만족하면 요청 자체를 실행하지 않고 내부적으로 `fallback`을 실행하는 방식이다.
+
+`Circuit Breaker`를 사용하는 이유는 만약 특정 서비스 `A` -> `B` -> `C` 순서로 호출한다고 가정 할 때, `C`측에서 처리량이 적거나 DB에 LOCK이 걸려 무한 대기가 발생 할 경우 `A`, `B`, `C` 모두가 무한 대기가 걸리게 된다. 물론 `Timeout`이 걸려 있을테니 진짜 무한대기는 아니겠지만 적어도 `A`, `B`만큼은 빠른 응답, 또 `C`한테 불필요한 트래픽(어차피 실패할꺼)을 줄이기 위해 `B`는 `C`를 호출하는 대신 자체 `fallback`을 실행 시킨다(`Circuit Breaker open` 상태) 그러다가 일정 시간이 지나면 다시 확인 해보고 이상이 없으면 다시 정상적으로 처리한다(`Circuit Breaker close` 상태).
+
+### Isolation 방법
+
+`Micro Service`는 하나의 어플리케이션에서 모든 일을 하는게 아닌, 필요에 따라 내부적으로 다른 어플리케이션을 호출하여 처리하는 방식이 많다. 이때 중요한건 다른 서비스를 호출해야 한다는 점인데 이때 호출을 관리하는 방법은 `Thread Pools` 방식과 `Semaphore` 방식 두가지를 사용한다.
+
+참고사항으로 `Thread Pools` & `Semaphore` 개념은 `Spring cloud`에서 시작한 개념은 아니니까 다른곳에서 검색해보면(...) 더 자세한 정보를 얻을 수 있다.
+
+#### Semaphore
+
+사실 `Semaphore`는 격리라고 보기에는 애매하다. 외부 어플리케이션 호출을 별도의 `Thread`를 할당 받는게 아닌 현재 사용중인 `Thread`를 그대로 사용하는 방식이다. 단순 동시 호출(`Concurrency`) 개수를 지정해 놨다가 사용하는 방식이라 장점은 `Thread Pools` 방식에 비해 빠르다는 점이 있지만 의미있는 값은 아니고, 단점으로는 별도의 `Thread`를 사용하지 않아 지연문제 발생 시 다른곳에 영향을 미칠수 있다는 점이다(이 부분은 추가로 확인 해봐야함).
+
+#### Thread-Pool
+
+Hystrix에서 관리하는 별도의 `Thread Pool`을 사용해서 외부 어플리케이션을 호출하는 방식이다. 따라서 동시 호출 개수는 `Thread Pool`에서 확보한 Thread 만큼 가능하고, 장점으로는 별도의 `Thread`로 사용하니 외부 시스템과 완전히 격리된다는 점이다. 단점으로는 별도의 `Thread Pool`을 관리하는데 오는 리소스, 오버헤드 등이 있지만 이러한 비용은 크게 신경쓰지 않고 거의 모든 케이스에서 `Thread Pool` 방식을 권장하고 있다.
