@@ -1,555 +1,330 @@
 ---
-title: "Thread"
-date: "2016-02-05T22:40:32.169Z"
-template: "post"
+title: 'Thread'
+date: '2016-02-05T22:40:32.169Z'
+template: 'post'
 draft: false
-category: "java"
+category: 'java'
 tags:
-  - "thread"
-  - "java"
-description: "Thread"
+  - 'thread'
+  - 'java'
+description: 'Thread'
 ---
 
-# Stream.
+# Thread
 
-# 1. 장점
-### 1.1 내부 반복처리를 진행하고, 직관적이라 이해하기 쉽다.
+# 1. 정의
 
-### 1.2 손쉬운 병렬처리
+하나의 어플리케이션 안에서 여러가지 작업을 동시에 하는것을 의미. 각각의 작업을
 
-### 1.3 최종 연산이 실행될때 중간연산들을 실행한다. (지연 실행)
-  이 부분이 좋은 점이 불필요한 연산을 줄여준다는 점이다. 밑에 2.1에서 좀 더 자세히 설명
-    
-# 2. Stream 기본 사용법
+thread라고 불린다. 컴퓨터에서 프로세스(process)와 thread라는 2가지의 실행 단위가 있는데,
 
-### 2.1 중간연산, 최종연산
-스트림 사용 시 중간연산, 최종 연산이 존재 하며, 최종 연산이 실행되면 해당 스트림은 더이상 사용 할 수가 없다.
+차이점은 프로세스는 자신 만의 데이터를 가지지만 스레드들은 동일한 데이터를 공유한다.
 
-일단 표부터 확인!
+### 1.1 스레드 상태, 라이프 사이클
 
-<table>
-  <thead>
-    <tr><th>중간연산</th><th>설명</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>Stream&lt;T&gt; distinct()</td><td>중복을 제거</td></tr>
-    <tr><td>Stream&lt;T&gt; filter(Predicate&lt;T&gt; predicate)</td><td>조건에 안맞는 요소 제외</td></tr>
-    <tr><td>Stream&lt;T&gt; limit(long maxSize)</td><td>스트림의 일부를 제한(개수 제한)한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; skip(long n)</td><td>스트림의 일부를 skip한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; peek(Consumer&lt;T&gt; action)</td><td>스트림의 요소에 작업을 수행한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; sorted()</td><td rowspan="2">스트림의 요소를 정렬한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; sorted(Conparator&lt;T&gt; comparator)</td></tr>
-    <tr><td>Stream&lt;R&gt; map(Function&lt;T, R&gt; mapper)</td><td rowspan="8">스트림의 요소를 변환한다.</td></tr>
-    <tr><td>DoubleStream mapToDouble(ToDoubleFunction&lt;T&gt; mapper</td></tr>
-    <tr><td>IntStream mapToInt(ToIntFunction&lt;T&gt; mapper)</td></tr>
-    <tr><td>LongStream mapToLong(ToLongFunction&lt;T&gt; mapper)</td></tr>
-    <tr><td>Stream&lt;R&gt; flatMap(Function&lt;T, Stream&lt;R&gt;&gt; mapper)</td></tr>
-    <tr><td>DoubleStream flatMapToDouble(Function&lt;T, DoubleStream&gt; m)</td></tr>
-    <tr><td>IntStream flatMapToInt(Function&lt;T, IntStream&gt; m)</td></tr>
-    <tr><td>LongStream flatMapToLong(Function&lt;T, LongStream&gt; m)</td></tr>
-  </tbody>
-</table>
+| 상태                          | 설명                                                                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| NEW                           | 스레드가 생성되고 아직 start()가 호출되지 않은 상태                                                                                        |
+| RUNNABLE                      | 실행 중 또는 실행 가능한 상태                                                                                                              |
+| BLOCKED                       | 동기화 블럭에 의해서 일시정지된 생태(lock이 풀릴 때까지 기다리는 상태)                                                                     |
+| WAITING, <br /> TIMED_WAITING | 스레드의 작업이 종료되지는 않았지만 실행가능하지 않은(unrunnable) 일시정지 상태. <br /> TIMED_WAITING은 일시정지 시간이 지정된 경우를 의미 |
+| TERMINATED                    | 스레드의 작업이 종료된 상태                                                                                                                |
 
-<table>
-  <thead>
-    <tr><th>최종연산</th><th>설명</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>void forEach(Consumer&lt;? super T&gt; action)</td><td>각 요소에 지정된 작업 수행</td></tr>
-    <tr><td>void forEachOrdered(Consumer&lt;? super T&gt; action)</td><td>각 요소에 지정된 작업 수행</td></tr>
-    <tr><td>long count()</td><td>스트림의 요소의 개수 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; max(Comparator&lt;? super T&gt; comparator)</td><td>스트림의 최대값 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; min(Comparator&lt;? super T&gt; comparator)</td><td>스트림의 최소값 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; findAny()</td><td>스트림의 아무거나 하나 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; findFirst()</td><td>스트림의 첫번째 요소 반환</td></tr>
-    <tr><td>boolean allMatch(Predicate&lt;T&gt; p)</td><td>조건에 모든 요소가 만족하는지</td></tr>
-    <tr><td>boolean anyMatch(Predicate&lt;T&gt; p)</td><td>조건에 하나라도 만족하는지</td></tr>
-    <tr><td>boolean noneMatch(Predicate&lt;T&gt; p)</td><td>조건에 모두 만족하지 않는지</td></tr>
-    <tr><td>Object[] toArray()</td><td>스트림의 모든 요소를 배열로 반환</td></tr>
-    <tr><td>A[] toArray(IntFunction&lt;A[]&gt; generator)</td><td>스트림의 모든 요소를 배열로 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator)</td><td rowspan="4">스트림의 요소를 하나씩 줄여 가면서 계산한다.</td></tr>
-    <tr><td>T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</td></tr>
-    <tr><td>U reduce(U identity, BinaryOperator&lt;U, T, U&gt; accumulator)</td></tr>
-    <tr><td>BinaryOperator&lt;U&gt; combiner</td></tr>
-    <tr><td>R collect(Collector&lt;T, A, R&gt; collector)</td><td rowspan="2">스트림의 요소를 수집한다.<br/>주로 요소를 그룹화 하거나 분할한<br/>결과를 컬렉션에 담아 반환하는데 사용한다.</td></tr>
-    <tr><td>R collect(Supplier&lt;R&gt; supplier<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,BiConsumer&lt;T, R&gt; accumulator<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;, BiConsumer&lt;R, T&gt; Combiner)</td></tr>
-  </tbody>
-</table>
+# 2. 장점
 
-미리 말하면 '자바의 정석' 보고 배꼇다... 그래도 markdown + table 조합때문에 작성이 힘들었다....
+# 3. 주요 사용법
 
-아무튼 중간연산은 항상 stream을 반환하는 것을 확인 할 수가 있다. 이러한 점을 활용하여 각 중간 연산을
+### 3.1 Thread 하위 메소드
 
-chaining 하여 편하게 사용이 가능하다. 또한 중간연산은 최종 연산을 하여야 의미가 있으므로, 최종적으로 최종 연산
+| Method                               | 설명                                                                    |
+| ------------------------------------ | ----------------------------------------------------------------------- |
+| Thread                               | 매개변수가 없는 기본 생성자                                             |
+| Thread(String name)                  | 이름이 name인 thread 객체 생성                                          |
+| Thread(Runnable target, String name) | Runnable을 구현하는 객체로 부터 스레드를 생성                           |
+| static int activeCount()             | 현재 활동 중인 스레드의 개수를 반환                                     |
+| String getName()                     | 스레드의 이름을 반환                                                    |
+| int getPriority()                    | 스레드의 우선순위를 반환                                                |
+| void interrupt()                     | 현재의 스레드를 중단                                                    |
+| boolean isInterrupted()              | 현재의 스레드가 중단될 수 있는지를 검사                                 |
+| void setPriority(int priority)       | 스레드의 우선순위를 지정                                                |
+| void setName(String name)            | 스레드의 이름을 지정한다.                                               |
+| static void sleep(int milliseconds)  | 현재 스레드를 지정된 시간만큼 재운다.                                   |
+| void run()                           | 스레드가 시작될 때 이 메소드가 호출. 스레드가 해야하는 작업을 구현한다. |
+| void start()                         | 스레드를 시작한다.                                                      |
+| static void yield()                  | 현재 스레드를 다른 스레드에 양보하게 만든다.                            |
+| void join()                          | 해당 스레드가 소멸될때까지 기다리게 한다.                               |
 
-을 하지 않으면 실행되지 않는다(바꿔 말하면 최종 연산이 될때 중간연산을 실행함).
+### 3.2 우선순위
+
+어떠한 스레드에 더 많은 양의 실행시간이 주어져, 결과적으로 더 빨리 완료 될지 설정하는 값.
+
+최소 우선순위(1) 부터 보통 우선순위(5), 최대 우선순위(10)까지 설정 가능하고, 메인스레드는 5이다.
+
+또한 메인스레드 내에서 생성하는 스레드의 우선순위는 별다른 입력이 없을 시, 우선순위를 상속 받아,
+
+자동으로 5가 된다. 또한 우선순위 변경은 스레드를 실행 하기 전에만 우선순위 변경이 가능.
+
+    멀티코어라고 해도 프로세서 환경에서 작업 시, 실행시간과 실행 기회를 더 많이 갖게 될 것이라고 기대할 수는 없다.
+    이는 os 레벨에서 다른 방식으로 스케쥴링 하기 때문에 어떠한 os에 따라 다른 결과를 얻을 수 있다.
+    따라서 os 별 스케쥴링 정책과 jvm 구현을 확인해야 한다. 따라서 환경에 상관없이 처리를 하고 싶으면
+    PriorityQueue 등에 우선순위를 저장해 놓고 작업을 처리하는게 나을 수 있다.
+
+### 3.3 데몬 스레드
+
+    다른 일반 스레드의 작업을 돕는 보조적인 역할을 수행하는 스레드.
+    일반 스레드가 모두 종료되면 데몬 스레드는 강제적으로 자동 종료됨.
+    이유는 보조적인 스레드라 종속된 일반 스레드가 종료되면 의미가 없어지게 된다. 이러한
+    점만 빼면 일반 스레드와 다른점이 없음. 또한 setDaemon 메소드는 start 이전에 설정해야함
+
+### 3.4 join(다른 쓰레드의 작업을 기다린다)
+
+    쓰레드 자신이 하던 작업을 잠시 멈추고 다른 쓰레드가 지정된 시간동안 작업을 수행하도록
+    할때 join()을 사용한다. 현재 쓰레드가 아닌 특정 쓰레드에 대해 동작하는점이 sleep()과 다르다.
+
 ```java
-public void streamOperator(){
-  
-  //중간연산만 단독으로 실행 시, 실행되지 않는다.
-  Stream<UserVo> userVoStream = getMockUserList().stream();
-  
-  userVoStream.peek(System.out::println);  
-}
+    public void baseThread2() throws InterruptedException {
+
+        int triesCount = 0;
+
+        Thread threadForSleep = new Thread(new ConcreteInterface1());
+        threadForSleep.start();
+
+        while(threadForSleep.isAlive()){
+            printMsg("threadForSleep 아직 살아있음");
+            triesCount++;
+            threadForSleep.join(3000);  //3초간 스레드 종료를 기다리고, 3초가 지나면 넘어감.
+
+            if(triesCount > 2){
+                printMsg("강제 인터럽트");
+                threadForSleep.interrupt();
+                threadForSleep.join();          //스레드가 종료할때까지 무한 대기
+            }
+        }
+
+        System.out.println("threadForSleep 스레드 종료");
+    }
 ```
 
-위의 소스와 표를 보면 peek 메소드는 각 요소에 일정한 작업을 하기위한 '중간 연산'이다.
+위 소스에서 `join`은 다른 스레드가 종료할때 까지 기다리게 된다. 참고로 sleep과 마찬가지로 대기 중
 
-하지만 중간연산이라 화면에 표출되는 것은 아무것도 없다. 최종연산인 forEach로 바꾸던가 
+interrupt가 들어올 수 있으며, interrupt가 들어올 시, exception이 발동된다(위 소스에선 그런거 고려안함)
 
-아니면 peek 이후에 최종연산 메소드를 체이닝 하여야한다.
+# 4. 동기화
 
-이러한 점이 좋은 점이유는 불필요한 연산을 줄여준다는 점이다. 예를들어 스트림 요소가 무한 스트림이고
+### 4.1 synchronized()
 
-그 중 중간연산에서 limit을 사용 후 중간연산 처리시 무한한 데이터를 전부 핸들링하는게 아니라 limit만큼
-
-제한 후 핸들링 하는 점이라 효율적이라고 말할 수 있다.
-
-### 2.2 병렬처리
-병렬처리는 스레드를 사용 해야 할것이고 그럴때 생각 해야 할 것이 많을 것이다.
-
-하지만 stream을 사용하여 병렬 처리 시 사용자(프로그래머)는 그냥 일반 stream 사용 시 사용하면 된다.
-```java
-public void parallelStream(){
-    IntStream forParallelStream = IntStream.range(1, 10);
-
-    forParallelStream
-            .parallel()
-            .forEach((n)->System.out.println("parallel numbering : "+n));
-
-  }
-```
-위 소스와 같이 스트림을 병렬처리 스트림으로 변경(parallel) 후 일반 스트림 같이 사용하면 된다.
-
-### 2.2 collect
-가공 및 처리한 데이터를 수집. 간단히 stream을 array, collection framework 등으로 형변환 한다고 생각하면 된다.
-```java
-public void streamCollect(){
-  
-  List<UserVo> userList = getMockUserList();
-  
-  //stream -> array
-  Stream<UserVo> toArrayStream = userList.stream();
-  UserVo[] resultArray = toArrayStream.toArray(UserVo[]::new);
-}
-```
-
-array로 변환 시, 그냥 toArray() 메소드를 호출하면된다. 하지만 여기서 Object 배열이 아닌 지정된 배열로 반환하기
-
-위해서는 toArray() 메소드에 IntFunction 인터페이스를 구현해서 넘겨줘야한다.
-
-번외로 메소드 참조에 관련해서 꽤나 부정적인 인식이 있었는데 이렇게 보니까 깔끔한것 같기는하다.
+lock, transaction, thread-safe 등의 관련 설명은 패스!
 
 ```java
-public void streamCollect(){
-  List<UserVo> userList = getMockUserList();
-  
-  Stream<UserVo> toMapStream = userList.stream();
-  
-  Map<String, UserVo> resultMap = toMapStream.collect(Collectors.toMap(userVo -> userVo.getName(), userVo -> userVo));
-}
-```
-collection framework로 변환 시, Stream.collect를 사용하고, 인자값(함수 같은 메소드)으로 toMap을 넘겨주면 된다.
+public class Buffer {
+    private int data;
+    private boolean empty = true;
 
-여기서 주의점으로 map은 (key, value)로 존재하므로 key값을 구하기 위한 Function interface, value값을 구하기 위한
+    public synchronized int get(){
+        while (empty){
+            try {
+                wait(); //생산될 때 까지 기다린다.
+            } catch (InterruptedException e) {  e.printStackTrace(); }
+        }
 
-Function interface를 구현해서 넘겨줘야 한다. 소스를 보면 key 값으로 user name, 값으로 vo객체 그대로 넘겨주는 것을
+        empty = true;
+        notifyAll();
 
-확인 할 수 있다.
-
-```java
-public void streamCollect(){
-  List<UserVo> userList = getMockUserList();
-  
-  Stream<UserVo> toListStream = userList.stream();
-  
-  List<UserVo> resultList = toListStream.collect(Collectors.toList());
-}
-```
-list로 변환은 간단하다. 다른 쪽도 마찬가지지만 현재 스트림을 통해 타입 유추가 가능하므로, 그냥 리스트로 받겠다는 명령만 하면 된다.
-
-### 2.3 map
-각 스트림마다 동일한 작업을 수행한다.
-```java
-public void streamMap(){
-  Stream<String> strArrStream = Stream.of(
-    "1_1", "1_2", "1_3", "1_4", "1_5", "1_6"
-    , "2_1", "2_2", "2_3", "2_4", "2_5", "2_6"
-    , "3_1", "3_2", "3_3", "3_4", "3_5", "3_6"
-  );
-
-  strArrStream
-    .map((s)->"prefix_"+s))
-    .forEach(System.out::println);
-}
-```
-
-
-### 2.4 flatMap
-스트림의 타입이 배열 등인 경우, 핸들링 하기가 불편한 경우가 있을 수 있다. 예를 들어 Stream<String[]> 같이 배열로
-
-스트림이 구성 된 경우 각 배열을 꺼내 모든 아이템을 문자열로 직렬화 하여 핸들링하는 경우가 더 편하게 느껴질 수도 있다.
-
-(개인 차에 따라 무조건 편하지 않을 수도 있다.) 그런 경우 flatMap을 사용하여 말그대로 스트림의 배열을 평평하게? 만들어 줄 수도 있다.
-
-```java
-public void flatStream(){
-  Stream<String[]> strArrStream = Stream.of(
-    new String[]{"1_1", "1_2", "1_3", "1_4", "1_5", "1_6"}
-      , new String[]{"2_1", "2_2", "2_3", "2_4", "2_5", "2_6"}
-      , new String[]{"3_1", "3_2", "3_3", "3_4", "3_5", "3_6"}
-  );
-
-  strArrStream
-    .flatMap(Arrays::stream)
-    .forEach(System.out::println);
-}
-```
-
-flatMap을 사용하여 스트림 내 배열(또는 객체)로 구성된 된 아이템을 단일 원소로 구성 할 수가 있다.
-
-### 2.5 reduce
-처음 부터 마지막 원소까지 하나씩 처리하면서 하나의 원소로 줄여가는 작업을 수행한다.
-
-```java
-public void streamReduce(){
-  Integer[] numberArr = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 10};
-
-  Stream<Integer> numberStream1 = Arrays.stream(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 10});
-
-  Integer intReuslt = numberStream1.reduce(0, (integer1, integer2) -> integer1 + integer2);
-
-  System.out.println("integer Sum : "+intReuslt);
-}
-```
-
-위 소스에서 reduce 메소드에 넘겨주는 첫번째 인자값은  저장될 변수(Stream의 제너릭 타입을 따라간다)와
-
-두번째 인자로 함수를 받아 어떻게 줄여갈지를 결정한다. 위 소스는 각 원소를 순회하면서 모든 값을 더해가는 형태이다.
-
-참고로
-첫번째 사이클 : 0+1
-두번째 사이클 : 1+2
-세번째 사이클 : 3+3
-....
-
-### 2.6 Collector 구현
-
-스트림의 최종 연산 메소드 중 하나인 Stream.collect()를 사용하여 map, list, set 등의 형태로 수집하여
-
-반환하고 싶을 경우도 있겠지만, 경우에 따라서 내가 원하는 형태의 결과로 수집되어 받고 싶은 경우도 있을 것이다.
-
-이런 경우에 Stream.collect() 메소드의 인자값으로 Collector를 구현한 인스턴스를 넘겨주면 된다. 이것만 구현하면 
-
-내부적으로 병렬 처리 시 생각해야 할 부분을 내부적으로 해결이 되므로 꽤나 편하다고 생각된다.
-
-소스가 길어지므로 collectorImpl 메소드와 CollectorImpl 클래스를 참고!
-
-참고로 CollectorImpl 클래스는 메소드(정확히 함수형 인터페이스) 표현 방법은 여러가지로 써놓았다. 모르거나
-
-어디서 무조건 배껴온거 아니다.
-
-위에서 말한 두 부분을 보기만하면 얼추 이해는 갈것이라고 생각되고, 추가로 내부적으로는 reduce를 사용한다는 점도
-
-같이 기억하면 될것이다.
-
-# 3. Optional<T> OptionalInt
-
-java 1.8에 추가된 Optional은 제너릭 타입을 한번 wrap한 레퍼 클래스라고 생각하면 된다. 장점으로는 데이터를
-
-핸들링하다 null값 처리를 유연하게 해주는 유틸성 클래스 정도라고 생각하면 된다.
-
-  참고로 Stream과는 큰 연관성은 없지만 Stream 사용시 유용하게 사용하므로 Optional을 껴놓았다.
-
-```java
-public final class Optional<T> {
-    
-    ...
-
-    private final T value;
-
-    private Optional(T value) {
-        this.value = Objects.requireNonNull(value);
+        return data;
     }
 
-    public static <T> Optional<T> of(T value) {
-        return new Optional<>(value);
+    public synchronized void put(int data){
+        while (!empty){
+            try {
+                wait(); //소비 될 때까지 기다린다.
+            } catch (InterruptedException e) { e.printStackTrace(); }
+        }
+
+        empty = false;
+        this.data = data;
+
+        notifyAll();
     }
+}
+```
+
+여러 스레드 안에서도 안전하게 데이터를 핸들링하기 위해서 `synchronized`를 사용한다.
+
+즉, thread-safe를 위하여 공통된 임계구역을 지정하고 특정 메소드 또는 블럭을 지정하여 `synchronized`사용하면 항상
+
+일관된 데이터를 얻을 수가 있다.
+
+참고로 특정 블럭에 `synchronized`적용 시
+
+```java
+synchronized(this){
+    //TODO : handle critical data
+}
+```
+
+위 소스에서 this는 critical한 data를 지정하고(보통 this이지만 아닐수도 있음) 내부 블록에서 lock을 얻어 사용해야할
+
+처리를 정의해주기만 하면 된다. 또한 메소드 통째로가 아닌 블록으로 지정하여 동기화 하였을 시, 특정 블록만 lock을 걸어서
+
+아무래도 메소드 전체보다는 빠를수 밖에 없다. 참고로 `synchronized` 안에서 예외가 발생하여도 lock은 자동적으로 풀린다.
+
+### 4.2 wait(), notify()
+
+- Object에 정의되어 있다(따로 import x)
+- 동기화 블록(synchronized)내에서만 사용할 수 있다.
+- wait는 lock을 반납하고 대기
+- notify를 호출하면 작업을 중단했던 스레드가 다시 락을 얻어 작업을 진행
+
+위 `4.1` 소스에서 `synchronized`안에 `wait()`, `notifyAll()`를 사용하고 있다.
+
+`get`, `put` 메소드 내부에서는 임계구역(`synchronized`)이므로 lock을 얻은 뒤, 다른 작업 처리를 기다리기
+
+위해 현재 스레드의 lock을 반납하고 대기(`wait()`) 하고 있다가, `notify` 또는 `notifyAll`에 의해 다시 처리가
+
+계속 진행되게 된다.
+
+    notify()와 notifyAll()의 차이점은 notify()는 waiting pool에서 대기 중인 스레드 중 하나를 임의로 선택하여
+    그 스레드한테만 알려주지만, notifyAll()은 모든 waiting pool에 대기중은 스레드에게 알려준다. 따라서 notify()는
+    경우에따라서 원하는 스레드에게 알림이 안갈 수도 있고, notifyAll()은 모든 스레드에게 알림이 가지만 프로세서를 할당
+    받지 못한 스레드는 다시 waiting pool로 들어가게 된다.
+
+### 4.3 volatile
+
+스레드 환경에서 각 프로세서에서 특정 필드 데이터를 캐싱하여 사용하면 캐시와 메모리 간 데이터가 불일치 하고, 따라서
+
+여러 프로세서에서 값이 불일치 하는 경우가 발생할 수도 있다. 이러한 케이스를 방지하기 위해 `volatile` 키워드를 사용하여
+
+변수 선언 시, '이 변수에 값은 캐시가 아닌 항상 메모리에서 읽어들이겠다' 라는 뜻이 된다. 따라서 항상 프로세서 별로 동일한
+
+값이 보장되게 된다. `synchronized`를 사용해도 값이 보장되지 않는다면 위 내용을 의심해봐야 한다.
+
+```java
+public ThreadTest {
+    public volatile int inMemoryData = 0;
+
     ...
 }
 ```
-위 소스는 `Optional` Class의 일부분으로 정말 제너릭 타입(T)을 랩핑한 클래스이다.
 
+위의 `inMemoryData` 값은 항상 캐시에 저장되지 않고 오로지 메모리에서만 저장되므로, 여러 스레드에서 프로세서 별로
+
+캐싱된 데이터로 사용하지 않고 항상 메모리에서 읽어들이게 된다.
+
+### 4.4 lock, condition을 이용한 동기화
+
+#### 4.4.1 lock
+
+#### 4.4.2 condition
+
+`wait()`와 `notify()`, `notifyAll()`은 특정 스레드를 대기, 알림 통지하지 못한다는 한계점이 있다.
+
+이에 `Condition`은 스레드를 그룹화 하고 그 그룹에게만 알림을 보낼 수가 있다.
+
+| Object                   | Condotion                                                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| void wait()              | void await() <br /> void awaitUninterruptibly()                                                                            |
+| void await(long timeout) | boolean await(long time, TimeUnit unit) <br /> long awaitNanos(long nanosTimeout) <br /> boolean awaitUntil(Date deadline) |
+| void notify()            | void signal()                                                                                                              |
+| void notifyAll()         | void signalAll()                                                                                                           |
 
 ```java
-  private void handleOptional1(){
-        Optional<Integer> wrapIntVal = Optional.of(new Integer(5));
-        Integer intVal = wrapIntVal.get();      //intVal == 5
+    @Override
+    public int get() {
+        lock.lock();
+        try{
+            while(empty){
+                putCond.await();
+            }
+            empty = true;
+            getCond.signal();
+
+        } catch (InterruptedException e) {  System.out.println("인터럽트 감지. "+e.getMessage());
+        } finally {
+            lock.unlock();
+        }
+
+        return data;
     }
-```
-보는 바와 같이 사용법은 간단하고 `Optional` 클래스를 살펴보면 다른 유틸성 메소드가 많긴 많이 있다...
 
-아무튼 스트림과 연계하여 사용하면 편리한점이 많이 있다.
-
-```java
-  private void safeValWithOptional(){
-
-      Map<String, Integer> mockupMap = new HashMap<>();
-
-      final String findKey = "data10"; //찾으려는 키값
-
-      //mock data
-      mockupMap.put("data1", 1);
-      mockupMap.put("data2", 2);
-      mockupMap.put("data3", 3);
-
-      Integer findVal = mockupMap.entrySet().stream()
-              .filter(entry -> findKey.equals(entry.getKey()))
-              .map(entry -> entry.getValue())
-              .findAny()              //Optional 객체가 반환된다.
-              .orElse(-1);
-
-      System.out.println("검색된 값 : "+findVal.toString());
-  }
-```
-데이터 스트림 값중 아무 값이나 한가지를 반환(`findAny`)하고, 만약 조건에 맞는 값이 없을 시, -1을
-
-반환하도록 짜여져 있다.
-
-  OptionalInt 같은 얘들은 IntStream 처럼 불필요한 형변환으로 인한 성능저하를 막기 위하여 사용된다.
-
-# 4. 주의점
-### 4.1 데이터 원본을 변경하지 않음
-
-```java
-public void streamOperator(){
-
-    List<UserVo> mockUserList = getMockUserList();
-
-    Stream<UserVo> userListStream = mockUserList.stream();
-
-    
-    userListStream
-      .filter(userVo -> userVo.getAge()>20)
-      //.peek(System.out::println)
-      .filter(userVo -> userVo.getAuth().contains("master"))
-      .forEach(userVo -> System.out.println(userVo.getName()));
-
-    //스트림 연산을 하여도 원본은 변경되지 않는다.
-    mockUserList.forEach((userVo)->{System.out.println(userVo.getName());});
-}
-```
-
-위 소스를 보면 stream으로 변경하여 User List를 필터링 작업을 수행했다. 하지만 mockUserList의 내용을 보면 
-
-그대로 변함없이 출력 되는 것을 확인 할 수 있다.
-
-### 4.2 일회용
-
-```java
-public void baseStream(){
-    //create stream
-    Stream<String> strToStream = Stream.of("one", "two", "three", "four");
-
-    strToStream
-      .filter(s->s.equals("one"))
-      .forEach(System.out::println);
-
-
-    //strToStream.forEach(System.out::println); ERROR!! 스트림은 소모성
-}
-```
-스트림은 최종 연산을 수행하며 다시 재사용이 불가능하다.
-
-재사용은 불가능하지만 그래도 요청할때마다 일관된 스트림을 얻기 위해 `Supplier` 함수형 인터페이스를 사용하기도 한다.
-
-```java
-public void baseStream(){
-    //함수를 저장
-    Supplier<Stream<String>> getListStream = () -> list.stream();
-
-    getListStream.get()
-        .forEach(System.out::println);
-
-    getListStream.get()
-        .forEach(System.out::println);
-}
-```
-
-이런식으로 list의 stream을 얻는 함수(`Functional interface`)를 사용한다. 하지만 보는바와 같이 같은 스트림을
-
-재사용하는게 아니라 각각 새로운 스트림을 얻는점은 변함이 없다.
-
-
-### 4.3 내부 작업을 반복으로 처리
-
-주의점이라기 보단 3.2에 있는 소스를 보면 forEach문을 사용하여 스트림에 반복된 작업 수행이 가능하다.
-
-이는 for문을 사용하여 직접 데이터를 가져와서 작업하는 방법이 아니라, 더 간결하고 빠르게 작업이 가능하다.
-
-### 4.4 병렬처리 thread safe
-아무리 병렬 처리가 쉽다고 해도, 결국엔 병렬 처리이다. 순서가 보장 되지 않으므로 이에 따른 문제가 발생 할 수도 있다.
-
-당장 2.2에 있는 소스만 봐도 순서가 보장 되지 않는 것을 확인 할 수가 있다.
-
-병렬 처리 시 thread safe 관련 해서 항상 유의해야 한다(thread safe 관련 설명은 생략).
-
-참고로 공부하면서 `ArrayList`가 경우에 따라서 thread-safe하지 않을 수도 있다는 점도 알게되었다.
-
-참고. Array List(Collections)를 thread-safe하게 사용하기
-
-https://beginnersbook.com/2013/12/how-to-synchronize-arraylist-in-java-with-example/
-
-### 4.5 병렬처리 시 sort
-
-```java
-public void streamSort(){
-    IntStream intsStream = new Random().ints(30, 0, 100);
-
-    //intsStream.sorted().forEach(System.out::println);
-    intsStream.parallel().filter(value -> value>30).sorted().forEach(System.out::println);
-}
-```
-
-병렬처리의 문제점이다. 위 소스에서 filter 후 sort 시, sort는 모든 처리가 종료 된 후 마지막에 정렬이 되야 하지만
-
-병렬처리라서 실행 순서를 보장 할 수가 없다. 따라서 위 소스는 filter는 정상적으로 작동 해도, sort는 정상 작동하지 않는다.
-
-하지만 'forEach'메소드 대신 'forEachOrdered' 사용 시, 병렬 처리 여부에 상관없이 처리가 가능하지만
-
-병렬처리로서의 이점(속도)은 줄어든다고 한다.
-
-### 4.6 callback hell
-
-스트림안에 스트림을 처리해야 하는 경우, 이럴때 생각나는건 javascript의 callback hell이 생각이 난다.
-
-flatMap으로 해결 할 수 있으면 좋겠지만 상황이 그렇게 좋지 않을 때 개인적으로는 딱히 해결법이 떠오르지 않는다.
-
-아쉬운데로 그냥 함수(`Functional interface`)를 넘겨줘, 그나마 가독성을 해결하려고 하고 있다.
-
-```java
-public void streamSort(){
-    Map<String, List<String>> map = new HashMap<>();
-    String[] strArr = {"key1","key2","key3","key4","key5","key6","key7"};
-
-    //더미 데이터 입력
-    Stream.of(strArr).forEach(key -> map.put(key, Arrays.asList(strArr)));
-    
-    List<Set<String>> itemSetList = map.keySet()
-        .stream()
-        .map(key -> map.get(key))
-        .map(itemList ->
-                itemList
-                    .stream()
-                    .map(item -> "update" + item)
-                    .collect(Collectors.toSet()))
-        .collect(Collectors.toList());
-}
-```
-
-위 소스에서 2번째 `map`에서 다시한번 스트림을 불러와 처리를 하고 있다. 이런식으로 내부적으로 연속해서 stream을
-
-처리하다 보면 가독성이 그리 좋을꺼 같지 않다고 생각하고 있다. 그래서 2번째 `map`에 인자값으로 함수를 반환하는
-
-메소드로 대체하여 사용하였다.
-
-```java
-public void streamSort(){
-    Map<String, List<String>> map = new HashMap<>();
-    String[] strArr = {"key1","key2","key3","key4","key5","key6","key7"};
-
-    //더미 데이터 입력
-    Stream.of(strArr).forEach(key -> map.put(key, Arrays.asList(strArr)));
-    
-    List<Set<String>> itemSetList = map.keySet()
-        .stream()
-        .map(key -> map.get(key))
-        .map(itemList -> handleItemList(itemList).get())
-        .collect(Collectors.toList());
-}
-
-private Supplier<Set<String>> handleItemList(List<String> itemList){
-    return () -> itemList
-        .stream()
-        .map(item -> "update" + item)
-        .collect(Collectors.toSet());
-}
-```
-
-이런식으로 하면 그나마 가독성이 좋아졌다고 생각하고 있다. 
-
-함수형 언어나 javascript에서 많이 들어본 thunk, currying이 생각나게 하고 있다.
-
-### 4.6 auto close
-
-아무래도 Stream을 사용하다보면 자원을 사용 후, 닫는것에 대해 예민하게 생각할 것이다.
-
-일반적으로 사용하는 `Stream`은 대부분 `AutoCloseable`를 구현하여 알아서 자원을 닫아준다.
-
-하지만 `Files.lines()` 등의 io channel을 사용하는 메소드는 주의해야 한다. 그냥 `try-with-resource` 구문을 사용
-
-시 편하게 할 수가 있다.(소스는 흔하니까 생략!)
-
-참고로 `Stream`의 하위`flatMap`, `concat`등의 메소드도 알아서 잘 닫아준다(새로운 스트림을 만들고, 이전 스트림은 close).
-
-* https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#flatMap-java.util.function.Function-
-
-flatMap
-
-    Each mapped stream is closed after its contents have been placed into this stream.
-
-concat
-
-    When the resulting stream is closed, the close handlers for both input streams are invoked.
-
-### 4.7 병렬 처리 시, 내부적으로 Fork Join Framework를 사용한다.
-
-주의사항이라기 보단 참고사항인데, 병렬처리 시 기본적으로 내부에서 Fork Join Framework를 사용해서 처리한다.
-
-스레드 개수 또한 알아서 정해져 있고(기본 코어 개수) 변경은 가능하지만 추천하지는 않는다. 아무튼 이러한 방법으로
-
-내가(개발자가) 아닌 시스템이 알아서 처리하는 고수준 코딩이 가능하다.
-
-### 4.8 Checked Exception 처리 불가
-
-스트림 처리중엔 `Checked Exception`은 밖으로 던질 수가 없다.
-
-```java
-    public static String encodeWithEx(String str) throws UnsupportedEncodingException {
-
-        return URLEncoder.encode(str, "utf-8");
-    }
-```
-위와 같은 메소드가 있을 때 스트림에서 Exception을 상위로 던지는걸 유도하고 싶을 수도 있지만 불가능하다.
-
-```java
-        strs.stream()
-            .map(WithCheckedEx::encodeWithEx)   //ERROR!
-            .collect(Collectors.toList());
-```
-
-내부적인 이유는 잘 모르겠지만 설계상 미스 or `Checked Exception`은 사실상 버려진 ? 그런 평가를 스택오버플로우에서 종종 봤다.
-
-아무튼 `Checked Exception`은 한번 랩핑해서 `RunTime Exception`으로 던지도록 할수밖에 없다.
-
-```java
-    public static String encodeWithoutEx(String str){
-
-        try {
-            return URLEncoder.encode(str, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage());
+    @Override
+    public void put(int data) {
+        lock.lock();
+        try{
+            while(!empty){
+                getCond.await();
+            }
+            empty = false;
+            this.data = data;
+
+            putCond.signal();
+
+        } catch (InterruptedException e) {  System.out.println("인터럽트 감지. "+e.getMessage());
+        } finally {
+            lock.unlock();
         }
     }
-
-    public static void main(String[] args) {
-
-        List<String> strs = Arrays.asList("첫번째", "두번째", "세번째");
-
-        strs.stream()
-                .map(WithCheckedEx::encodeWithoutEx)
-                .collect(Collectors.toList());
-    }
 ```
+
+핵심은 `Condition`의 인스턴스인 `getCond`객체와 `putCond`객체이다. 각 인스턴스는 특정 객체를 대기, 알림을 받을 수가 있어서
+
+소스에선 `put`과 `get`메소드는 크로스 형태로 대기, 알림을 직접적으로 알려줄 수가 있다. 물론 이런 형태는 인터럽트를 발생 시
+
+오히려 무한루프에 빠질수 있는 취약한 구조이므로 실무에서 써먹을려면 잘 생각해야한다.(물론 `condition`의 단점이라기보단 스레드가 그렇다)
+
+### 4.5 fork, join 프레임워크
+
+fork, join 프레임워크는 하나의 작업을 작은 작업으로 분할하여 큐에 담은 다음, 각 스레드에서 큐에 담긴 작업을 하나씩 잡고
+
+처리하도록 설계되어 있다. 따라서 특정 스레드가 따로 노는 일이 없으므로 빠른 처리가 가능하다. 물론 선행, 후행 작업이
+
+있으므로 오버헤드가 나는 케이스도 발생할 수 있다. 아무튼 그래서 작업을 나누는(fork) 처리와 다시 합치는(join) 부분(compute)
+
+을 구현해야한다.
+
+# 5. 주의할점
+
+### 5.1 독립적인 stack에서 실행됨
+
+    stack trace를 사용시 확인 가능. 따라서 한 스레드가 예외가 발생해서 종료되어도 다른 스레드의 실행에는
+    영향을 미치지 않는다. run, start 메소드에 따라 호출 스택이 달라짐
+
+- 소스 내 `checkCallStack`메소드를 스레드 `run`으로 호출 시 call stack
+
+```
+java.lang.Exception: Exception
+at thread.items.CheckCallStack.throwException(CheckCallStack.java:12)
+at thread.items.CheckCallStack.run(CheckCallStack.java:7)
+at java.lang.Thread.run(Thread.java:745)
+at thread.ThreadMain.checkCallStack(ThreadMain.java:133)
+at thread.ThreadMain.main(ThreadMain.java:26)
+Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv4Stack=true
+```
+
+- 소스내 `checkCallStack`메소드를 스레드 `start()`으로 호출 시 call stack
+
+```
+java.lang.Exception: Exception
+at thread.items.CheckCallStack.throwException(CheckCallStack.java:12)
+at thread.items.CheckCallStack.run(CheckCallStack.java:7)
+at java.lang.Thread.run(Thread.java:745)
+```
+
+`run`을 통해 새로운 스레드 환경이 아닌 일반 메소드로 호출 시, callstack 최하단에 `main` 메소드에서 부터 callstack이 쌓이는 것을 확인 할 수가
+
+있다. 하지만 `start`를 써서 새로운 스레드 환경에서 호출 시, 독립적인 stack으로 옮겨 실행 되므로 callstack의 최하단에는 `main`메소드가 아닌
+
+`Thread`에서 부터 시작하는 것을 확인 할 수가 있다.
+
+### 5.2 한번 실행이 종료된 스레드는 다시 실행 할 수 없다.
+
+### 5.3 sleep은 항상 현재 실행 중인 쓰레드에 대해 작동한다.
+
+`sleep` 메소드는 현재 실행 중인 스레드에 대해서만 반응한다.
+
+따라서 인스턴스에서 호출하는건 의미가 없다 (태생이 static method 이다)
+
+### 6. 참고자료
+
+- 스레드, 스레드 풀 관련 설명 : http://hamait.tistory.com/612
+
+- 병렬처리 관련 설명. ForkJoin프레임워크 포함 : https://www.popit.kr/java8-stream%EC%9D%98-parallel-%EC%B2%98%EB%A6%AC/

@@ -40,6 +40,9 @@ const Skills = () => {
                     <span>Spring Security OAuth2</span>
                   </li>
                   <li>
+                    <span>Spring Cloud</span>
+                  </li>
+                  <li>
                     <span>Web Flux(현재 공부중)</span>
                   </li>
                   <h5 className={styles['skills__subtitle']}>NodeJS</h5>
@@ -50,7 +53,7 @@ const Skills = () => {
                     <span>Koa</span>
                   </li>
                   <li>
-                    <span>es8</span>
+                    <span>ES8</span>
                   </li>
                 </ul>
               </div>
