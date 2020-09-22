@@ -58,387 +58,329 @@
 
         gtag('config', '', {"send_page_view":false});
       }
-      </script><link rel="sitemap" type="application/xml" href="/blog/sitemap.xml"/><link rel="manifest" href="/blog/manifest.webmanifest"/><meta name="theme-color" content="#F7A046"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png"/><title data-react-helmet="true">Thread - Blog by joohyung</title><meta data-react-helmet="true" name="description" content="Thread"/><meta data-react-helmet="true" property="og:site_name" content="Thread - Blog by joohyung"/><link as="script" rel="preload" href="/blog/webpack-runtime-e7dc6aa0ee5137b7f878.js"/><link as="script" rel="preload" href="/blog/framework-99708135f20a48422ed8.js"/><link as="script" rel="preload" href="/blog/532a2f07-1d2a7bbc1a68ccd5edd4.js"/><link as="script" rel="preload" href="/blog/app-ddd22c35447b94046b82.js"/><link as="script" rel="preload" href="/blog/styles-083a06cb5740baaf347d.js"/><link as="script" rel="preload" href="/blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-593db5d5481bbc0d5885.js"/><link as="script" rel="preload" href="/blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js"/><link as="script" rel="preload" href="/blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js"/><link as="fetch" rel="preload" href="/blog/page-data/posts/java/java-thread/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/blog/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--3Pyz6"><div><a class="Post-module--post__home-button--16Kl0" href="/blog/">전체</a><div><div class="Content-module--content--3p512"><h1 class="Content-module--content__title--2BDW9">Thread</h1><div class="Content-module--content__body--2TrQ-"><h1 id="stream" style="position:relative;"><a href="#stream" aria-label="stream permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Stream.</h1>
-<h1 id="1-장점" style="position:relative;"><a href="#1-%EC%9E%A5%EC%A0%90" aria-label="1 장점 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. 장점</h1>
-<h3 id="11-내부-반복처리를-진행하고-직관적이라-이해하기-쉽다" style="position:relative;"><a href="#11-%EB%82%B4%EB%B6%80-%EB%B0%98%EB%B3%B5%EC%B2%98%EB%A6%AC%EB%A5%BC-%EC%A7%84%ED%96%89%ED%95%98%EA%B3%A0-%EC%A7%81%EA%B4%80%EC%A0%81%EC%9D%B4%EB%9D%BC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%89%BD%EB%8B%A4" aria-label="11 내부 반복처리를 진행하고 직관적이라 이해하기 쉽다 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.1 내부 반복처리를 진행하고, 직관적이라 이해하기 쉽다.</h3>
-<h3 id="12-손쉬운-병렬처리" style="position:relative;"><a href="#12-%EC%86%90%EC%89%AC%EC%9A%B4-%EB%B3%91%EB%A0%AC%EC%B2%98%EB%A6%AC" aria-label="12 손쉬운 병렬처리 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2 손쉬운 병렬처리</h3>
-<h3 id="13-최종-연산이-실행될때-중간연산들을-실행한다-지연-실행" style="position:relative;"><a href="#13-%EC%B5%9C%EC%A2%85-%EC%97%B0%EC%82%B0%EC%9D%B4-%EC%8B%A4%ED%96%89%EB%90%A0%EB%95%8C-%EC%A4%91%EA%B0%84%EC%97%B0%EC%82%B0%EB%93%A4%EC%9D%84-%EC%8B%A4%ED%96%89%ED%95%9C%EB%8B%A4-%EC%A7%80%EC%97%B0-%EC%8B%A4%ED%96%89" aria-label="13 최종 연산이 실행될때 중간연산들을 실행한다 지연 실행 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.3 최종 연산이 실행될때 중간연산들을 실행한다. (지연 실행)</h3>
-<p>  이 부분이 좋은 점이 불필요한 연산을 줄여준다는 점이다. 밑에 2.1에서 좀 더 자세히 설명</p>
-<h1 id="2-stream-기본-사용법" style="position:relative;"><a href="#2-stream-%EA%B8%B0%EB%B3%B8-%EC%82%AC%EC%9A%A9%EB%B2%95" aria-label="2 stream 기본 사용법 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Stream 기본 사용법</h1>
-<h3 id="21-중간연산-최종연산" style="position:relative;"><a href="#21-%EC%A4%91%EA%B0%84%EC%97%B0%EC%82%B0-%EC%B5%9C%EC%A2%85%EC%97%B0%EC%82%B0" aria-label="21 중간연산 최종연산 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.1 중간연산, 최종연산</h3>
-<p>스트림 사용 시 중간연산, 최종 연산이 존재 하며, 최종 연산이 실행되면 해당 스트림은 더이상 사용 할 수가 없다.</p>
-<p>일단 표부터 확인!</p>
+      </script><link rel="sitemap" type="application/xml" href="/blog/sitemap.xml"/><link rel="manifest" href="/blog/manifest.webmanifest"/><meta name="theme-color" content="#F7A046"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png"/><title data-react-helmet="true">Thread - Blog by joohyung</title><meta data-react-helmet="true" name="description" content="Thread"/><meta data-react-helmet="true" property="og:site_name" content="Thread - Blog by joohyung"/><link as="script" rel="preload" href="/blog/webpack-runtime-fccbc9098f76a2614d5c.js"/><link as="script" rel="preload" href="/blog/framework-99708135f20a48422ed8.js"/><link as="script" rel="preload" href="/blog/532a2f07-1d2a7bbc1a68ccd5edd4.js"/><link as="script" rel="preload" href="/blog/app-ddd22c35447b94046b82.js"/><link as="script" rel="preload" href="/blog/styles-083a06cb5740baaf347d.js"/><link as="script" rel="preload" href="/blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-593db5d5481bbc0d5885.js"/><link as="script" rel="preload" href="/blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js"/><link as="script" rel="preload" href="/blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js"/><link as="fetch" rel="preload" href="/blog/page-data/posts/java/java-thread/page-data.json" crossorigin="anonymous"/><link as="fetch" rel="preload" href="/blog/page-data/app-data.json" crossorigin="anonymous"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--3Pyz6"><div><a class="Post-module--post__home-button--16Kl0" href="/blog/">전체</a><div><div class="Content-module--content--3p512"><h1 class="Content-module--content__title--2BDW9">Thread</h1><div class="Content-module--content__body--2TrQ-"><h1 id="thread" style="position:relative;"><a href="#thread" aria-label="thread permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Thread</h1>
+<h1 id="1-정의" style="position:relative;"><a href="#1-%EC%A0%95%EC%9D%98" aria-label="1 정의 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. 정의</h1>
+<p>하나의 어플리케이션 안에서 여러가지 작업을 동시에 하는것을 의미. 각각의 작업을</p>
+<p>thread라고 불린다. 컴퓨터에서 프로세스(process)와 thread라는 2가지의 실행 단위가 있는데,</p>
+<p>차이점은 프로세스는 자신 만의 데이터를 가지지만 스레드들은 동일한 데이터를 공유한다.</p>
+<h3 id="11-스레드-상태-라이프-사이클" style="position:relative;"><a href="#11-%EC%8A%A4%EB%A0%88%EB%93%9C-%EC%83%81%ED%83%9C-%EB%9D%BC%EC%9D%B4%ED%94%84-%EC%82%AC%EC%9D%B4%ED%81%B4" aria-label="11 스레드 상태 라이프 사이클 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.1 스레드 상태, 라이프 사이클</h3>
 <table>
-  <thead>
-    <tr><th>중간연산</th><th>설명</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>Stream&lt;T&gt; distinct()</td><td>중복을 제거</td></tr>
-    <tr><td>Stream&lt;T&gt; filter(Predicate&lt;T&gt; predicate)</td><td>조건에 안맞는 요소 제외</td></tr>
-    <tr><td>Stream&lt;T&gt; limit(long maxSize)</td><td>스트림의 일부를 제한(개수 제한)한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; skip(long n)</td><td>스트림의 일부를 skip한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; peek(Consumer&lt;T&gt; action)</td><td>스트림의 요소에 작업을 수행한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; sorted()</td><td rowspan="2">스트림의 요소를 정렬한다.</td></tr>
-    <tr><td>Stream&lt;T&gt; sorted(Conparator&lt;T&gt; comparator)</td></tr>
-    <tr><td>Stream&lt;R&gt; map(Function&lt;T, R&gt; mapper)</td><td rowspan="8">스트림의 요소를 변환한다.</td></tr>
-    <tr><td>DoubleStream mapToDouble(ToDoubleFunction&lt;T&gt; mapper</td></tr>
-    <tr><td>IntStream mapToInt(ToIntFunction&lt;T&gt; mapper)</td></tr>
-    <tr><td>LongStream mapToLong(ToLongFunction&lt;T&gt; mapper)</td></tr>
-    <tr><td>Stream&lt;R&gt; flatMap(Function&lt;T, Stream&lt;R&gt;&gt; mapper)</td></tr>
-    <tr><td>DoubleStream flatMapToDouble(Function&lt;T, DoubleStream&gt; m)</td></tr>
-    <tr><td>IntStream flatMapToInt(Function&lt;T, IntStream&gt; m)</td></tr>
-    <tr><td>LongStream flatMapToLong(Function&lt;T, LongStream&gt; m)</td></tr>
-  </tbody>
+<thead>
+<tr>
+<th>상태</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NEW</td>
+<td>스레드가 생성되고 아직 start()가 호출되지 않은 상태</td>
+</tr>
+<tr>
+<td>RUNNABLE</td>
+<td>실행 중 또는 실행 가능한 상태</td>
+</tr>
+<tr>
+<td>BLOCKED</td>
+<td>동기화 블럭에 의해서 일시정지된 생태(lock이 풀릴 때까지 기다리는 상태)</td>
+</tr>
+<tr>
+<td>WAITING, <br /> TIMED_WAITING</td>
+<td>스레드의 작업이 종료되지는 않았지만 실행가능하지 않은(unrunnable) 일시정지 상태. <br /> TIMED_WAITING은 일시정지 시간이 지정된 경우를 의미</td>
+</tr>
+<tr>
+<td>TERMINATED</td>
+<td>스레드의 작업이 종료된 상태</td>
+</tr>
+</tbody>
 </table>
+<h1 id="2-장점" style="position:relative;"><a href="#2-%EC%9E%A5%EC%A0%90" aria-label="2 장점 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. 장점</h1>
+<h1 id="3-주요-사용법" style="position:relative;"><a href="#3-%EC%A3%BC%EC%9A%94-%EC%82%AC%EC%9A%A9%EB%B2%95" aria-label="3 주요 사용법 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3. 주요 사용법</h1>
+<h3 id="31-thread-하위-메소드" style="position:relative;"><a href="#31-thread-%ED%95%98%EC%9C%84-%EB%A9%94%EC%86%8C%EB%93%9C" aria-label="31 thread 하위 메소드 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.1 Thread 하위 메소드</h3>
 <table>
-  <thead>
-    <tr><th>최종연산</th><th>설명</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>void forEach(Consumer&lt;? super T&gt; action)</td><td>각 요소에 지정된 작업 수행</td></tr>
-    <tr><td>void forEachOrdered(Consumer&lt;? super T&gt; action)</td><td>각 요소에 지정된 작업 수행</td></tr>
-    <tr><td>long count()</td><td>스트림의 요소의 개수 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; max(Comparator&lt;? super T&gt; comparator)</td><td>스트림의 최대값 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; min(Comparator&lt;? super T&gt; comparator)</td><td>스트림의 최소값 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; findAny()</td><td>스트림의 아무거나 하나 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; findFirst()</td><td>스트림의 첫번째 요소 반환</td></tr>
-    <tr><td>boolean allMatch(Predicate&lt;T&gt; p)</td><td>조건에 모든 요소가 만족하는지</td></tr>
-    <tr><td>boolean anyMatch(Predicate&lt;T&gt; p)</td><td>조건에 하나라도 만족하는지</td></tr>
-    <tr><td>boolean noneMatch(Predicate&lt;T&gt; p)</td><td>조건에 모두 만족하지 않는지</td></tr>
-    <tr><td>Object[] toArray()</td><td>스트림의 모든 요소를 배열로 반환</td></tr>
-    <tr><td>A[] toArray(IntFunction&lt;A[]&gt; generator)</td><td>스트림의 모든 요소를 배열로 반환</td></tr>
-    <tr><td>Optional&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator)</td><td rowspan="4">스트림의 요소를 하나씩 줄여 가면서 계산한다.</td></tr>
-    <tr><td>T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</td></tr>
-    <tr><td>U reduce(U identity, BinaryOperator&lt;U, T, U&gt; accumulator)</td></tr>
-    <tr><td>BinaryOperator&lt;U&gt; combiner</td></tr>
-    <tr><td>R collect(Collector&lt;T, A, R&gt; collector)</td><td rowspan="2">스트림의 요소를 수집한다.<br/>주로 요소를 그룹화 하거나 분할한<br/>결과를 컬렉션에 담아 반환하는데 사용한다.</td></tr>
-    <tr><td>R collect(Supplier&lt;R&gt; supplier<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,BiConsumer&lt;T, R&gt; accumulator<br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;, BiConsumer&lt;R, T&gt; Combiner)</td></tr>
-  </tbody>
+<thead>
+<tr>
+<th>Method</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thread</td>
+<td>매개변수가 없는 기본 생성자</td>
+</tr>
+<tr>
+<td>Thread(String name)</td>
+<td>이름이 name인 thread 객체 생성</td>
+</tr>
+<tr>
+<td>Thread(Runnable target, String name)</td>
+<td>Runnable을 구현하는 객체로 부터 스레드를 생성</td>
+</tr>
+<tr>
+<td>static int activeCount()</td>
+<td>현재 활동 중인 스레드의 개수를 반환</td>
+</tr>
+<tr>
+<td>String getName()</td>
+<td>스레드의 이름을 반환</td>
+</tr>
+<tr>
+<td>int getPriority()</td>
+<td>스레드의 우선순위를 반환</td>
+</tr>
+<tr>
+<td>void interrupt()</td>
+<td>현재의 스레드를 중단</td>
+</tr>
+<tr>
+<td>boolean isInterrupted()</td>
+<td>현재의 스레드가 중단될 수 있는지를 검사</td>
+</tr>
+<tr>
+<td>void setPriority(int priority)</td>
+<td>스레드의 우선순위를 지정</td>
+</tr>
+<tr>
+<td>void setName(String name)</td>
+<td>스레드의 이름을 지정한다.</td>
+</tr>
+<tr>
+<td>static void sleep(int milliseconds)</td>
+<td>현재 스레드를 지정된 시간만큼 재운다.</td>
+</tr>
+<tr>
+<td>void run()</td>
+<td>스레드가 시작될 때 이 메소드가 호출. 스레드가 해야하는 작업을 구현한다.</td>
+</tr>
+<tr>
+<td>void start()</td>
+<td>스레드를 시작한다.</td>
+</tr>
+<tr>
+<td>static void yield()</td>
+<td>현재 스레드를 다른 스레드에 양보하게 만든다.</td>
+</tr>
+<tr>
+<td>void join()</td>
+<td>해당 스레드가 소멸될때까지 기다리게 한다.</td>
+</tr>
+</tbody>
 </table>
-<p>미리 말하면 ‘자바의 정석’ 보고 배꼇다… 그래도 markdown + table 조합때문에 작성이 힘들었다…</p>
-<p>아무튼 중간연산은 항상 stream을 반환하는 것을 확인 할 수가 있다. 이러한 점을 활용하여 각 중간 연산을</p>
-<p>chaining 하여 편하게 사용이 가능하다. 또한 중간연산은 최종 연산을 하여야 의미가 있으므로, 최종적으로 최종 연산</p>
-<p>을 하지 않으면 실행되지 않는다(바꿔 말하면 최종 연산이 될때 중간연산을 실행함).</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamOperator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  
-  <span class="token comment">//중간연산만 단독으로 실행 시, 실행되지 않는다.</span>
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> userVoStream <span class="token operator">=</span> <span class="token function">getMockUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  userVoStream<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-<span class="token punctuation">}</span></code></pre></div>
-<p>위의 소스와 표를 보면 peek 메소드는 각 요소에 일정한 작업을 하기위한 ‘중간 연산’이다.</p>
-<p>하지만 중간연산이라 화면에 표출되는 것은 아무것도 없다. 최종연산인 forEach로 바꾸던가 </p>
-<p>아니면 peek 이후에 최종연산 메소드를 체이닝 하여야한다.</p>
-<p>이러한 점이 좋은 점이유는 불필요한 연산을 줄여준다는 점이다. 예를들어 스트림 요소가 무한 스트림이고</p>
-<p>그 중 중간연산에서 limit을 사용 후 중간연산 처리시 무한한 데이터를 전부 핸들링하는게 아니라 limit만큼</p>
-<p>제한 후 핸들링 하는 점이라 효율적이라고 말할 수 있다.</p>
-<h3 id="22-병렬처리" style="position:relative;"><a href="#22-%EB%B3%91%EB%A0%AC%EC%B2%98%EB%A6%AC" aria-label="22 병렬처리 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2 병렬처리</h3>
-<p>병렬처리는 스레드를 사용 해야 할것이고 그럴때 생각 해야 할 것이 많을 것이다.</p>
-<p>하지만 stream을 사용하여 병렬 처리 시 사용자(프로그래머)는 그냥 일반 stream 사용 시 사용하면 된다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token class-name">IntStream</span> forParallelStream <span class="token operator">=</span> <span class="token class-name">IntStream</span><span class="token punctuation">.</span><span class="token function">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h3 id="32-우선순위" style="position:relative;"><a href="#32-%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84" aria-label="32 우선순위 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.2 우선순위</h3>
+<p>어떠한 스레드에 더 많은 양의 실행시간이 주어져, 결과적으로 더 빨리 완료 될지 설정하는 값.</p>
+<p>최소 우선순위(1) 부터 보통 우선순위(5), 최대 우선순위(10)까지 설정 가능하고, 메인스레드는 5이다.</p>
+<p>또한 메인스레드 내에서 생성하는 스레드의 우선순위는 별다른 입력이 없을 시, 우선순위를 상속 받아,</p>
+<p>자동으로 5가 된다. 또한 우선순위 변경은 스레드를 실행 하기 전에만 우선순위 변경이 가능.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">멀티코어라고 해도 프로세서 환경에서 작업 시, 실행시간과 실행 기회를 더 많이 갖게 될 것이라고 기대할 수는 없다.
+이는 os 레벨에서 다른 방식으로 스케쥴링 하기 때문에 어떠한 os에 따라 다른 결과를 얻을 수 있다.
+따라서 os 별 스케쥴링 정책과 jvm 구현을 확인해야 한다. 따라서 환경에 상관없이 처리를 하고 싶으면
+PriorityQueue 등에 우선순위를 저장해 놓고 작업을 처리하는게 나을 수 있다.</code></pre></div>
+<h3 id="33-데몬-스레드" style="position:relative;"><a href="#33-%EB%8D%B0%EB%AA%AC-%EC%8A%A4%EB%A0%88%EB%93%9C" aria-label="33 데몬 스레드 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.3 데몬 스레드</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">다른 일반 스레드의 작업을 돕는 보조적인 역할을 수행하는 스레드.
+일반 스레드가 모두 종료되면 데몬 스레드는 강제적으로 자동 종료됨.
+이유는 보조적인 스레드라 종속된 일반 스레드가 종료되면 의미가 없어지게 된다. 이러한
+점만 빼면 일반 스레드와 다른점이 없음. 또한 setDaemon 메소드는 start 이전에 설정해야함</code></pre></div>
+<h3 id="34-join다른-쓰레드의-작업을-기다린다" style="position:relative;"><a href="#34-join%EB%8B%A4%EB%A5%B8-%EC%93%B0%EB%A0%88%EB%93%9C%EC%9D%98-%EC%9E%91%EC%97%85%EC%9D%84-%EA%B8%B0%EB%8B%A4%EB%A6%B0%EB%8B%A4" aria-label="34 join다른 쓰레드의 작업을 기다린다 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.4 join(다른 쓰레드의 작업을 기다린다)</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">쓰레드 자신이 하던 작업을 잠시 멈추고 다른 쓰레드가 지정된 시간동안 작업을 수행하도록
+할때 join()을 사용한다. 현재 쓰레드가 아닌 특정 쓰레드에 대해 동작하는점이 sleep()과 다르다.</code></pre></div>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">baseThread2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">InterruptedException</span> <span class="token punctuation">{</span>
 
-    forParallelStream
-            <span class="token punctuation">.</span><span class="token function">parallel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">-></span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"parallel numbering : "</span><span class="token operator">+</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> triesCount <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-  <span class="token punctuation">}</span></code></pre></div>
-<p>위 소스와 같이 스트림을 병렬처리 스트림으로 변경(parallel) 후 일반 스트림 같이 사용하면 된다.</p>
-<h3 id="22-collect" style="position:relative;"><a href="#22-collect" aria-label="22 collect permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.2 collect</h3>
-<p>가공 및 처리한 데이터를 수집. 간단히 stream을 array, collection framework 등으로 형변환 한다고 생각하면 된다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamCollect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  
-  <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> userList <span class="token operator">=</span> <span class="token function">getMockUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token comment">//stream -> array</span>
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> toArrayStream <span class="token operator">=</span> userList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token class-name">UserVo</span><span class="token punctuation">[</span><span class="token punctuation">]</span> resultArray <span class="token operator">=</span> toArrayStream<span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token class-name">UserVo</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token keyword">new</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>array로 변환 시, 그냥 toArray() 메소드를 호출하면된다. 하지만 여기서 Object 배열이 아닌 지정된 배열로 반환하기</p>
-<p>위해서는 toArray() 메소드에 IntFunction 인터페이스를 구현해서 넘겨줘야한다.</p>
-<p>번외로 메소드 참조에 관련해서 꽤나 부정적인 인식이 있었는데 이렇게 보니까 깔끔한것 같기는하다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamCollect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> userList <span class="token operator">=</span> <span class="token function">getMockUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> toMapStream <span class="token operator">=</span> userList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">UserVo</span><span class="token punctuation">></span></span> resultMap <span class="token operator">=</span> toMapStream<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>userVo <span class="token operator">-></span> userVo<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> userVo <span class="token operator">-></span> userVo<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>collection framework로 변환 시, Stream.collect를 사용하고, 인자값(함수 같은 메소드)으로 toMap을 넘겨주면 된다.</p>
-<p>여기서 주의점으로 map은 (key, value)로 존재하므로 key값을 구하기 위한 Function interface, value값을 구하기 위한</p>
-<p>Function interface를 구현해서 넘겨줘야 한다. 소스를 보면 key 값으로 user name, 값으로 vo객체 그대로 넘겨주는 것을</p>
-<p>확인 할 수 있다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamCollect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> userList <span class="token operator">=</span> <span class="token function">getMockUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> toListStream <span class="token operator">=</span> userList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> resultList <span class="token operator">=</span> toListStream<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>list로 변환은 간단하다. 다른 쪽도 마찬가지지만 현재 스트림을 통해 타입 유추가 가능하므로, 그냥 리스트로 받겠다는 명령만 하면 된다.</p>
-<h3 id="23-map" style="position:relative;"><a href="#23-map" aria-label="23 map permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.3 map</h3>
-<p>각 스트림마다 동일한 작업을 수행한다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> strArrStream <span class="token operator">=</span> <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>
-    <span class="token string">"1_1"</span><span class="token punctuation">,</span> <span class="token string">"1_2"</span><span class="token punctuation">,</span> <span class="token string">"1_3"</span><span class="token punctuation">,</span> <span class="token string">"1_4"</span><span class="token punctuation">,</span> <span class="token string">"1_5"</span><span class="token punctuation">,</span> <span class="token string">"1_6"</span>
-    <span class="token punctuation">,</span> <span class="token string">"2_1"</span><span class="token punctuation">,</span> <span class="token string">"2_2"</span><span class="token punctuation">,</span> <span class="token string">"2_3"</span><span class="token punctuation">,</span> <span class="token string">"2_4"</span><span class="token punctuation">,</span> <span class="token string">"2_5"</span><span class="token punctuation">,</span> <span class="token string">"2_6"</span>
-    <span class="token punctuation">,</span> <span class="token string">"3_1"</span><span class="token punctuation">,</span> <span class="token string">"3_2"</span><span class="token punctuation">,</span> <span class="token string">"3_3"</span><span class="token punctuation">,</span> <span class="token string">"3_4"</span><span class="token punctuation">,</span> <span class="token string">"3_5"</span><span class="token punctuation">,</span> <span class="token string">"3_6"</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Thread</span> threadForSleep <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ConcreteInterface1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        threadForSleep<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  strArrStream
-    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token operator">-></span><span class="token string">"prefix_"</span><span class="token operator">+</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<h3 id="24-flatmap" style="position:relative;"><a href="#24-flatmap" aria-label="24 flatmap permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.4 flatMap</h3>
-<p>스트림의 타입이 배열 등인 경우, 핸들링 하기가 불편한 경우가 있을 수 있다. 예를 들어 Stream&#x3C;String[]> 같이 배열로</p>
-<p>스트림이 구성 된 경우 각 배열을 꺼내 모든 아이템을 문자열로 직렬화 하여 핸들링하는 경우가 더 편하게 느껴질 수도 있다.</p>
-<p>(개인 차에 따라 무조건 편하지 않을 수도 있다.) 그런 경우 flatMap을 사용하여 말그대로 스트림의 배열을 평평하게? 만들어 줄 수도 있다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">flatStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token class-name">Stream</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> strArrStream <span class="token operator">=</span> <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>
-    <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"1_1"</span><span class="token punctuation">,</span> <span class="token string">"1_2"</span><span class="token punctuation">,</span> <span class="token string">"1_3"</span><span class="token punctuation">,</span> <span class="token string">"1_4"</span><span class="token punctuation">,</span> <span class="token string">"1_5"</span><span class="token punctuation">,</span> <span class="token string">"1_6"</span><span class="token punctuation">}</span>
-      <span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"2_1"</span><span class="token punctuation">,</span> <span class="token string">"2_2"</span><span class="token punctuation">,</span> <span class="token string">"2_3"</span><span class="token punctuation">,</span> <span class="token string">"2_4"</span><span class="token punctuation">,</span> <span class="token string">"2_5"</span><span class="token punctuation">,</span> <span class="token string">"2_6"</span><span class="token punctuation">}</span>
-      <span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"3_1"</span><span class="token punctuation">,</span> <span class="token string">"3_2"</span><span class="token punctuation">,</span> <span class="token string">"3_3"</span><span class="token punctuation">,</span> <span class="token string">"3_4"</span><span class="token punctuation">,</span> <span class="token string">"3_5"</span><span class="token punctuation">,</span> <span class="token string">"3_6"</span><span class="token punctuation">}</span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>threadForSleep<span class="token punctuation">.</span><span class="token function">isAlive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">printMsg</span><span class="token punctuation">(</span><span class="token string">"threadForSleep 아직 살아있음"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            triesCount<span class="token operator">++</span><span class="token punctuation">;</span>
+            threadForSleep<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//3초간 스레드 종료를 기다리고, 3초가 지나면 넘어감.</span>
 
-  strArrStream
-    <span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token operator">::</span><span class="token function">stream</span><span class="token punctuation">)</span>
-    <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>flatMap을 사용하여 스트림 내 배열(또는 객체)로 구성된 된 아이템을 단일 원소로 구성 할 수가 있다.</p>
-<h3 id="25-reduce" style="position:relative;"><a href="#25-reduce" aria-label="25 reduce permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.5 reduce</h3>
-<p>처음 부터 마지막 원소까지 하나씩 처리하면서 하나의 원소로 줄여가는 작업을 수행한다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamReduce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span> numberArr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-  <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> numberStream1 <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token class-name">Integer</span> intReuslt <span class="token operator">=</span> numberStream1<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>integer1<span class="token punctuation">,</span> integer2<span class="token punctuation">)</span> <span class="token operator">-></span> integer1 <span class="token operator">+</span> integer2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-  <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"integer Sum : "</span><span class="token operator">+</span>intReuslt<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>위 소스에서 reduce 메소드에 넘겨주는 첫번째 인자값은  저장될 변수(Stream의 제너릭 타입을 따라간다)와</p>
-<p>두번째 인자로 함수를 받아 어떻게 줄여갈지를 결정한다. 위 소스는 각 원소를 순회하면서 모든 값을 더해가는 형태이다.</p>
-<p>참고로
-첫번째 사이클 : 0+1
-두번째 사이클 : 1+2
-세번째 사이클 : 3+3
-…</p>
-<h3 id="26-collector-구현" style="position:relative;"><a href="#26-collector-%EA%B5%AC%ED%98%84" aria-label="26 collector 구현 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2.6 Collector 구현</h3>
-<p>스트림의 최종 연산 메소드 중 하나인 Stream.collect()를 사용하여 map, list, set 등의 형태로 수집하여</p>
-<p>반환하고 싶을 경우도 있겠지만, 경우에 따라서 내가 원하는 형태의 결과로 수집되어 받고 싶은 경우도 있을 것이다.</p>
-<p>이런 경우에 Stream.collect() 메소드의 인자값으로 Collector를 구현한 인스턴스를 넘겨주면 된다. 이것만 구현하면 </p>
-<p>내부적으로 병렬 처리 시 생각해야 할 부분을 내부적으로 해결이 되므로 꽤나 편하다고 생각된다.</p>
-<p>소스가 길어지므로 collectorImpl 메소드와 CollectorImpl 클래스를 참고!</p>
-<p>참고로 CollectorImpl 클래스는 메소드(정확히 함수형 인터페이스) 표현 방법은 여러가지로 써놓았다. 모르거나</p>
-<p>어디서 무조건 배껴온거 아니다.</p>
-<p>위에서 말한 두 부분을 보기만하면 얼추 이해는 갈것이라고 생각되고, 추가로 내부적으로는 reduce를 사용한다는 점도</p>
-<p>같이 기억하면 될것이다.</p>
-<h1 id="3-optionalt-optionalint" style="position:relative;"><a href="#3-optionalt-optionalint" aria-label="3 optionalt optionalint permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3. Optional<T> OptionalInt</h1>
-<p>java 1.8에 추가된 Optional은 제너릭 타입을 한번 wrap한 레퍼 클래스라고 생각하면 된다. 장점으로는 데이터를</p>
-<p>핸들링하다 null값 처리를 유연하게 해주는 유틸성 클래스 정도라고 생각하면 된다.</p>
-<p>  참고로 Stream과는 큰 연관성은 없지만 Stream 사용시 유용하게 사용하므로 Optional을 껴놓았다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">{</span>
-    
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">T</span> value<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Optional</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">requireNonNull</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token function">of</span><span class="token punctuation">(</span><span class="token class-name">T</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>위 소스는 <code class="language-text">Optional</code> Class의 일부분으로 정말 제너릭 타입(T)을 랩핑한 클래스이다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">  <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">handleOptional1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token class-name">Optional</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> wrapIntVal <span class="token operator">=</span> <span class="token class-name">Optional</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Integer</span> intVal <span class="token operator">=</span> wrapIntVal<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//intVal == 5</span>
-    <span class="token punctuation">}</span></code></pre></div>
-<p>보는 바와 같이 사용법은 간단하고 <code class="language-text">Optional</code> 클래스를 살펴보면 다른 유틸성 메소드가 많긴 많이 있다…</p>
-<p>아무튼 스트림과 연계하여 사용하면 편리한점이 많이 있다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">  <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">safeValWithOptional</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-      <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Integer</span><span class="token punctuation">></span></span> mockupMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-      <span class="token keyword">final</span> <span class="token class-name">String</span> findKey <span class="token operator">=</span> <span class="token string">"data10"</span><span class="token punctuation">;</span> <span class="token comment">//찾으려는 키값</span>
-
-      <span class="token comment">//mock data</span>
-      mockupMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"data1"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      mockupMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"data2"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      mockupMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"data3"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-      <span class="token class-name">Integer</span> findVal <span class="token operator">=</span> mockupMap<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-              <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>entry <span class="token operator">-></span> findKey<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-              <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>entry <span class="token operator">-></span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-              <span class="token punctuation">.</span><span class="token function">findAny</span><span class="token punctuation">(</span><span class="token punctuation">)</span>              <span class="token comment">//Optional 객체가 반환된다.</span>
-              <span class="token punctuation">.</span><span class="token function">orElse</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-      <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"검색된 값 : "</span><span class="token operator">+</span>findVal<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span></code></pre></div>
-<p>데이터 스트림 값중 아무 값이나 한가지를 반환(<code class="language-text">findAny</code>)하고, 만약 조건에 맞는 값이 없을 시, -1을</p>
-<p>반환하도록 짜여져 있다.</p>
-<p>  OptionalInt 같은 얘들은 IntStream 처럼 불필요한 형변환으로 인한 성능저하를 막기 위하여 사용된다.</p>
-<h1 id="4-주의점" style="position:relative;"><a href="#4-%EC%A3%BC%EC%9D%98%EC%A0%90" aria-label="4 주의점 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4. 주의점</h1>
-<h3 id="41-데이터-원본을-변경하지-않음" style="position:relative;"><a href="#41-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9B%90%EB%B3%B8%EC%9D%84-%EB%B3%80%EA%B2%BD%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%8C" aria-label="41 데이터 원본을 변경하지 않음 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.1 데이터 원본을 변경하지 않음</h3>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamOperator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> mockUserList <span class="token operator">=</span> <span class="token function">getMockUserList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">UserVo</span><span class="token punctuation">></span></span> userListStream <span class="token operator">=</span> mockUserList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    
-    userListStream
-      <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>userVo <span class="token operator">-></span> userVo<span class="token punctuation">.</span><span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span><span class="token number">20</span><span class="token punctuation">)</span>
-      <span class="token comment">//.peek(System.out::println)</span>
-      <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>userVo <span class="token operator">-></span> userVo<span class="token punctuation">.</span><span class="token function">getAuth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"master"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-      <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>userVo <span class="token operator">-></span> <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>userVo<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//스트림 연산을 하여도 원본은 변경되지 않는다.</span>
-    mockUserList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>userVo<span class="token punctuation">)</span><span class="token operator">-></span><span class="token punctuation">{</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>userVo<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>위 소스를 보면 stream으로 변경하여 User List를 필터링 작업을 수행했다. 하지만 mockUserList의 내용을 보면 </p>
-<p>그대로 변함없이 출력 되는 것을 확인 할 수 있다.</p>
-<h3 id="42-일회용" style="position:relative;"><a href="#42-%EC%9D%BC%ED%9A%8C%EC%9A%A9" aria-label="42 일회용 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.2 일회용</h3>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">baseStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token comment">//create stream</span>
-    <span class="token class-name">Stream</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> strToStream <span class="token operator">=</span> <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"one"</span><span class="token punctuation">,</span> <span class="token string">"two"</span><span class="token punctuation">,</span> <span class="token string">"three"</span><span class="token punctuation">,</span> <span class="token string">"four"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    strToStream
-      <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>s<span class="token operator">-></span>s<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"one"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-      <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-    <span class="token comment">//strToStream.forEach(System.out::println); ERROR!! 스트림은 소모성</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>스트림은 최종 연산을 수행하며 다시 재사용이 불가능하다.</p>
-<p>재사용은 불가능하지만 그래도 요청할때마다 일관된 스트림을 얻기 위해 <code class="language-text">Supplier</code> 함수형 인터페이스를 사용하기도 한다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">baseStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token comment">//함수를 저장</span>
-    <span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Stream</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> getListStream <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> list<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    getListStream<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    getListStream<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>이런식으로 list의 stream을 얻는 함수(<code class="language-text">Functional interface</code>)를 사용한다. 하지만 보는바와 같이 같은 스트림을</p>
-<p>재사용하는게 아니라 각각 새로운 스트림을 얻는점은 변함이 없다.</p>
-<h3 id="43-내부-작업을-반복으로-처리" style="position:relative;"><a href="#43-%EB%82%B4%EB%B6%80-%EC%9E%91%EC%97%85%EC%9D%84-%EB%B0%98%EB%B3%B5%EC%9C%BC%EB%A1%9C-%EC%B2%98%EB%A6%AC" aria-label="43 내부 작업을 반복으로 처리 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.3 내부 작업을 반복으로 처리</h3>
-<p>주의점이라기 보단 3.2에 있는 소스를 보면 forEach문을 사용하여 스트림에 반복된 작업 수행이 가능하다.</p>
-<p>이는 for문을 사용하여 직접 데이터를 가져와서 작업하는 방법이 아니라, 더 간결하고 빠르게 작업이 가능하다.</p>
-<h3 id="44-병렬처리-thread-safe" style="position:relative;"><a href="#44-%EB%B3%91%EB%A0%AC%EC%B2%98%EB%A6%AC-thread-safe" aria-label="44 병렬처리 thread safe permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4 병렬처리 thread safe</h3>
-<p>아무리 병렬 처리가 쉽다고 해도, 결국엔 병렬 처리이다. 순서가 보장 되지 않으므로 이에 따른 문제가 발생 할 수도 있다.</p>
-<p>당장 2.2에 있는 소스만 봐도 순서가 보장 되지 않는 것을 확인 할 수가 있다.</p>
-<p>병렬 처리 시 thread safe 관련 해서 항상 유의해야 한다(thread safe 관련 설명은 생략).</p>
-<p>참고로 공부하면서 <code class="language-text">ArrayList</code>가 경우에 따라서 thread-safe하지 않을 수도 있다는 점도 알게되었다.</p>
-<p>참고. Array List(Collections)를 thread-safe하게 사용하기</p>
-<p><a href="https://beginnersbook.com/2013/12/how-to-synchronize-arraylist-in-java-with-example/" target="_blank" rel="nofollow noopener noreferrer">https://beginnersbook.com/2013/12/how-to-synchronize-arraylist-in-java-with-example/</a></p>
-<h3 id="45-병렬처리-시-sort" style="position:relative;"><a href="#45-%EB%B3%91%EB%A0%AC%EC%B2%98%EB%A6%AC-%EC%8B%9C-sort" aria-label="45 병렬처리 시 sort permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.5 병렬처리 시 sort</h3>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token class-name">IntStream</span> intsStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ints</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//intsStream.sorted().forEach(System.out::println);</span>
-    intsStream<span class="token punctuation">.</span><span class="token function">parallel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>value <span class="token operator">-></span> value<span class="token operator">></span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token operator">::</span><span class="token function">println</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>병렬처리의 문제점이다. 위 소스에서 filter 후 sort 시, sort는 모든 처리가 종료 된 후 마지막에 정렬이 되야 하지만</p>
-<p>병렬처리라서 실행 순서를 보장 할 수가 없다. 따라서 위 소스는 filter는 정상적으로 작동 해도, sort는 정상 작동하지 않는다.</p>
-<p>하지만 ‘forEach’메소드 대신 ‘forEachOrdered’ 사용 시, 병렬 처리 여부에 상관없이 처리가 가능하지만</p>
-<p>병렬처리로서의 이점(속도)은 줄어든다고 한다.</p>
-<h3 id="46-callback-hell" style="position:relative;"><a href="#46-callback-hell" aria-label="46 callback hell permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.6 callback hell</h3>
-<p>스트림안에 스트림을 처리해야 하는 경우, 이럴때 생각나는건 javascript의 callback hell이 생각이 난다.</p>
-<p>flatMap으로 해결 할 수 있으면 좋겠지만 상황이 그렇게 좋지 않을 때 개인적으로는 딱히 해결법이 떠오르지 않는다.</p>
-<p>아쉬운데로 그냥 함수(<code class="language-text">Functional interface</code>)를 넘겨줘, 그나마 가독성을 해결하려고 하고 있다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> strArr <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"key1"</span><span class="token punctuation">,</span><span class="token string">"key2"</span><span class="token punctuation">,</span><span class="token string">"key3"</span><span class="token punctuation">,</span><span class="token string">"key4"</span><span class="token punctuation">,</span><span class="token string">"key5"</span><span class="token punctuation">,</span><span class="token string">"key6"</span><span class="token punctuation">,</span><span class="token string">"key7"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//더미 데이터 입력</span>
-    <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>strArr<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>key <span class="token operator">-></span> map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>strArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Set</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> itemSetList <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>key <span class="token operator">-></span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>itemList <span class="token operator">-></span>
-                itemList
-                    <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>item <span class="token operator">-></span> <span class="token string">"update"</span> <span class="token operator">+</span> item<span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>위 소스에서 2번째 <code class="language-text">map</code>에서 다시한번 스트림을 불러와 처리를 하고 있다. 이런식으로 내부적으로 연속해서 stream을</p>
-<p>처리하다 보면 가독성이 그리 좋을꺼 같지 않다고 생각하고 있다. 그래서 2번째 <code class="language-text">map</code>에 인자값으로 함수를 반환하는</p>
-<p>메소드로 대체하여 사용하였다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">streamSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> strArr <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"key1"</span><span class="token punctuation">,</span><span class="token string">"key2"</span><span class="token punctuation">,</span><span class="token string">"key3"</span><span class="token punctuation">,</span><span class="token string">"key4"</span><span class="token punctuation">,</span><span class="token string">"key5"</span><span class="token punctuation">,</span><span class="token string">"key6"</span><span class="token punctuation">,</span><span class="token string">"key7"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    <span class="token comment">//더미 데이터 입력</span>
-    <span class="token class-name">Stream</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>strArr<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>key <span class="token operator">-></span> map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>strArr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Set</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> itemSetList <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>key <span class="token operator">-></span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>itemList <span class="token operator">-></span> <span class="token function">handleItemList</span><span class="token punctuation">(</span>itemList<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">private</span> <span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Set</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token function">handleItemList</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> itemList<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> itemList
-        <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>item <span class="token operator">-></span> <span class="token string">"update"</span> <span class="token operator">+</span> item<span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre></div>
-<p>이런식으로 하면 그나마 가독성이 좋아졌다고 생각하고 있다. </p>
-<p>함수형 언어나 javascript에서 많이 들어본 thunk, currying이 생각나게 하고 있다.</p>
-<h3 id="46-auto-close" style="position:relative;"><a href="#46-auto-close" aria-label="46 auto close permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.6 auto close</h3>
-<p>아무래도 Stream을 사용하다보면 자원을 사용 후, 닫는것에 대해 예민하게 생각할 것이다.</p>
-<p>일반적으로 사용하는 <code class="language-text">Stream</code>은 대부분 <code class="language-text">AutoCloseable</code>를 구현하여 알아서 자원을 닫아준다.</p>
-<p>하지만 <code class="language-text">Files.lines()</code> 등의 io channel을 사용하는 메소드는 주의해야 한다. 그냥 <code class="language-text">try-with-resource</code> 구문을 사용</p>
-<p>시 편하게 할 수가 있다.(소스는 흔하니까 생략!)</p>
-<p>참고로 <code class="language-text">Stream</code>의 하위<code class="language-text">flatMap</code>, <code class="language-text">concat</code>등의 메소드도 알아서 잘 닫아준다(새로운 스트림을 만들고, 이전 스트림은 close).</p>
-<ul>
-<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#flatMap-java.util.function.Function-" target="_blank" rel="nofollow noopener noreferrer">https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#flatMap-java.util.function.Function-</a></li>
-</ul>
-<p>flatMap</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">Each mapped stream is closed after its contents have been placed into this stream.</code></pre></div>
-<p>concat</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">When the resulting stream is closed, the close handlers for both input streams are invoked.</code></pre></div>
-<h3 id="47-병렬-처리-시-내부적으로-fork-join-framework를-사용한다" style="position:relative;"><a href="#47-%EB%B3%91%EB%A0%AC-%EC%B2%98%EB%A6%AC-%EC%8B%9C-%EB%82%B4%EB%B6%80%EC%A0%81%EC%9C%BC%EB%A1%9C-fork-join-framework%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C%EB%8B%A4" aria-label="47 병렬 처리 시 내부적으로 fork join framework를 사용한다 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.7 병렬 처리 시, 내부적으로 Fork Join Framework를 사용한다.</h3>
-<p>주의사항이라기 보단 참고사항인데, 병렬처리 시 기본적으로 내부에서 Fork Join Framework를 사용해서 처리한다.</p>
-<p>스레드 개수 또한 알아서 정해져 있고(기본 코어 개수) 변경은 가능하지만 추천하지는 않는다. 아무튼 이러한 방법으로</p>
-<p>내가(개발자가) 아닌 시스템이 알아서 처리하는 고수준 코딩이 가능하다.</p>
-<h3 id="48-checked-exception-처리-불가" style="position:relative;"><a href="#48-checked-exception-%EC%B2%98%EB%A6%AC-%EB%B6%88%EA%B0%80" aria-label="48 checked exception 처리 불가 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.8 Checked Exception 처리 불가</h3>
-<p>스트림 처리중엔 <code class="language-text">Checked Exception</code>은 밖으로 던질 수가 없다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">encodeWithEx</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">UnsupportedEncodingException</span> <span class="token punctuation">{</span>
-
-        <span class="token keyword">return</span> <span class="token class-name">URLEncoder</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre></div>
-<p>위와 같은 메소드가 있을 때 스트림에서 Exception을 상위로 던지는걸 유도하고 싶을 수도 있지만 불가능하다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">        strs<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">WithCheckedEx</span><span class="token operator">::</span><span class="token function">encodeWithEx</span><span class="token punctuation">)</span>   <span class="token comment">//ERROR!</span>
-            <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<p>내부적인 이유는 잘 모르겠지만 설계상 미스 or <code class="language-text">Checked Exception</code>은 사실상 버려진 ? 그런 평가를 스택오버플로우에서 종종 봤다.</p>
-<p>아무튼 <code class="language-text">Checked Exception</code>은 한번 랩핑해서 <code class="language-text">RunTime Exception</code>으로 던지도록 할수밖에 없다.</p>
-<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">encodeWithoutEx</span><span class="token punctuation">(</span><span class="token class-name">String</span> str<span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token class-name">URLEncoder</span><span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> <span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">UnsupportedEncodingException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>triesCount <span class="token operator">></span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">printMsg</span><span class="token punctuation">(</span><span class="token string">"강제 인터럽트"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                threadForSleep<span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                threadForSleep<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">//스레드가 종료할때까지 무한 대기</span>
+            <span class="token punctuation">}</span>
         <span class="token punctuation">}</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"threadForSleep 스레드 종료"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre></div>
+<p>위 소스에서 <code class="language-text">join</code>은 다른 스레드가 종료할때 까지 기다리게 된다. 참고로 sleep과 마찬가지로 대기 중</p>
+<p>interrupt가 들어올 수 있으며, interrupt가 들어올 시, exception이 발동된다(위 소스에선 그런거 고려안함)</p>
+<h1 id="4-동기화" style="position:relative;"><a href="#4-%EB%8F%99%EA%B8%B0%ED%99%94" aria-label="4 동기화 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4. 동기화</h1>
+<h3 id="41-synchronized" style="position:relative;"><a href="#41-synchronized" aria-label="41 synchronized permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.1 synchronized()</h3>
+<p>lock, transaction, thread-safe 등의 관련 설명은 패스!</p>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Buffer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> data<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> empty <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>empty<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                <span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//생산될 때 까지 기다린다.</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        empty <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> data<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>empty<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                <span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//소비 될 때까지 기다린다.</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span> e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> strs <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"첫번째"</span><span class="token punctuation">,</span> <span class="token string">"두번째"</span><span class="token punctuation">,</span> <span class="token string">"세번째"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        empty <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span>
 
-        strs<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">WithCheckedEx</span><span class="token operator">::</span><span class="token function">encodeWithoutEx</span><span class="token punctuation">)</span>
-                <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span></code></pre></div></div></div></div><div class="Post-module--post__footer--3WzWU"><div><p class="Meta-module--meta__date--29eD7">Published <!-- -->2016-02-5</p></div><div class="Tags-module--tags--1L_ct"><ul class="Tags-module--tags__list--91FqN"><li class="Tags-module--tags__list-item--1M30P"><a class="Tags-module--tags__list-item-link--3SL_8" href="/blog/tag/thread/">thread</a></li><li class="Tags-module--tags__list-item--1M30P"><a class="Tags-module--tags__list-item-link--3SL_8" href="/blog/tag/java/">java</a></li></ul></div><div class="Author-module--author--2Yefr"><p><a class="Author-module--author__bio-twitter--n-O9n" href="https://github.com/qweasd147" rel="noopener noreferrer" target="_blank"><strong>Kim joohyung</strong> on Github</a></p></div></div><div class="Post-module--post__comments--25y6I"></div></div><div class="SideButton-module--sides--BtKaf"><a class="SideButton-module--sides-button--1ZBs9 SideButton-module--sides-button-hide--1UbTc">Up</a></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/posts/java/java-thread/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-ddd22c35447b94046b82.js"],"component---cache-caches-gatsby-plugin-offline-app-shell-js":["/component---cache-caches-gatsby-plugin-offline-app-shell-js-fe3bb41d5112e8efbcdb.js"],"component---src-templates-not-found-template-js":["/component---src-templates-not-found-template-js-51378f8c163528582082.js"],"component---src-templates-tags-list-template-js":["/component---src-templates-tags-list-template-js-b3f8e2b302663d84ce58.js"],"component---src-templates-categories-list-template-js":["/component---src-templates-categories-list-template-js-c284e1532732377ecf23.js"],"component---src-templates-custom-skills-template-js":["/component---src-templates-custom-skills-template-js-3a8d89904dcf745665c8.js"],"component---src-templates-page-template-js":["/component---src-templates-page-template-js-270a650ea9cf9e2562f0.js"],"component---src-templates-post-template-js":["/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js"],"component---src-templates-tag-template-js":["/component---src-templates-tag-template-js-318fb5fa7e0888471404.js"],"component---src-templates-category-template-js":["/component---src-templates-category-template-js-ba13ae9f7e97d2353768.js"],"component---src-templates-index-template-js":["/component---src-templates-index-template-js-619a2418c919c20a95dc.js"]};/*]]>*/</script><script src="/blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js" async=""></script><script src="/blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js" async=""></script><script src="/blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-593db5d5481bbc0d5885.js" async=""></script><script src="/blog/styles-083a06cb5740baaf347d.js" async=""></script><script src="/blog/app-ddd22c35447b94046b82.js" async=""></script><script src="/blog/532a2f07-1d2a7bbc1a68ccd5edd4.js" async=""></script><script src="/blog/framework-99708135f20a48422ed8.js" async=""></script><script src="/blog/webpack-runtime-e7dc6aa0ee5137b7f878.js" async=""></script></body></html>
+        <span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>여러 스레드 안에서도 안전하게 데이터를 핸들링하기 위해서 <code class="language-text">synchronized</code>를 사용한다.</p>
+<p>즉, thread-safe를 위하여 공통된 임계구역을 지정하고 특정 메소드 또는 블럭을 지정하여 <code class="language-text">synchronized</code>사용하면 항상</p>
+<p>일관된 데이터를 얻을 수가 있다.</p>
+<p>참고로 특정 블럭에 <code class="language-text">synchronized</code>적용 시</p>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">//TODO : handle critical data</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>위 소스에서 this는 critical한 data를 지정하고(보통 this이지만 아닐수도 있음) 내부 블록에서 lock을 얻어 사용해야할</p>
+<p>처리를 정의해주기만 하면 된다. 또한 메소드 통째로가 아닌 블록으로 지정하여 동기화 하였을 시, 특정 블록만 lock을 걸어서</p>
+<p>아무래도 메소드 전체보다는 빠를수 밖에 없다. 참고로 <code class="language-text">synchronized</code> 안에서 예외가 발생하여도 lock은 자동적으로 풀린다.</p>
+<h3 id="42-wait-notify" style="position:relative;"><a href="#42-wait-notify" aria-label="42 wait notify permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.2 wait(), notify()</h3>
+<ul>
+<li>Object에 정의되어 있다(따로 import x)</li>
+<li>동기화 블록(synchronized)내에서만 사용할 수 있다.</li>
+<li>wait는 lock을 반납하고 대기</li>
+<li>notify를 호출하면 작업을 중단했던 스레드가 다시 락을 얻어 작업을 진행</li>
+</ul>
+<p>위 <code class="language-text">4.1</code> 소스에서 <code class="language-text">synchronized</code>안에 <code class="language-text">wait()</code>, <code class="language-text">notifyAll()</code>를 사용하고 있다.</p>
+<p><code class="language-text">get</code>, <code class="language-text">put</code> 메소드 내부에서는 임계구역(<code class="language-text">synchronized</code>)이므로 lock을 얻은 뒤, 다른 작업 처리를 기다리기</p>
+<p>위해 현재 스레드의 lock을 반납하고 대기(<code class="language-text">wait()</code>) 하고 있다가, <code class="language-text">notify</code> 또는 <code class="language-text">notifyAll</code>에 의해 다시 처리가</p>
+<p>계속 진행되게 된다.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">notify()와 notifyAll()의 차이점은 notify()는 waiting pool에서 대기 중인 스레드 중 하나를 임의로 선택하여
+그 스레드한테만 알려주지만, notifyAll()은 모든 waiting pool에 대기중은 스레드에게 알려준다. 따라서 notify()는
+경우에따라서 원하는 스레드에게 알림이 안갈 수도 있고, notifyAll()은 모든 스레드에게 알림이 가지만 프로세서를 할당
+받지 못한 스레드는 다시 waiting pool로 들어가게 된다.</code></pre></div>
+<h3 id="43-volatile" style="position:relative;"><a href="#43-volatile" aria-label="43 volatile permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.3 volatile</h3>
+<p>스레드 환경에서 각 프로세서에서 특정 필드 데이터를 캐싱하여 사용하면 캐시와 메모리 간 데이터가 불일치 하고, 따라서</p>
+<p>여러 프로세서에서 값이 불일치 하는 경우가 발생할 수도 있다. 이러한 케이스를 방지하기 위해 <code class="language-text">volatile</code> 키워드를 사용하여</p>
+<p>변수 선언 시, ‘이 변수에 값은 캐시가 아닌 항상 메모리에서 읽어들이겠다’ 라는 뜻이 된다. 따라서 항상 프로세서 별로 동일한</p>
+<p>값이 보장되게 된다. <code class="language-text">synchronized</code>를 사용해도 값이 보장되지 않는다면 위 내용을 의심해봐야 한다.</p>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">ThreadTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> inMemoryData <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>위의 <code class="language-text">inMemoryData</code> 값은 항상 캐시에 저장되지 않고 오로지 메모리에서만 저장되므로, 여러 스레드에서 프로세서 별로</p>
+<p>캐싱된 데이터로 사용하지 않고 항상 메모리에서 읽어들이게 된다.</p>
+<h3 id="44-lock-condition을-이용한-동기화" style="position:relative;"><a href="#44-lock-condition%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%8F%99%EA%B8%B0%ED%99%94" aria-label="44 lock condition을 이용한 동기화 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4 lock, condition을 이용한 동기화</h3>
+<h4 id="441-lock" style="position:relative;"><a href="#441-lock" aria-label="441 lock permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.1 lock</h4>
+<h4 id="442-condition" style="position:relative;"><a href="#442-condition" aria-label="442 condition permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.4.2 condition</h4>
+<p><code class="language-text">wait()</code>와 <code class="language-text">notify()</code>, <code class="language-text">notifyAll()</code>은 특정 스레드를 대기, 알림 통지하지 못한다는 한계점이 있다.</p>
+<p>이에 <code class="language-text">Condition</code>은 스레드를 그룹화 하고 그 그룹에게만 알림을 보낼 수가 있다.</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Condotion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void wait()</td>
+<td>void await() <br /> void awaitUninterruptibly()</td>
+</tr>
+<tr>
+<td>void await(long timeout)</td>
+<td>boolean await(long time, TimeUnit unit) <br /> long awaitNanos(long nanosTimeout) <br /> boolean awaitUntil(Date deadline)</td>
+</tr>
+<tr>
+<td>void notify()</td>
+<td>void signal()</td>
+</tr>
+<tr>
+<td>void notifyAll()</td>
+<td>void signalAll()</td>
+</tr>
+</tbody>
+</table>
+<div class="gatsby-highlight" data-language="java"><pre class="language-java"><code class="language-java">    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>empty<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                putCond<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            empty <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+            getCond<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"인터럽트 감지. "</span><span class="token operator">+</span>e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> data<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">int</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span><span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>empty<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                getCond<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            empty <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data<span class="token punctuation">;</span>
+
+            putCond<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"인터럽트 감지. "</span><span class="token operator">+</span>e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre></div>
+<p>핵심은 <code class="language-text">Condition</code>의 인스턴스인 <code class="language-text">getCond</code>객체와 <code class="language-text">putCond</code>객체이다. 각 인스턴스는 특정 객체를 대기, 알림을 받을 수가 있어서</p>
+<p>소스에선 <code class="language-text">put</code>과 <code class="language-text">get</code>메소드는 크로스 형태로 대기, 알림을 직접적으로 알려줄 수가 있다. 물론 이런 형태는 인터럽트를 발생 시</p>
+<p>오히려 무한루프에 빠질수 있는 취약한 구조이므로 실무에서 써먹을려면 잘 생각해야한다.(물론 <code class="language-text">condition</code>의 단점이라기보단 스레드가 그렇다)</p>
+<h3 id="45-fork-join-프레임워크" style="position:relative;"><a href="#45-fork-join-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC" aria-label="45 fork join 프레임워크 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.5 fork, join 프레임워크</h3>
+<p>fork, join 프레임워크는 하나의 작업을 작은 작업으로 분할하여 큐에 담은 다음, 각 스레드에서 큐에 담긴 작업을 하나씩 잡고</p>
+<p>처리하도록 설계되어 있다. 따라서 특정 스레드가 따로 노는 일이 없으므로 빠른 처리가 가능하다. 물론 선행, 후행 작업이</p>
+<p>있으므로 오버헤드가 나는 케이스도 발생할 수 있다. 아무튼 그래서 작업을 나누는(fork) 처리와 다시 합치는(join) 부분(compute)</p>
+<p>을 구현해야한다.</p>
+<h1 id="5-주의할점" style="position:relative;"><a href="#5-%EC%A3%BC%EC%9D%98%ED%95%A0%EC%A0%90" aria-label="5 주의할점 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5. 주의할점</h1>
+<h3 id="51-독립적인-stack에서-실행됨" style="position:relative;"><a href="#51-%EB%8F%85%EB%A6%BD%EC%A0%81%EC%9D%B8-stack%EC%97%90%EC%84%9C-%EC%8B%A4%ED%96%89%EB%90%A8" aria-label="51 독립적인 stack에서 실행됨 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.1 독립적인 stack에서 실행됨</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">stack trace를 사용시 확인 가능. 따라서 한 스레드가 예외가 발생해서 종료되어도 다른 스레드의 실행에는
+영향을 미치지 않는다. run, start 메소드에 따라 호출 스택이 달라짐</code></pre></div>
+<ul>
+<li>소스 내 <code class="language-text">checkCallStack</code>메소드를 스레드 <code class="language-text">run</code>으로 호출 시 call stack</li>
+</ul>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">java.lang.Exception: Exception
+at thread.items.CheckCallStack.throwException(CheckCallStack.java:12)
+at thread.items.CheckCallStack.run(CheckCallStack.java:7)
+at java.lang.Thread.run(Thread.java:745)
+at thread.ThreadMain.checkCallStack(ThreadMain.java:133)
+at thread.ThreadMain.main(ThreadMain.java:26)
+Picked up JAVA_TOOL_OPTIONS: -Djava.net.preferIPv4Stack=true</code></pre></div>
+<ul>
+<li>소스내 <code class="language-text">checkCallStack</code>메소드를 스레드 <code class="language-text">start()</code>으로 호출 시 call stack</li>
+</ul>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">java.lang.Exception: Exception
+at thread.items.CheckCallStack.throwException(CheckCallStack.java:12)
+at thread.items.CheckCallStack.run(CheckCallStack.java:7)
+at java.lang.Thread.run(Thread.java:745)</code></pre></div>
+<p><code class="language-text">run</code>을 통해 새로운 스레드 환경이 아닌 일반 메소드로 호출 시, callstack 최하단에 <code class="language-text">main</code> 메소드에서 부터 callstack이 쌓이는 것을 확인 할 수가</p>
+<p>있다. 하지만 <code class="language-text">start</code>를 써서 새로운 스레드 환경에서 호출 시, 독립적인 stack으로 옮겨 실행 되므로 callstack의 최하단에는 <code class="language-text">main</code>메소드가 아닌</p>
+<p><code class="language-text">Thread</code>에서 부터 시작하는 것을 확인 할 수가 있다.</p>
+<h3 id="52-한번-실행이-종료된-스레드는-다시-실행-할-수-없다" style="position:relative;"><a href="#52-%ED%95%9C%EB%B2%88-%EC%8B%A4%ED%96%89%EC%9D%B4-%EC%A2%85%EB%A3%8C%EB%90%9C-%EC%8A%A4%EB%A0%88%EB%93%9C%EB%8A%94-%EB%8B%A4%EC%8B%9C-%EC%8B%A4%ED%96%89-%ED%95%A0-%EC%88%98-%EC%97%86%EB%8B%A4" aria-label="52 한번 실행이 종료된 스레드는 다시 실행 할 수 없다 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.2 한번 실행이 종료된 스레드는 다시 실행 할 수 없다.</h3>
+<h3 id="53-sleep은-항상-현재-실행-중인-쓰레드에-대해-작동한다" style="position:relative;"><a href="#53-sleep%EC%9D%80-%ED%95%AD%EC%83%81-%ED%98%84%EC%9E%AC-%EC%8B%A4%ED%96%89-%EC%A4%91%EC%9D%B8-%EC%93%B0%EB%A0%88%EB%93%9C%EC%97%90-%EB%8C%80%ED%95%B4-%EC%9E%91%EB%8F%99%ED%95%9C%EB%8B%A4" aria-label="53 sleep은 항상 현재 실행 중인 쓰레드에 대해 작동한다 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.3 sleep은 항상 현재 실행 중인 쓰레드에 대해 작동한다.</h3>
+<p><code class="language-text">sleep</code> 메소드는 현재 실행 중인 스레드에 대해서만 반응한다.</p>
+<p>따라서 인스턴스에서 호출하는건 의미가 없다 (태생이 static method 이다)</p>
+<h3 id="6-참고자료" style="position:relative;"><a href="#6-%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C" aria-label="6 참고자료 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>6. 참고자료</h3>
+<ul>
+<li>스레드, 스레드 풀 관련 설명 : <a href="http://hamait.tistory.com/612" target="_blank" rel="nofollow noopener noreferrer">http://hamait.tistory.com/612</a></li>
+<li>병렬처리 관련 설명. ForkJoin프레임워크 포함 : <a href="https://www.popit.kr/java8-stream%EC%9D%98-parallel-%EC%B2%98%EB%A6%AC/" target="_blank" rel="nofollow noopener noreferrer">https://www.popit.kr/java8-stream%EC%9D%98-parallel-%EC%B2%98%EB%A6%AC/</a></li>
+</ul></div></div></div><div class="Post-module--post__footer--3WzWU"><div><p class="Meta-module--meta__date--29eD7">Published <!-- -->2016-02-5</p></div><div class="Tags-module--tags--1L_ct"><ul class="Tags-module--tags__list--91FqN"><li class="Tags-module--tags__list-item--1M30P"><a class="Tags-module--tags__list-item-link--3SL_8" href="/blog/tag/thread/">thread</a></li><li class="Tags-module--tags__list-item--1M30P"><a class="Tags-module--tags__list-item-link--3SL_8" href="/blog/tag/java/">java</a></li></ul></div><div class="Author-module--author--2Yefr"><p><a class="Author-module--author__bio-twitter--n-O9n" href="https://github.com/qweasd147" rel="noopener noreferrer" target="_blank"><strong>Kim joohyung</strong> on Github</a></p></div></div><div class="Post-module--post__comments--25y6I"></div></div><div class="SideButton-module--sides--BtKaf"><a class="SideButton-module--sides-button--1ZBs9 SideButton-module--sides-button-hide--1UbTc">Up</a></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/posts/java/java-thread/";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-ddd22c35447b94046b82.js"],"component---cache-caches-gatsby-plugin-offline-app-shell-js":["/component---cache-caches-gatsby-plugin-offline-app-shell-js-fe3bb41d5112e8efbcdb.js"],"component---src-templates-not-found-template-js":["/component---src-templates-not-found-template-js-51378f8c163528582082.js"],"component---src-templates-tags-list-template-js":["/component---src-templates-tags-list-template-js-b3f8e2b302663d84ce58.js"],"component---src-templates-categories-list-template-js":["/component---src-templates-categories-list-template-js-c284e1532732377ecf23.js"],"component---src-templates-custom-skills-template-js":["/component---src-templates-custom-skills-template-js-83272389441fe9c6a7cc.js"],"component---src-templates-page-template-js":["/component---src-templates-page-template-js-270a650ea9cf9e2562f0.js"],"component---src-templates-post-template-js":["/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js"],"component---src-templates-tag-template-js":["/component---src-templates-tag-template-js-318fb5fa7e0888471404.js"],"component---src-templates-category-template-js":["/component---src-templates-category-template-js-ba13ae9f7e97d2353768.js"],"component---src-templates-index-template-js":["/component---src-templates-index-template-js-619a2418c919c20a95dc.js"]};/*]]>*/</script><script src="/blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js" async=""></script><script src="/blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js" async=""></script><script src="/blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-593db5d5481bbc0d5885.js" async=""></script><script src="/blog/styles-083a06cb5740baaf347d.js" async=""></script><script src="/blog/app-ddd22c35447b94046b82.js" async=""></script><script src="/blog/532a2f07-1d2a7bbc1a68ccd5edd4.js" async=""></script><script src="/blog/framework-99708135f20a48422ed8.js" async=""></script><script src="/blog/webpack-runtime-fccbc9098f76a2614d5c.js" async=""></script></body></html>
