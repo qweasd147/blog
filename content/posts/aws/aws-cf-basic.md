@@ -3,7 +3,7 @@ title: 'AWS - Cloud Front - 기본'
 date: '2020-08-10T05:58:14.024Z'
 template: 'post'
 draft: false
-category: 'etc'
+category: 'aws'
 tags:
   - 'aws'
   - 'cloudfront'

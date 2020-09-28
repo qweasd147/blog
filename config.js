@@ -24,6 +24,14 @@ module.exports = {
       path: '/category/javascript',
     },
     {
+      label: 'Spring',
+      path: '/category/spring',
+    },
+    {
+      label: 'AWS',
+      path: '/category/aws',
+    },
+    {
       label: 'Etc',
       path: '/category/etc',
     },

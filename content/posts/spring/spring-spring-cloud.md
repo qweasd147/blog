@@ -3,7 +3,7 @@ title: 'Spring Cloud - 기본 설명'
 date: '2020-09-03T00:55:55.498Z'
 template: 'post'
 draft: false
-category: 'etc'
+category: 'spring'
 tags:
   - 'spring'
   - 'cloud'

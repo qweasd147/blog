@@ -3,7 +3,7 @@ title: 'Spring Cloud - Zuul'
 date: '2020-09-25T07:19:37.572Z'
 template: 'post'
 draft: false
-category: 'etc'
+category: 'spring'
 tags:
   - 'spring'
   - 'cloud'

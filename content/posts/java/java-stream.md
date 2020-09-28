@@ -1,29 +1,32 @@
 ---
-title: "Stream"
-date: "2016-02-03T22:40:32.169Z"
-template: "post"
+title: 'Stream'
+date: '2016-02-03T22:40:32.169Z'
+template: 'post'
 draft: false
-category: "java"
+category: 'java'
 tags:
-  - "stream"
-  - "java"
-  - "functional"
-description: "많은 데이터를 손쉽게 처리"
+  - 'stream'
+  - 'java'
+  - 'functional'
+description: '많은 데이터를 손쉽게 처리'
 ---
 
 # Stream.
 
 # 1. 장점
+
 ### 1.1 내부 반복처리를 진행하고, 직관적이라 이해하기 쉽다.
 
 ### 1.2 손쉬운 병렬처리
 
 ### 1.3 최종 연산이 실행될때 중간연산들을 실행한다. (지연 실행)
-  이 부분이 좋은 점이 불필요한 연산을 줄여준다는 점이다. 밑에 2.1에서 좀 더 자세히 설명
-    
+
+이 부분이 좋은 점이 불필요한 연산을 줄여준다는 점이다. 밑에 2.1에서 좀 더 자세히 설명
+
 # 2. Stream 기본 사용법
 
 ### 2.1 중간연산, 최종연산
+
 스트림 사용 시 중간연산, 최종 연산이 존재 하며, 최종 연산이 실행되면 해당 스트림은 더이상 사용 할 수가 없다.
 
 일단 표부터 확인!
@@ -86,19 +89,20 @@ description: "많은 데이터를 손쉽게 처리"
 chaining 하여 편하게 사용이 가능하다. 또한 중간연산은 최종 연산을 하여야 의미가 있으므로, 최종적으로 최종 연산
 
 을 하지 않으면 실행되지 않는다(바꿔 말하면 최종 연산이 될때 중간연산을 실행함).
+
 ```java
 public void streamOperator(){
-  
+
   //중간연산만 단독으로 실행 시, 실행되지 않는다.
   Stream<UserVo> userVoStream = getMockUserList().stream();
-  
-  userVoStream.peek(System.out::println);  
+
+  userVoStream.peek(System.out::println);
 }
 ```
 
 위의 소스와 표를 보면 peek 메소드는 각 요소에 일정한 작업을 하기위한 '중간 연산'이다.
 
-하지만 중간연산이라 화면에 표출되는 것은 아무것도 없다. 최종연산인 forEach로 바꾸던가 
+하지만 중간연산이라 화면에 표출되는 것은 아무것도 없다. 최종연산인 forEach로 바꾸던가
 
 아니면 peek 이후에 최종연산 메소드를 체이닝 하여야한다.
 
@@ -109,9 +113,11 @@ public void streamOperator(){
 제한 후 핸들링 하는 점이라 효율적이라고 말할 수 있다.
 
 ### 2.2 병렬처리
+
 병렬처리는 스레드를 사용 해야 할것이고 그럴때 생각 해야 할 것이 많을 것이다.
 
 하지만 stream을 사용하여 병렬 처리 시 사용자(프로그래머)는 그냥 일반 stream 사용 시 사용하면 된다.
+
 ```java
 public void parallelStream(){
     IntStream forParallelStream = IntStream.range(1, 10);
@@ -122,15 +128,18 @@ public void parallelStream(){
 
   }
 ```
+
 위 소스와 같이 스트림을 병렬처리 스트림으로 변경(parallel) 후 일반 스트림 같이 사용하면 된다.
 
 ### 2.2 collect
+
 가공 및 처리한 데이터를 수집. 간단히 stream을 array, collection framework 등으로 형변환 한다고 생각하면 된다.
+
 ```java
 public void streamCollect(){
-  
+
   List<UserVo> userList = getMockUserList();
-  
+
   //stream -> array
   Stream<UserVo> toArrayStream = userList.stream();
   UserVo[] resultArray = toArrayStream.toArray(UserVo[]::new);
@@ -146,12 +155,13 @@ array로 변환 시, 그냥 toArray() 메소드를 호출하면된다. 하지만
 ```java
 public void streamCollect(){
   List<UserVo> userList = getMockUserList();
-  
+
   Stream<UserVo> toMapStream = userList.stream();
-  
+
   Map<String, UserVo> resultMap = toMapStream.collect(Collectors.toMap(userVo -> userVo.getName(), userVo -> userVo));
 }
 ```
+
 collection framework로 변환 시, Stream.collect를 사용하고, 인자값(함수 같은 메소드)으로 toMap을 넘겨주면 된다.
 
 여기서 주의점으로 map은 (key, value)로 존재하므로 key값을 구하기 위한 Function interface, value값을 구하기 위한
@@ -163,16 +173,19 @@ Function interface를 구현해서 넘겨줘야 한다. 소스를 보면 key 값
 ```java
 public void streamCollect(){
   List<UserVo> userList = getMockUserList();
-  
+
   Stream<UserVo> toListStream = userList.stream();
-  
+
   List<UserVo> resultList = toListStream.collect(Collectors.toList());
 }
 ```
+
 list로 변환은 간단하다. 다른 쪽도 마찬가지지만 현재 스트림을 통해 타입 유추가 가능하므로, 그냥 리스트로 받겠다는 명령만 하면 된다.
 
 ### 2.3 map
+
 각 스트림마다 동일한 작업을 수행한다.
+
 ```java
 public void streamMap(){
   Stream<String> strArrStream = Stream.of(
@@ -187,8 +200,8 @@ public void streamMap(){
 }
 ```
 
-
 ### 2.4 flatMap
+
 스트림의 타입이 배열 등인 경우, 핸들링 하기가 불편한 경우가 있을 수 있다. 예를 들어 Stream<String[]> 같이 배열로
 
 스트림이 구성 된 경우 각 배열을 꺼내 모든 아이템을 문자열로 직렬화 하여 핸들링하는 경우가 더 편하게 느껴질 수도 있다.
@@ -212,6 +225,7 @@ public void flatStream(){
 flatMap을 사용하여 스트림 내 배열(또는 객체)로 구성된 된 아이템을 단일 원소로 구성 할 수가 있다.
 
 ### 2.5 reduce
+
 처음 부터 마지막 원소까지 하나씩 처리하면서 하나의 원소로 줄여가는 작업을 수행한다.
 
 ```java
@@ -226,7 +240,7 @@ public void streamReduce(){
 }
 ```
 
-위 소스에서 reduce 메소드에 넘겨주는 첫번째 인자값은  저장될 변수(Stream의 제너릭 타입을 따라간다)와
+위 소스에서 reduce 메소드에 넘겨주는 첫번째 인자값은 저장될 변수(Stream의 제너릭 타입을 따라간다)와
 
 두번째 인자로 함수를 받아 어떻게 줄여갈지를 결정한다. 위 소스는 각 원소를 순회하면서 모든 값을 더해가는 형태이다.
 
@@ -242,7 +256,7 @@ public void streamReduce(){
 
 반환하고 싶을 경우도 있겠지만, 경우에 따라서 내가 원하는 형태의 결과로 수집되어 받고 싶은 경우도 있을 것이다.
 
-이런 경우에 Stream.collect() 메소드의 인자값으로 Collector를 구현한 인스턴스를 넘겨주면 된다. 이것만 구현하면 
+이런 경우에 Stream.collect() 메소드의 인자값으로 Collector를 구현한 인스턴스를 넘겨주면 된다. 이것만 구현하면
 
 내부적으로 병렬 처리 시 생각해야 할 부분을 내부적으로 해결이 되므로 꽤나 편하다고 생각된다.
 
@@ -262,11 +276,11 @@ java 1.8에 추가된 Optional은 제너릭 타입을 한번 wrap한 레퍼 클�
 
 핸들링하다 null값 처리를 유연하게 해주는 유틸성 클래스 정도라고 생각하면 된다.
 
-  참고로 Stream과는 큰 연관성은 없지만 Stream 사용시 유용하게 사용하므로 Optional을 껴놓았다.
+참고로 Stream과는 큰 연관성은 없지만 Stream 사용시 유용하게 사용하므로 Optional을 껴놓았다.
 
 ```java
 public final class Optional<T> {
-    
+
     ...
 
     private final T value;
@@ -281,8 +295,8 @@ public final class Optional<T> {
     ...
 }
 ```
-위 소스는 `Optional` Class의 일부분으로 정말 제너릭 타입(T)을 랩핑한 클래스이다.
 
+위 소스는 `Optional` Class의 일부분으로 정말 제너릭 타입(T)을 랩핑한 클래스이다.
 
 ```java
   private void handleOptional1(){
@@ -290,6 +304,7 @@ public final class Optional<T> {
         Integer intVal = wrapIntVal.get();      //intVal == 5
     }
 ```
+
 보는 바와 같이 사용법은 간단하고 `Optional` 클래스를 살펴보면 다른 유틸성 메소드가 많긴 많이 있다...
 
 아무튼 스트림과 연계하여 사용하면 편리한점이 많이 있다.
@@ -315,13 +330,15 @@ public final class Optional<T> {
       System.out.println("검색된 값 : "+findVal.toString());
   }
 ```
+
 데이터 스트림 값중 아무 값이나 한가지를 반환(`findAny`)하고, 만약 조건에 맞는 값이 없을 시, -1을
 
 반환하도록 짜여져 있다.
 
-  OptionalInt 같은 얘들은 IntStream 처럼 불필요한 형변환으로 인한 성능저하를 막기 위하여 사용된다.
+OptionalInt 같은 얘들은 IntStream 처럼 불필요한 형변환으로 인한 성능저하를 막기 위하여 사용된다.
 
 # 4. 주의점
+
 ### 4.1 데이터 원본을 변경하지 않음
 
 ```java
@@ -331,7 +348,7 @@ public void streamOperator(){
 
     Stream<UserVo> userListStream = mockUserList.stream();
 
-    
+
     userListStream
       .filter(userVo -> userVo.getAge()>20)
       //.peek(System.out::println)
@@ -343,7 +360,7 @@ public void streamOperator(){
 }
 ```
 
-위 소스를 보면 stream으로 변경하여 User List를 필터링 작업을 수행했다. 하지만 mockUserList의 내용을 보면 
+위 소스를 보면 stream으로 변경하여 User List를 필터링 작업을 수행했다. 하지만 mockUserList의 내용을 보면
 
 그대로 변함없이 출력 되는 것을 확인 할 수 있다.
 
@@ -362,6 +379,7 @@ public void baseStream(){
     //strToStream.forEach(System.out::println); ERROR!! 스트림은 소모성
 }
 ```
+
 스트림은 최종 연산을 수행하며 다시 재사용이 불가능하다.
 
 재사용은 불가능하지만 그래도 요청할때마다 일관된 스트림을 얻기 위해 `Supplier` 함수형 인터페이스를 사용하기도 한다.
@@ -383,7 +401,6 @@ public void baseStream(){
 
 재사용하는게 아니라 각각 새로운 스트림을 얻는점은 변함이 없다.
 
-
 ### 4.3 내부 작업을 반복으로 처리
 
 주의점이라기 보단 3.2에 있는 소스를 보면 forEach문을 사용하여 스트림에 반복된 작업 수행이 가능하다.
@@ -391,6 +408,7 @@ public void baseStream(){
 이는 for문을 사용하여 직접 데이터를 가져와서 작업하는 방법이 아니라, 더 간결하고 빠르게 작업이 가능하다.
 
 ### 4.4 병렬처리 thread safe
+
 아무리 병렬 처리가 쉽다고 해도, 결국엔 병렬 처리이다. 순서가 보장 되지 않으므로 이에 따른 문제가 발생 할 수도 있다.
 
 당장 2.2에 있는 소스만 봐도 순서가 보장 되지 않는 것을 확인 할 수가 있다.
@@ -437,7 +455,7 @@ public void streamSort(){
 
     //더미 데이터 입력
     Stream.of(strArr).forEach(key -> map.put(key, Arrays.asList(strArr)));
-    
+
     List<Set<String>> itemSetList = map.keySet()
         .stream()
         .map(key -> map.get(key))
@@ -463,7 +481,7 @@ public void streamSort(){
 
     //더미 데이터 입력
     Stream.of(strArr).forEach(key -> map.put(key, Arrays.asList(strArr)));
-    
+
     List<Set<String>> itemSetList = map.keySet()
         .stream()
         .map(key -> map.get(key))
@@ -479,7 +497,7 @@ private Supplier<Set<String>> handleItemList(List<String> itemList){
 }
 ```
 
-이런식으로 하면 그나마 가독성이 좋아졌다고 생각하고 있다. 
+이런식으로 하면 그나마 가독성이 좋아졌다고 생각하고 있다.
 
 함수형 언어나 javascript에서 많이 들어본 thunk, currying이 생각나게 하고 있다.
 
@@ -495,7 +513,7 @@ private Supplier<Set<String>> handleItemList(List<String> itemList){
 
 참고로 `Stream`의 하위`flatMap`, `concat`등의 메소드도 알아서 잘 닫아준다(새로운 스트림을 만들고, 이전 스트림은 close).
 
-* https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#flatMap-java.util.function.Function-
+- https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#flatMap-java.util.function.Function-
 
 flatMap
 
@@ -523,6 +541,7 @@ concat
         return URLEncoder.encode(str, "utf-8");
     }
 ```
+
 위와 같은 메소드가 있을 때 스트림에서 Exception을 상위로 던지는걸 유도하고 싶을 수도 있지만 불가능하다.
 
 ```java

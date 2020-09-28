@@ -3,7 +3,7 @@ title: 'AWS - Cloud Front - WebServer'
 date: '2020-08-12T07:52:44.005Z'
 template: 'post'
 draft: false
-category: 'etc'
+category: 'aws'
 tags:
   - 'aws'
   - 'cloudfront'

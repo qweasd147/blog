@@ -1,32 +1,37 @@
 ---
-title: "Lambda"
-date: "2016-02-02T22:40:32.169Z"
-template: "post"
+title: 'Lambda'
+date: '2016-02-02T22:40:32.169Z'
+template: 'post'
 draft: false
-category: "java"
+category: 'java'
 tags:
-  - "lambda"
-  - "java"
-  - "functional"
-  - "function"
-description: "중요한 로직만 작성하여 가독성을 높이고 functional interface에 적합하게 사용하고 싶을때"
+  - 'lambda'
+  - 'java'
+  - 'functional'
+  - 'function'
+description: '중요한 로직만 작성하여 가독성을 높이고 functional interface에 적합하게 사용하고 싶을때'
 ---
 
 # Lambda.
 
 # 1. 장점
+
     간단하다! 그래서 알아보기가 쉽고 마치 자바에 없는 함수를 사용하는 느낌을 받는다.
-    
+
 # 2. Lambda 기본 사용법
+
 ### 2.1 메소드 표현식을 ()=>{} 형태로 사용함
+
 ### 2.2 Functional Interface
 
 #### 2.2.1 기본 사용법
+
 java에선 기본적으로 함수 개념이 없다. 하지만 함수를 주고 받아야 하기 때문에 조금 편법을 사용한다.
 
-interface에 하나의 메소드만 선언 해 놓고, 이 메소드의 구현하여 interface를 주고 받는 것이다. 
-    
-     
+interface에 하나의 메소드만 선언 해 놓고, 이 메소드의 구현하여 interface를 주고 받는 것이다.
+  
+
+
 ```java
 public interface LambdaInterface {
     public void doSomeThing();
@@ -57,7 +62,7 @@ likeCallback(() -> {
 
 위의 `doSomeThing`은 반환값이 없고, 매개변수가 없다. 하지만 매개변수가 있고 반환값이 있다면?
 
-또 새로운 의미없는 인터페이스를 작성하는 방식이다.  java 1.8이상부터 이렇게 별 의미없고
+또 새로운 의미없는 인터페이스를 작성하는 방식이다. java 1.8이상부터 이렇게 별 의미없고
 
 (어디까지나 모든 소스에서 쓸수도 있는 인터페이스 라는 점에서 의미가 없다는 것이다.)
 
@@ -66,11 +71,11 @@ likeCallback(() -> {
 ```java
 @FunctionalInterface
 public interface Function<T, R> {
-    
+
     ....
-    
+
     R apply(T t);
-    
+
     ....
 }
 ```
@@ -85,46 +90,48 @@ public interface Function<T, R> {
 
 아래 표는 자바에서 제공하는 함수형 인터페이스를 표로 나타냈다(전부 다는 아니고 일부만)
 
-| Interface  | Method |
-| ------------- | ------------- |
-| Function<T, R>  | R apply(T t);  |
-| Predicate&lt;T&gt;  | boolean test(T t);  |
+| Interface          | Method             |
+| ------------------ | ------------------ |
+| Function<T, R>     | R apply(T t);      |
+| Predicate&lt;T&gt; | boolean test(T t); |
 | Consumer&lt;T&gt;  | void accept(T t);  |
-| Supplier&lt;T&gt;  | T get();  |
-| Runnable  | void run();  |
+| Supplier&lt;T&gt;  | T get();           |
+| Runnable           | void run();        |
 
 T는 type(매개변수 타입), R은 Return Type을 나타내므로, 용도는 꽤나 직관적으로 알 수 있다.
 
 또한 표에는 없지만 매개변수가 2개인 함수형 인터페이스는 위 인터페이스 명 앞에 Bi가 붙는다(`BiFunction<T,U,R>`).
 
-`Runnable` 만 java.lang 패키지에 있고 그 외 것들과 더 많은 함수형 인터페이스는 
+`Runnable` 만 java.lang 패키지에 있고 그 외 것들과 더 많은 함수형 인터페이스는
 
 java.util.function 패키지에 더 많은 함수형 인터페이스가 존재한다.
 
--------------
+---
 
 #### 2.2.2 collection framework 에서 활용
+
 이런 함수형 인터페이스의 강점은 javascript의 callback과 같은 기능을 생각하면 된다.
 
 기본 native code에서 공통적인 비지니스 로직을 처리하고, 딱 필요한 부분만 사용자가
 
 함수(정확히는 메소드)를 구현 하여 호출하는 방식이다.
 
-| Interface  | Method | 설명 |
-| ------------- | ------------- | ------------- |
-| Collection  | boolean removeIf(Predicate&lt;E&gt; filter)  | 조건에 맞는 요소를 삭제 |
-| List  | void replaceAll(UnaryOperator&lt;E&gt; operator)  | 모든 요소를 변환하여 대체 |
-| Iterable  | void forEach(Consumer&lt;T&gt; action) | 모든 요소에 작업 action을 수행 |
-| Map  | V compute(K key, BiFunction<K, V, V> f)  | 지정된 키의 값에 작업 f를 수행 |
-| Map  | V computeIfAbsent(K key, Function<K, V> f)  | 키가 없으면, 작업 f 수행 후 추가 |
-| Map  | V computeIfPresent(K key, BiFunction<K, V, V> f)  | 지정된 키가 있을 때, 작업 f 수행 |
-| Map  | V merge(K key, V value, BiFunction<V, V, V> f)  | 모든 요소에 병합작업 f를 수행 |
-| Map  | void forEach(BiConsumer<K, V> action)  | 모든 요소에 작업 action을 수행 |
-| Map  | void replaceAll(BiFunction<K, V, V> action)  | 모든 요소에 치환작업 f를 수행 |
+| Interface  | Method                                           | 설명                             |
+| ---------- | ------------------------------------------------ | -------------------------------- |
+| Collection | boolean removeIf(Predicate&lt;E&gt; filter)      | 조건에 맞는 요소를 삭제          |
+| List       | void replaceAll(UnaryOperator&lt;E&gt; operator) | 모든 요소를 변환하여 대체        |
+| Iterable   | void forEach(Consumer&lt;T&gt; action)           | 모든 요소에 작업 action을 수행   |
+| Map        | V compute(K key, BiFunction<K, V, V> f)          | 지정된 키의 값에 작업 f를 수행   |
+| Map        | V computeIfAbsent(K key, Function<K, V> f)       | 키가 없으면, 작업 f 수행 후 추가 |
+| Map        | V computeIfPresent(K key, BiFunction<K, V, V> f) | 지정된 키가 있을 때, 작업 f 수행 |
+| Map        | V merge(K key, V value, BiFunction<V, V, V> f)   | 모든 요소에 병합작업 f를 수행    |
+| Map        | void forEach(BiConsumer<K, V> action)            | 모든 요소에 작업 action을 수행   |
+| Map        | void replaceAll(BiFunction<K, V, V> action)      | 모든 요소에 치환작업 f를 수행    |
 
-개인적으로 좋은 내용들이라 생각해서 '자바의 정석' 책을 읽다가 그냥 배꼇다... 
+개인적으로 좋은 내용들이라 생각해서 '자바의 정석' 책을 읽다가 그냥 배꼇다...
 
 아무튼 사용 예제를 보면
+
 ```java
 public void collectionDefaultMethod(){
     List<String> strList = new ArrayList<>();
@@ -164,11 +171,11 @@ java 1.8부터 인터페이스에 default method와 static method가 추가되�
 
 ### Function class
 
-| 구분 | method | 설명 |
-| ------------- | ------------- | ------------- |
+| 구분    | method                                                                | 설명                                               |
+| ------- | --------------------------------------------------------------------- | -------------------------------------------------- |
 | default | Function<V, R> <br/> compose(Function<? super V, ? extends T> before) | before Function을 실행 후, 자기 자신 Function 실행 |
-| default | Function<T, V> <br/> andThen(Function<? super R, ? extends V> after) | 자기자신 Function을 실행 후, after Function 실행 |
-| static  | Function<T, T> identity()  | 항등 함수를 반환 t->t |
+| default | Function<T, V> <br/> andThen(Function<? super R, ? extends V> after)  | 자기자신 Function을 실행 후, after Function 실행   |
+| static  | Function<T, T> identity()                                             | 항등 함수를 반환 t->t                              |
 
 솔직히 딱히 설명할께 없다...
 
@@ -202,13 +209,12 @@ compose와 andthen의 차이는 그저 어떤게 먼저 실행 될 지 차이고
 
 ### Predicate class
 
-| 구분 | method | 설명 |
-| ------------- | ------------- | ------------- |
-| default | Predicate&lt;T&gt; and(Predicate<? super T> other) | 자기 자신 결과와 other Predicate 결과 and 연산 |
-| default | Predicate&lt;T&gt; negate() | 자기자신 결과를 not 연산 |
-| default  | Predicate&lt;T&gt; or(Predicate<? super T> other)  | 자기 자신 결과와 other Predicate 결과 or 연산 |
-| static | Predicate&lt;T&gt; isEqual(Object targetRef) | 입력받은 object와 같은지 비교하는 Predicate을 반환한다 |
-
+| 구분    | method                                             | 설명                                                   |
+| ------- | -------------------------------------------------- | ------------------------------------------------------ |
+| default | Predicate&lt;T&gt; and(Predicate<? super T> other) | 자기 자신 결과와 other Predicate 결과 and 연산         |
+| default | Predicate&lt;T&gt; negate()                        | 자기자신 결과를 not 연산                               |
+| default | Predicate&lt;T&gt; or(Predicate<? super T> other)  | 자기 자신 결과와 other Predicate 결과 or 연산          |
+| static  | Predicate&lt;T&gt; isEqual(Object targetRef)       | 입력받은 object와 같은지 비교하는 Predicate을 반환한다 |
 
 ```java
 public void funcCombine(){
@@ -233,18 +239,19 @@ public void funcCombine(){
     */
 }
 ```
+
 Predicate를 활용해서 함수를 만들고, and, or not 연산을 실행할 수가 있다.
 
 이것도 간단하게 구현이 되어 있어서 혹시나마 이해가 안된다면 소스 까보는것도 괜찮다.
 
-
     아무튼 이런식으로 함수형 인터페이스를 사용함으로써 꽤나 유용하고,
-    
+
     javascript 디자인 패턴에서 커링(currying) 같은것도 충분히 구현이 가능할꺼 라고 본다.
 
 # 3 주의할점 및 기타 활용
+
 ### 3.1 외부 변수는 별다른 선언이 없어도 final하다. 아래 소스는 1.8 버전 기준
-    
+
 ```java
 public void lambdaBase(){
     int num = 5;
@@ -275,9 +282,11 @@ public void lambdaBase(){
 참고 자료 : http://wonwoo.ml/index.php/post/1125
 
 ### 3.2 closure
+
 java에서 closure를 사용할 수 있는데, 다른 쪽에서 설명하기도 뭐해서 람다와 같이 설명함.
 
 혹시나 closure 개념을 모른다면 javascript를 참고하자.
+
 ```java
 public static Function<Integer, Integer> getFunction(){
     int num = 10;
@@ -285,6 +294,7 @@ public static Function<Integer, Integer> getFunction(){
     return n ->  n*num;
 }
 ```
+
 위 static method는 Function(Interface이다)의 구현체를 반환하는 메소드가 되겠다.
 
 Funtion은 단일 메소드의 함수형 인터페이스 이므로, 이러한 형태가 가능하다.

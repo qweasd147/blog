@@ -1,24 +1,26 @@
 ---
-title: enum
-date: "2016-09-01T23:46:37.121Z"
-template: "post"
+title: Enum
+date: '2016-09-01T23:46:37.121Z'
+template: 'post'
 draft: false
-category: "java"
+category: 'java'
 tags:
-  - "java"
-  - "enum"
-description: "enum 정의"
-socialImage: "/media/image-2.jpg"
+  - 'java'
+  - 'enum'
+description: 'enum 정의'
+socialImage: '/media/image-2.jpg'
 ---
 
 # enum.
 
-# 1. enum ? 
+# 1. enum ?
+
     타입관리까지 가능한 열거형 상수. 값이라기 보단 클래스에 가깝다.
-    
+
 # 2. 장점
 
 ### 2.1 타입에 안전한 열거형(typesafe enum).
+
 ```java
 public void enumBase(){
 
@@ -33,6 +35,7 @@ public void enumBase(){
 하지만 enum을 사용 시, 이러한 부분은 안전하게 비교가 가능하다.
 
 ### 2.2 각 서드파티에 원하는 형태의 데이터 관리가 편함
+
 ```java
 public void enumStatus(){
 
@@ -44,7 +47,7 @@ public void enumStatus(){
     }catch (RuntimeException e){
         thirdPartyResult = Status.ProcessStatus.FAIL;
     }
-    
+
     각 서드파티에 맞는 데이터 관리가 쉬워진다.
     insertFile(thirdPartyResult.getNumberStatus()); //파일에는 숫자형태로 기록
     insertDB(thirdPartyResult.getStrStatus());      //DB에는 문자 형태로 기록
@@ -60,13 +63,13 @@ public void enumStatus(){
 
     String SUCCESS = "SUCCESS";
     String FAIL = "FAIL";
-    
+
     String SUCCESS_FILE="success";
     String FAIL_FILE="fail";
-    
+
     int SUCCESS_DB = 0;
     int FAIL_DB = 1;
-    
+
     String thirdPartyResult = null;
 
     try{
@@ -75,7 +78,7 @@ public void enumStatus(){
     }catch (RuntimeException e){
         thirdPartyResult = FAIL;
     }
-    
+
     if(SUCCESS.equals(thirdPartyResult)){
         insertFile(SUCCESS_FILE);
         insertDB(SUCCESS_DB);
@@ -83,22 +86,22 @@ public void enumStatus(){
         insertFile(FAIL_FILE);
         insertDB(SUCCESS_DB);
     }
-    
+
 }
 ```
 
 대충 이런식이 될 것이다. 이해하는데 큰 문제는 없을 지라도 뭔가 쫌 아쉽게 보인다.
 
-물론 적당한 디자인 패턴을 적용 할 수도 있겠지만 enum보다 좋은 형태로 적용하기는 쉽지 않을 것이다. 
+물론 적당한 디자인 패턴을 적용 할 수도 있겠지만 enum보다 좋은 형태로 적용하기는 쉽지 않을 것이다.
 
 ### 2.3 `==`를 사용하여 동등 여부 계산이 빠르다.
 
-문자열 비교 시, `equals`를 사용 할 것이다. 하지만 enum의 동등 비교는 `==`를 사용 하므로써 더욱 빠르게 연산된다. 
-
+문자열 비교 시, `equals`를 사용 할 것이다. 하지만 enum의 동등 비교는 `==`를 사용 하므로써 더욱 빠르게 연산된다.
 
 # 3. 주요 사용법
 
 ### 3.1 기본 사용법
+
 ```java
 public void enumBase(){
 
@@ -118,16 +121,16 @@ public void enumBase(){
 }
 ```
 
-| 구분 | method | 설명 |
-| ------------- | ------------- | ------------- |
-| public final | String name() | enum 선언 시 똑같은 선언명을 돌려준다. |
-| public final | int ordinal() | 0부터 시작하여 선언 된 순서를 반환한다. |
-| public final | int compareTo(E o) | 비교 결과를 반환한다. o 보다 작을 시 음수, 같을 시 0, 크면 양수 |
-| public static | <T extends Enum<T>> T valueOf(String name)  | 지정된 열거형의 이름(선언명)을 찾아 반환한다. |
-| public static | <T extends Enum<T>> T[] values  | 지정된 열거형 전체를 배열형태로 반환한다. |
-
+| 구분          | method                                     | 설명                                                            |
+| ------------- | ------------------------------------------ | --------------------------------------------------------------- |
+| public final  | String name()                              | enum 선언 시 똑같은 선언명을 돌려준다.                          |
+| public final  | int ordinal()                              | 0부터 시작하여 선언 된 순서를 반환한다.                         |
+| public final  | int compareTo(E o)                         | 비교 결과를 반환한다. o 보다 작을 시 음수, 같을 시 0, 크면 양수 |
+| public static | <T extends Enum<T>> T valueOf(String name) | 지정된 열거형의 이름(선언명)을 찾아 반환한다.                   |
+| public static | <T extends Enum<T>> T[] values             | 지정된 열거형 전체를 배열형태로 반환한다.                       |
 
 ### 3.2 추상 메소드 사용 가능
+
 ```java
 public enum WithAbstract{
     ADD {
@@ -189,9 +192,9 @@ enum의 생성자는 무조건 private하다. 오직 클래스 정의 내에서�
 
 ```java
 public void enumBase(){
-    
+
     //Card.Kind data = new Card.Kind();     //ERROR!
-        
+
     }
 }
 ```

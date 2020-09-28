@@ -3,7 +3,7 @@ title: 'AWS - Cognito'
 date: '2020-08-03T02:09:50.508Z'
 template: 'post'
 draft: false
-category: 'etc'
+category: 'aws'
 tags:
   - 'aws'
   - 'cognito'
