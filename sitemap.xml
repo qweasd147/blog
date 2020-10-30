@@ -24,6 +24,7 @@
 <url> <loc>https://qweasd147.github.io/blog/posts/js/js-prototype/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/js/js-scope/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/spring/spring-oauth2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/posts/spring/spring-spring-cloud-config/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/spring/spring-spring-cloud-hystrix/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/spring/spring-spring-cloud-zuul/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/spring/spring-spring-cloud/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -36,6 +37,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/cloud</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/cloudfront</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/cognito</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/config</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/db</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/dev-ops</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/docker</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -63,6 +65,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/scope</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/serverless</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/spring</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/spring/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/stream</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/thenable</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/thread</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -75,6 +78,7 @@
 <url> <loc>https://qweasd147.github.io/blog/category/javascript</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/category/javascript/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/category/spring</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/category/spring/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/page/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
