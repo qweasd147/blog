@@ -1,0 +1,19 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/mixins';
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px 20px;
+
+  &__tag {
+    background: rgb(241, 243, 245);
+    border-radius: 20px;
+    color: rgb(12, 166, 120);
+    cursor: pointer;
+    display: inline-flex;
+    height: 35px;
+    align-items: center;
+    padding: 0px 10px;
+  }
+}
