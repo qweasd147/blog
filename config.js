@@ -36,6 +36,10 @@ module.exports = {
       path: '/category/etc',
     },
     {
+      label: '태그 목록',
+      path: '/tags',
+    },
+    {
       label: 'Skill',
       path: '/skills',
     },
