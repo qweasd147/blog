@@ -20,6 +20,7 @@ const Layout = ({ children, title, description, socialImage }: Props) => {
   const metaImageUrl = url + withPrefix(metaImage);
 
   const layoutRef = useRef();
+  const observeRef = useRef();
 
   return (
     <div className={styles.layout} ref={layoutRef}>
@@ -30,7 +31,12 @@ const Layout = ({ children, title, description, socialImage }: Props) => {
         <meta property="og:site_name" content={title} />
       </Helmet>
       {children}
-      <SideButton buttonText="Up" refTarget={layoutRef} />
+      <div ref={observeRef} className={styles['layout-doc-mask']} />
+      <SideButton
+        buttonText="Up"
+        docTarget={layoutRef}
+        observeTarget={observeRef}
+      />
     </div>
   );
 };

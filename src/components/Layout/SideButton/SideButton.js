@@ -1,55 +1,80 @@
 // @flow strict
 import React, { useState, useEffect } from 'react';
-import styles from './SideButton.module.scss';
 import classNames from 'classnames/bind';
+import styles from './SideButton.module.scss';
 
 type Props = {
   buttonText: string,
-  refTarget: RefObject<HTMLDivElement>,
+  docTarget: RefObject<HTMLDivElement>,
+  observeTarget: RefObject<HTMLDivElement>,
 };
 
 const cx = classNames.bind(styles);
 
-const toTop = (refTarget: RefObject<HTMLDivElement>) => {
-  refTarget.current.scrollIntoView({ behavior: 'smooth' });
+const toTop = (docTarget: RefObject<HTMLDivElement>): void => {
+  docTarget.current.scrollIntoView({ behavior: 'smooth' });
 };
 
-const SideButton = ({ buttonText, refTarget }: Props) => {
+/**
+ * 문서가 너무 짧은지 여부
+ * @param {*} docTarget window와 비교할 문서
+ */
+const isTooShort = (docTarget: RefObject<HTMLDivElement>): boolean => {
+  const windowBottomY = window?.scrollY + window?.innerHeight;
+
+  if (!Number.isInteger(windowBottomY)) return false;
+
+  const documentY = docTarget.current.clientHeight;
+  const currentPercent = (windowBottomY / documentY) * 100;
+
+  // 전체 문서 길이가 너무 짧으면 버튼 그냥 생략
+  if (currentPercent < 20 || currentPercent < 80) {
+    return false;
+  }
+
+  return true;
+};
+
+const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
   const [isShow, setIsShow] = useState(false);
-
-  const handleScroll = () => {
-    const windowBottomY = window?.scrollY + window?.innerHeight;
-
-    if (!Number.isInteger(windowBottomY)) return;
-
-    const documentY = refTarget.current.clientHeight;
-    const currentPercent = (windowBottomY / documentY) * 100;
-
-    // 전체 문서 길이가 너무 짧으면 버튼 그냥 생략
-    if (currentPercent < 20 || currentPercent < 80) {
-      setIsShow(false);
-    } else {
-      setIsShow(true);
-    }
-  };
+  const [isInitObserver, setIsInitObserver] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const observeEl = observeTarget?.current;
+    let observer: IntersectionObserver;
 
-  const buttonClassName = cx({
-    'sides-button': true,
-    'sides-button-hide': !isShow,
-  });
+    if (!isInitObserver && observeEl) {
+      setIsInitObserver(true);
+      observer = new IntersectionObserver(
+        ([btnEntry]) => {
+          if (isTooShort(docTarget)) {
+            setIsShow(false);
+          } else {
+            setIsShow(btnEntry.isIntersecting);
+          }
+        },
+        /*
+        {
+          threshold: 0.1,
+        },
+        */
+      );
+
+      observer.observe(observeEl);
+    }
+    return () => observer?.disconnect();
+  }, []);
 
   return (
     <div className={styles['sides']}>
       <a
-        className={buttonClassName}
-        onClick={(e: React.MouseEvent) => {
+        className={cx({
+          'sides-button': true,
+          'sides-button-hide': !isShow,
+        })}
+        onClick={(e: React.MouseEvent): void => {
           e.preventDefault();
-          toTop(refTarget);
+          toTop(docTarget);
         }}
       >
         {buttonText}
