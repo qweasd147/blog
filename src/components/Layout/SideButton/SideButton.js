@@ -45,20 +45,13 @@ const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
 
     if (!isInitObserver && observeEl) {
       setIsInitObserver(true);
-      observer = new IntersectionObserver(
-        ([btnEntry]) => {
-          if (isTooShort(docTarget)) {
-            setIsShow(false);
-          } else {
-            setIsShow(btnEntry.isIntersecting);
-          }
-        },
-        /*
-        {
-          threshold: 0.1,
-        },
-        */
-      );
+      observer = new IntersectionObserver(([btnEntry]) => {
+        if (isTooShort(docTarget)) {
+          setIsShow(false);
+        } else {
+          setIsShow(btnEntry.isIntersecting);
+        }
+      });
 
       observer.observe(observeEl);
     }
