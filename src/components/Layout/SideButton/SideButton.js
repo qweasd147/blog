@@ -1,5 +1,5 @@
 // @flow strict
-import React, { useState, useEffect } from 'react';
+import React, { RefObject, useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './SideButton.module.scss';
 
@@ -17,15 +17,15 @@ const toTop = (docTarget: RefObject<HTMLDivElement>): void => {
 
 /**
  * 문서가 너무 짧은지 여부
- * @param {*} docTarget window와 비교할 문서
+ * @param {*} docHeight window와 비교할 문서 높이
  */
-const isTooShort = (docTarget: RefObject<HTMLDivElement>): boolean => {
+const isTooShortDoc = (docHeight: number): boolean => {
+  if (!docHeight) return false;
+
   const windowBottomY = window?.scrollY + window?.innerHeight;
 
   if (!Number.isInteger(windowBottomY)) return false;
-
-  const documentY = docTarget.current.clientHeight;
-  const currentPercent = (windowBottomY / documentY) * 100;
+  const currentPercent = (windowBottomY / docHeight) * 100;
 
   // 전체 문서 길이가 너무 짧으면 버튼 그냥 생략
   if (currentPercent < 20 || currentPercent < 80) {
@@ -37,26 +37,43 @@ const isTooShort = (docTarget: RefObject<HTMLDivElement>): boolean => {
 
 const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
   const [isShow, setIsShow] = useState(false);
-  const [isInitObserver, setIsInitObserver] = useState(false);
+  const [isShowingMask, setIsShowingMask] = useState(false);
+  const [isTooShort, setIsTooShort] = useState(false);
 
   useEffect(() => {
     const observeEl = observeTarget?.current;
-    let observer: IntersectionObserver;
+    const observer: IntersectionObserver = new IntersectionObserver(
+      ([btnEntry]) => {
+        setIsShowingMask(btnEntry.isIntersecting);
+      },
+    );
 
-    if (!isInitObserver && observeEl) {
-      setIsInitObserver(true);
-      observer = new IntersectionObserver(([btnEntry]) => {
-        if (isTooShort(docTarget)) {
-          setIsShow(false);
-        } else {
-          setIsShow(btnEntry.isIntersecting);
-        }
-      });
+    observer.observe(observeEl);
 
-      observer.observe(observeEl);
-    }
     return () => observer?.disconnect();
   }, []);
+
+  useEffect(() => {
+    const docObserveEl = docTarget?.current;
+
+    const observer: ResizeObserver = new ResizeObserver(
+      ([{ contentRect } = docEntry]) => {
+        setIsTooShort(isTooShortDoc(contentRect.height));
+      },
+    );
+
+    observer.observe(docObserveEl);
+
+    return () => observer?.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isTooShort) {
+      setIsShow(false);
+    } else {
+      setIsShow(isShowingMask);
+    }
+  }, [isTooShort, isShowingMask]);
 
   return (
     <div className={styles['sides']}>
