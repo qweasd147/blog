@@ -57,8 +57,8 @@ const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
     const docObserveEl = docTarget?.current;
 
     const observer: ResizeObserver = new ResizeObserver(
-      ([{ contentRect } = docEntry]) => {
-        setIsTooShort(isTooShortDoc(contentRect.height));
+      ([{ contentRect: { height } } = docEntry]) => {
+        setIsTooShort(isTooShortDoc(height));
       },
     );
 
