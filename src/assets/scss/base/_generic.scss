@@ -133,6 +133,14 @@ p {
 blockquote {
   padding: 0;
   font-style: italic;
+  border-left: 5px solid #3399ff;
+
+  > p {
+    padding-left: 15px;
+    > code[class*='language-'] {
+      overflow-wrap: break-word;
+    }
+  }
 }
 
 figure {
@@ -214,6 +222,7 @@ th,
 td {
   border-bottom: 1px solid #444444;
   padding: 10px;
+  text-align: center;
 }
 
 a {

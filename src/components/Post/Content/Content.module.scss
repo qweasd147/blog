@@ -51,6 +51,15 @@
     & img {
       max-width: 100%;
     }
+
+    & ul {
+      margin-left: 20px;
+      padding-left: 5px;
+
+      ul {
+        margin-left: 5px;
+      }
+    }
   }
 }
 
@@ -78,6 +87,15 @@
 
       & ul > li > p {
         margin-bottom: 0px;
+      }
+
+      & ul {
+        margin-left: auto;
+        padding-left: 40px;
+
+        ul {
+          margin-left: auto;
+        }
       }
     }
   }
