@@ -61,7 +61,6 @@ type Props = {
 
 // 주요 함수
 useEffect(() => {
-  const observeEl = observeTarget?.current;
   const observer = new IntersectionObserver(([btnEntry]) => {
     if (isTooShort(docTarget)) {
       setIsShow(false);
@@ -70,14 +69,14 @@ useEffect(() => {
     }
   });
 
-  observer.observe(observeEl);
+  observer.observe(observeTarget.current);
 
   return () => observer?.disconnect();
 }, []);
 ```
 
-> 기본적인 사용법으로 감지 할 대상(`IntersectionObserver.observe`)을 여러개 등록이 가능하여 callback 함수의 첫번째 argument는 배열 형태로 넘어온다.
+> 기본적인 사용법으로 감지 할 대상(`IntersectionObserver.observe`)들을 등록하면 대상들이 viewport에 표출되거나 사라지는 시점에 callback 함수가 실행된다. 콜백 함수의 첫번째 argument는 감지하는 대상들로, 배열 형태로 넘어온다. `isIntersecting`값이 `true`면 표출 중인 상태고 `false`면 사라진 상태가 된다(위 소스에선 하나의 dom만 등록했다). 그 외 옵션값도 지정이 가능한데 자세한건 [document](https://developer.mozilla.org/ko/docs/Web/API/IntersectionObserver/IntersectionObserver) 참고.
 
 다시한번 말하지만 `IntersectionObserver`는 특정 영역(기본값 `viewport`)에 특정 `dom element`가 표출여부를 감지하는 함수이다. 따라서 감지할 `observeTarget`을 추가하였는데, 무조건 블로그 하단에 위치하는 투명한 element를 추가하였다. 그래서 해당 dom(`observeTarget`)이 화면에 표출 중 인지 여부(`btnEntry.isIntersecting`)를 판단해서 `Up` 버튼 표출 여부를 결정하도록 개선하였더니 확실히 dom에 직접 접근하는 횟수는 확 줄어 들었다.
 
-약간 억지스럽게 한것도 있고 특정 상황에 버그(버그 내용은 비밀)도 있긴하지만 공부도 하게 되고, 말 그대로 react 스럽게 한것 같아 마음에 든다.
+약간 억지스럽게 한것도 있긴하지만 공부도 하게 되고, 말 그대로 react 스럽게 한것 같아 마음에 든다.

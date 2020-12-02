@@ -22,13 +22,15 @@ const toTop = (docTarget: RefObject<HTMLDivElement>): void => {
 const isTooShortDoc = (docHeight: number): boolean => {
   if (!docHeight) return false;
 
-  const windowBottomY = window?.scrollY + window?.innerHeight;
+  // 현재 스크롤 위치 + view port height
+  // const windowBottomY = window?.scrollY + window?.innerHeight;
+  const viewPortHeight = window?.innerHeight;
 
-  if (!Number.isInteger(windowBottomY)) return false;
-  const currentPercent = (windowBottomY / docHeight) * 100;
+  if (!Number.isInteger(viewPortHeight)) return false;
+  const viewPortPercent = (viewPortHeight / docHeight) * 100;
 
-  // 전체 문서 길이가 너무 짧으면 버튼 그냥 생략
-  if (currentPercent < 20 || currentPercent < 80) {
+  // viewport보다 문서 길이가 너무 짧으면 true
+  if (viewPortPercent < 80) {
     return false;
   }
 
@@ -41,28 +43,25 @@ const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
   const [isTooShort, setIsTooShort] = useState(false);
 
   useEffect(() => {
-    const observeEl = observeTarget?.current;
     const observer: IntersectionObserver = new IntersectionObserver(
       ([btnEntry]) => {
         setIsShowingMask(btnEntry.isIntersecting);
       },
     );
 
-    observer.observe(observeEl);
+    observer.observe(observeTarget.current);
 
     return () => observer?.disconnect();
   }, []);
 
   useEffect(() => {
-    const docObserveEl = docTarget?.current;
-
     const observer: ResizeObserver = new ResizeObserver(
       ([{ contentRect: { height } } = docEntry]) => {
         setIsTooShort(isTooShortDoc(height));
       },
     );
 
-    observer.observe(docObserveEl);
+    observer.observe(docTarget.current);
 
     return () => observer?.disconnect();
   }, []);
