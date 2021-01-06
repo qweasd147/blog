@@ -117,3 +117,34 @@ CDN 서버 입장해선 접근 시 무조건 index.html로 보내게 된다(`/`,
 #### 4. 웹서버 관리가 필요없다.
 
 내가 직접 웹서버를 구축하고 관리하는게 아니라 다 aws에서 관리해주니까 성능, 관리 측면에서 엄청난 이득이다.
+
+---
+
+## 안될 시 점검 사항
+
+- cloudfront를 통해 S3 접근이 안될 때(403)
+
+`Grant Read Permissions on Bucket` 이 옵션은 `S3`에 해당 `CloudFront`의 읽기 권한을 자동으로 추가 해준다고 하였다. 근데 최근에 `AWS`쪽 버그인지 해당 옵션을 주고 생성하여도 접근을 못한 적이 있었다. 혹시나 셋팅을 다 끝냈는데 막상 요청해보면 `403`이 뜬다면 `S3`에 접근 권한이 추가 되어있는지 확인 먼저 해보는게 좋다.
+
+`S3` 이동 -> `버킷 선택` -> 권한 탭 이동
+순서대로 이동 하면 중간에 `버킷 정책`이라고 있는데 여기에 `CloudFront`의 OAI가 잘 붙어 있는지 확인한다.
+
+```json
+{
+  "Version": "2008-10-17",
+  "Id": "PolicyForCloudFrontPrivateContent",
+  "Statement": [
+    {
+      "Sid": "1",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity CF의_OAI_ID"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::버킷명/*"
+    }
+  ]
+}
+```
+
+이런식으로 잘 등록 되어있나 눈으로 확인이 가능하고, 추가로 버킷에 특정 디렉토리 하위만 접근 가능하도록 수정 가능하다(`Resource`에서 수정)
