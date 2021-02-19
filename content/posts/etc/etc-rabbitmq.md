@@ -166,6 +166,53 @@ reason : expired, exchange name : demo-queue-name-exchange
 x-death : {reason=expired, count=1, exchange=demo-queue-name-exchange, time=Wed Jul 08 11:15:21 KST 2020, routing-keys=[foo.bar.baz2], queue=demo-queue-name}
 ```
 
-# 추가 설명 예정사항(TODO)
+# 5. Exchange
 
-1. Exchange 종류 및 routing
+`exchange`의 역할은 메세지를 전달받아 어느 큐로 전달 할지 결정한다고 하였다. `exchange` 종류로는 크게 3가지가 있다. (`Header` 방식은 생략)
+
+| 종류   | 설명                                                        | 용도      |
+| ------ | ----------------------------------------------------------- | --------- |
+| Direct | 라우팅 키가 정확히 일치                                     | Unicast   |
+| Fanout | 라우팅 키 상관없이 등록된 모든 Queue로 전송                 | Broadcast |
+| Topic  | 라우팅 키를 패턴으로 검사하여 패턴에 맞는 모든 Queue로 전송 | Multicast |
+
+### 5.1 Direct
+
+위 테이블에서 설명 한것 그대로 라우팅 키가 정확히 일치하는 `Queue`로 메세지를 전송한다. 라우팅 키가 정확히 일치 해야하므로 `Unicast` 즉 `Point to Point` 방식으로 메세지를 전송한다.
+
+### 5.2 Fanout
+
+라우팅키를 분석하지 않고 연결된 모든 `Queue`로 메세지를 전송하는 방식이다. 불특정 다수에게 보내는 방식(`Broadcast`)으로 구독형 방식이라 생각 말 할 수도 있겠지만 `Rabbitmq` 기본이 polling이라는 점도 기억은 해놔야한다.
+
+### 5.3 Topic
+
+라우팅키에 패턴 정보가 있으면 패턴을 분석하여 적합한 `Queue`들 한테 메세지를 전송해준다. `Direct`, `Fanout` 특성이 조금씩 섞여있는 형태로 `Multicast`(수신 대상자들을 특정 할 수 있음)로 쓰인다.
+
+```java
+    @Bean("queue1")
+    public Queue queue1() {
+        return new Queue("queueName1", true, false, false);
+    }
+
+    @Bean("queue2")
+    public Queue queue2() {
+        return new Queue("queueName2", true, false, false);
+    }
+
+    @Bean("topicExchange")
+    public TopicExchange exchange() {
+        return new TopicExchange("topicExchangeName");
+    }
+
+    @Bean
+    public Binding binding1(@Qualifier("queue1")Queue queue, @Qualifier("topicExchange")TopicExchange topicExchange) {
+        return BindingBuilder.bind(queue).to(topicExchange).with("foo.bar.#");
+    }
+
+    @Bean
+    public Binding binding2(@Qualifier("queue2")Queue queue, @Qualifier("topicExchange")TopicExchange topicExchange) {
+        return BindingBuilder.bind(queue).to(topicExchange).with("foo.bar.#");
+    }
+```
+
+java를 기준으로 위와 같이 `topic exchange`에 라우팅 키 패턴을 `foo.bar.#`으로 `queue1`, `queue2`를 연결해 놓고 있다가 `foo.bar.baz1`, `foo.bar.baz2`이런식으로 라우팅 키가 들어오면 `queue1`, `queue2`에게 각각 메세지를 전달 해준다.
