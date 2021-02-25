@@ -21,6 +21,9 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: ./node_modules/.bin/gatsby build --prefix-paths
+      - run: rm -rf ./public/media/
+      - run: mv ./public/blog/* ./public/
+      - run: rm -rf ./public/blog/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
