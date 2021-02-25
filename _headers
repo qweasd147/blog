@@ -407,18 +407,6 @@
   Link: </blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js>; rel=preload; as=script
   Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </blog/page-data/posts/spring/spring-jpa/page-data.json>; rel=preload; as=fetch; crossorigin
-/blog/posts/spring/spring-oauth2/
-  Link: </blog/webpack-runtime-a8018b769c51a9f09f59.js>; rel=preload; as=script
-  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
-  Link: </blog/framework-99708135f20a48422ed8.js>; rel=preload; as=script
-  Link: </blog/532a2f07-1d2a7bbc1a68ccd5edd4.js>; rel=preload; as=script
-  Link: </blog/app-ddd22c35447b94046b82.js>; rel=preload; as=script
-  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
-  Link: </blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-e742d76806731ccfa685.js>; rel=preload; as=script
-  Link: </blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js>; rel=preload; as=script
-  Link: </blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js>; rel=preload; as=script
-  Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </blog/page-data/posts/spring/spring-oauth2/page-data.json>; rel=preload; as=fetch; crossorigin
 /blog/posts/spring/spring-spring-cloud-config/
   Link: </blog/webpack-runtime-a8018b769c51a9f09f59.js>; rel=preload; as=script
   Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
@@ -431,6 +419,18 @@
   Link: </blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js>; rel=preload; as=script
   Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </blog/page-data/posts/spring/spring-spring-cloud-config/page-data.json>; rel=preload; as=fetch; crossorigin
+/blog/posts/spring/spring-oauth2/
+  Link: </blog/webpack-runtime-a8018b769c51a9f09f59.js>; rel=preload; as=script
+  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
+  Link: </blog/framework-99708135f20a48422ed8.js>; rel=preload; as=script
+  Link: </blog/532a2f07-1d2a7bbc1a68ccd5edd4.js>; rel=preload; as=script
+  Link: </blog/app-ddd22c35447b94046b82.js>; rel=preload; as=script
+  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
+  Link: </blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-e742d76806731ccfa685.js>; rel=preload; as=script
+  Link: </blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js>; rel=preload; as=script
+  Link: </blog/component---src-templates-post-template-js-17e06f3db6dffdc0abe9.js>; rel=preload; as=script
+  Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </blog/page-data/posts/spring/spring-oauth2/page-data.json>; rel=preload; as=fetch; crossorigin
 /blog/posts/spring/spring-spring-cloud-hystrix/
   Link: </blog/webpack-runtime-a8018b769c51a9f09f59.js>; rel=preload; as=script
   Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
