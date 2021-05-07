@@ -4,6 +4,7 @@
 <url> <loc>https://qweasd147.github.io/blog/categories</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/skills</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/pages/about/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/posts/aws/aws-cf-basic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/aws/aws-cf-webserver/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/aws/aws-cognito/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/aws/aws-dynamodb/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -16,11 +17,10 @@
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-rabbitmq/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-enum/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-generic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://qweasd147.github.io/blog/posts/aws/aws-cf-basic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-lambda/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/posts/java/java-stream/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-thread/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/kotlin-variance/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://qweasd147.github.io/blog/posts/java/java-stream/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/js/js-closure/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/js/js-destructuring/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/js/js-generator/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
