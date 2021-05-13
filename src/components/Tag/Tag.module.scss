@@ -4,7 +4,9 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 11px 20px;
+  // grid 속성은 safari에서 안되고 grid-gap은 ide가 쓰지 말라그러고
+  grid-gap: 11px 20px;
+  //gap: 11px 20px;
 
   &__tag {
     background: rgb(241, 243, 245);
