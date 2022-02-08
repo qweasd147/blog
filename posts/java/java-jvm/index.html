@@ -73,7 +73,14 @@
 <h2 id="metaspace" style="position:relative;"><a href="#metaspace" aria-label="metaspace permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Metaspace</h2>
 <p><code class="language-text">java8</code> 이후부터 생겨났고, 이름 그대로 class의 메타데이터 (메소드 정보 포함) 등이 저장되는 공간이다. heap과 별개로 <code class="language-text">native memory</code>에서 관리되며, 별다른 설정값을 안넣으면 최대 메모리 용량 만큼이나 늘어날 수가 있다.</p>
 <h2 id="thread-stack" style="position:relative;"><a href="#thread-stack" aria-label="thread stack permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Thread Stack</h2>
-<p>각 메소드 등을 실행&#x26;결과 값과 지역변수 등이 저장된다. 이 영역은 스레드 마다 하나씩 생성되는데, 위의 <code class="language-text">Heap &amp; Metaspace</code>의 정보를 가져와 사용하기도 한다. 당연히 이것들은 하나만 생성되고, 여러 스레드에서 공유 하는 형태로 사용된다.</p>
+<p>각 메소드 등을 실행&#x26;결과 값과 지역변수 등이 저장된다. 이 영역은 스레드 마다 하나씩 생성되는데, 위의 <code class="language-text">Heap &amp; Metaspace</code>의 정보를 가져와 사용하기도 한다.</p>
+<p>중요한 특징들을 다시한번 나열하면</p>
+<ol>
+<li>stack은 스레드 당 하나씩 할당(생성) 된다</li>
+<li>객체(reference 타입)은 heap에 저장되고 그 연결 정보(변수)를 stack에 저장한다.</li>
+<li>생성된 객체는 heap에 저장되고 여러 스레드에서 공유하는 형태로 관리된다.</li>
+<li>primitive type(원시타입)은 그냥 값으로써 stack에 저장된다.</li>
+</ol>
 <p>아래 링크는 코드에 따라 heap, stack에 순차적으로 쌓이는 구조를 확인 할 수 있다.</p>
 <blockquote>
 <p><a href="https://speakerdeck.com/deepu105/jvm-memory-usage-stack-vs-heap" target="_blank" rel="nofollow noopener noreferrer">https://speakerdeck.com/deepu105/jvm-memory-usage-stack-vs-heap</a></p>
