@@ -16,6 +16,7 @@
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-docker/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-git-rebase/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-rabbitmq/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/posts/etc/etc-tf-provider/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-enum/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-generic/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/posts/java/java-jvm/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -61,6 +62,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/gateway</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/git</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/heap</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/iac</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/infra</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/inheritance</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/iterator</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -82,6 +84,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/oauth-2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/optimizer</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/orm</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/provider</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/rabbitmq</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/react</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/rebase</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
@@ -90,6 +93,7 @@
 <url> <loc>https://qweasd147.github.io/blog/tag/spring</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/spring/page/1</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/stream</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://qweasd147.github.io/blog/tag/terraform</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/thenable</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/thread</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://qweasd147.github.io/blog/tag/web-server</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
