@@ -1,4 +1,223 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>https://qweasd147.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 30 Mar 2022 06:52:11 GMT</lastBuildDate><item><title><![CDATA[Terraform - 기본]]></title><description><![CDATA[테라폼 기본 설명 + Provider 역할]]></description><link>https://qweasd147.github.io/posts/etc/etc-tf-provider/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-tf-provider/</guid><pubDate>Wed, 30 Mar 2022 05:56:58 GMT</pubDate><content:encoded>&lt;p&gt;예전엔 인프라 구성이라고 해봤자 그냥 리눅스 서버 한대 올리고 그곳에 모든 어플리케이션(웹서버, db, was 등등)을 설치하고 사용해서 프로비저닝에 대한 별다른 불편함을 느끼지 못했다. 근데 요즘엔 클라우드 서비스 중에서 &lt;code class=&quot;language-text&quot;&gt;IaaS&lt;/code&gt;를 제공해 주는곳도 많고 그 종류도 다양해져서, 그 사이 연관관계의 복잡함, 한번 설치하고 다른곳에 똑같이 설치하는데에도 실수나 시간도 많이 걸리는 단점이 눈에 띄게 생겨났다. 이런 서비스들 설치와 연관관계 등을 소스코드로 관리하고 설치 할 수 있다면 휴먼에러나 시간을 줄일 수가 있는데, 이런 방식을 IaC(&lt;code class=&quot;language-text&quot;&gt;Infrastructure as Code&lt;/code&gt;)라고 하며, &lt;code class=&quot;language-text&quot;&gt;Terraform&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;IaC&lt;/code&gt;를 위한 도구로 사용된다.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>https://qweasd147.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 15 Apr 2022 07:31:26 GMT</lastBuildDate><item><title><![CDATA[Terraform - Resource]]></title><description><![CDATA[테라폼으로 provider(aws) 서비스를 사용하려고 할때 + Meta-Arguments]]></description><link>https://qweasd147.github.io/posts/etc/etc-tf-resource/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-tf-resource/</guid><pubDate>Fri, 15 Apr 2022 01:28:28 GMT</pubDate><content:encoded>&lt;h2 id=&quot;1-resource&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-resource&quot; aria-label=&quot;1 resource permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Resource&lt;/h2&gt;
+&lt;p&gt;실질적으로 aws 서비스(ec2, s3, rds 등등)들을 프로비저닝 할 수 있는 코드들이 된다.&lt;/p&gt;
+&lt;p&gt;기본 문법으로는 아래와 같다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_resource_name&amp;quot; &amp;quot;tf_고유_이름&amp;quot; {
+
+   # TODO : 각 resource에 필요한 arguments 들
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;주의 할 점으로는 여기서 말하는 &lt;code class=&quot;language-text&quot;&gt;tf_고유_이름&lt;/code&gt;은 테라폼이 내부적으로 리소스를 구분하기 위한 고유 key값이 된다. 즉, 동일한 종류의 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt; 중에선 유니크 해야하며, 이 이름이 aws에서 표기되는 이름과는 연관이 없다(리소스 종류별로 조금씩 다르긴 하다)&lt;/p&gt;
+&lt;p&gt;ec2 인스턴스 한대를 올리기 위한 샘플은 아래와 같이 작성하면 된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;test-ec2-instance&amp;quot; {
+  ami           = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type = &amp;quot;t2.micro&amp;quot;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;결국엔 필요한 &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt;와 각 리소스 간의 특징을 잘 알아야하는데 그 말은 &lt;code class=&quot;language-text&quot;&gt;terraform&lt;/code&gt;만 알면 안되고 &lt;code class=&quot;language-text&quot;&gt;aws&lt;/code&gt;로 잘 해야 한다는 점이다.
+aws는 그냥 꾸준히 공부하고 구성에 필요한 내용은 테라폼 공식 문서를 참고해서 구현하면 된다&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/aws/latest/docs&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://registry.terraform.io/providers/hashicorp/aws/latest/docs&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;2-meta-arguments&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-meta-arguments&quot; aria-label=&quot;2 meta arguments permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Meta-Arguments&lt;/h2&gt;
+&lt;p&gt;모든 &lt;code class=&quot;language-text&quot;&gt;Resource&lt;/code&gt;에 기본적으로 적용할 수가 있는 &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt;들이 있다. 바꺼 ㅁㄹ하면 특정 리소스에 종속되지 않고 제공되는 가장 기본적인 &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt; 이다.&lt;/p&gt;
+&lt;h3 id=&quot;21-depends_on&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#21-depends_on&quot; aria-label=&quot;21 depends_on permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.1 depends_on&lt;/h3&gt;
+&lt;p&gt;프로비저닝을 위해 각 resource 간에 생성되는 순서를 명시 해야하거나 참조되는 &lt;code class=&quot;language-text&quot;&gt;attribute&lt;/code&gt;를 위해 의존관계를 명시하기 위해 사용된다.&lt;/p&gt;
+&lt;p&gt;예를들어 &lt;code class=&quot;language-text&quot;&gt;ec2&lt;/code&gt;와 거기에 붙일 &lt;code class=&quot;language-text&quot;&gt;EBS&lt;/code&gt;가 필요하다면 &lt;code class=&quot;language-text&quot;&gt;EBS&lt;/code&gt;를 먼저 생성하고 &lt;code class=&quot;language-text&quot;&gt;ec2&lt;/code&gt;에 연결을 해 줘야 할것이다. 그럴 때 아래와 같이 사용 할 수가 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_volume_attachment&amp;quot; &amp;quot;ebs_att&amp;quot; {
+  device_name = &amp;quot;/dev/sdh&amp;quot;
+  volume_id   = aws_ebs_volume.ec2_volume.id
+  instance_id = aws_instance.server.id
+
+  depends_on = [
+    aws_ebs_volume.ec2_volume,
+  ]
+}
+
+resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+
+  depends_on = [
+    aws_ebs_volume.ec2_volume,
+  ]
+}
+
+resource &amp;quot;aws_ebs_volume&amp;quot; &amp;quot;ec2_volume&amp;quot; {
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+  size              = 30
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;depends_on&lt;/code&gt;를 붙여 먼저 생성되어야 하는 resource를 지정 할 수가 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;여기선 구지 예시를 들고 싶어서 이런식으로 구성하였지만 &lt;code class=&quot;language-text&quot;&gt;aws_instance&lt;/code&gt;의 arguments로 &lt;code class=&quot;language-text&quot;&gt;root_block_device&lt;/code&gt;가 있으니 이렇게 구지 따로 만들 필요까진 없고, 기본적으로 의존관계를 명시 안해줘도 테라폼이 알아서 필요한 순서대로 생성해준다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;22-count&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#22-count&quot; aria-label=&quot;22 count permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.2 count&lt;/h3&gt;
+&lt;p&gt;동일한 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;를 여러개 생성하고 싶을 때 사용한다. 예를들어 동일한 타입의 &lt;code class=&quot;language-text&quot;&gt;ec2&lt;/code&gt;를 여러개 만들고 싶을때 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;를 여러번 정의 할 수도 있겠지만 그냥 &lt;code class=&quot;language-text&quot;&gt;count&lt;/code&gt;를 쓰면 더 편하고 쉽게 생성이 가능하다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+
+  # 똑같은 ec2를 2개 만들어 낸다.
+  count = 2
+  tags = {
+    Name = &amp;quot;Server ${count.index}&amp;quot;
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;plan또는 apply를 해보면 아래와같이 2개의 인스턴스가 생성되고, 이 리소스의 고유한 key값으로 &lt;code class=&quot;language-text&quot;&gt;web[0]&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;web[1]&lt;/code&gt;가 생성되는 것도 함께 기억해야한다(count는 index기반으로 키가 생성된다)&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;aws_instance.web[0] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;web&amp;quot; {
+ ... argument 정보
+ tags = {
+        + &amp;quot;Name&amp;quot; = &amp;quot;Server 0&amp;quot;
+ }
+}
+aws_instance.web[1] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;web&amp;quot; {
+ ... argument 정보
+ tags = {
+        + &amp;quot;Name&amp;quot; = &amp;quot;Server 1&amp;quot;
+ }
+}
+Plan: 2 to add, 0 to change, 0 to destroy.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;${count.index}&lt;/code&gt; 는 고유 index 정보를 의미한다.&lt;/p&gt;
+&lt;h3 id=&quot;23-for_each&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#23-for_each&quot; aria-label=&quot;23 for_each permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3 for_each&lt;/h3&gt;
+&lt;p&gt;목적은 count 와 동일하지만, count는 단순 개수에 대한 정보이지만 for_each 는 map, set 형태의 데이터 구조로 활용이 가능하다.&lt;/p&gt;
+&lt;h4 id=&quot;231-map&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#231-map&quot; aria-label=&quot;231 map permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3.1 Map&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+
+  for_each = {
+    web_server : &amp;quot;nginx&amp;quot;
+    was : &amp;quot;java&amp;quot;
+  }
+
+  tags = {
+    &amp;quot;${each.key}&amp;quot; = each.value
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;plan&lt;/code&gt; 결과&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# aws_instance.server[&amp;quot;nginx&amp;quot;] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+ ... argument 정보
+ tags = {
+        + &amp;quot;web_server&amp;quot; = &amp;quot;nginx&amp;quot;
+ }
+# aws_instance.server[&amp;quot;was&amp;quot;] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+ ... argument 정보
+ tags = {
+        + &amp;quot;was&amp;quot; = &amp;quot;java&amp;quot;
+ }
+Plan: 2 to add, 0 to change, 0 to destroy.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;232-set&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#232-set&quot; aria-label=&quot;232 set permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3.2 Set&lt;/h4&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+
+  for_each = toset([&amp;quot;was&amp;quot;, &amp;quot;web_server&amp;quot;])
+  tags = {
+    Name = &amp;quot;${each.key}&amp;quot;
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;plan 결과&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# aws_instance.server[&amp;quot;was&amp;quot;] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ... argument 정보
+
+  tags_all                             = {
+    + &amp;quot;was&amp;quot; = &amp;quot;java&amp;quot;
+  }
+# aws_instance.server[&amp;quot;web_server&amp;quot;] will be created
+  + resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ... argument 정보
+  tags_all                             = {
+    + &amp;quot;web_server&amp;quot; = &amp;quot;nginx&amp;quot;
+  }
+Plan: 2 to add, 0 to change, 0 to destroy.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;꼭꼭 기억해야할 점으로 &lt;code class=&quot;language-text&quot;&gt;count&lt;/code&gt;와 다르게 map이나 set으로 구성하면 리소스 구분 키값으로 &lt;code class=&quot;language-text&quot;&gt;server[&amp;quot;was&amp;quot;]&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;server[&amp;quot;web_server&amp;quot;]&lt;/code&gt; 이런식으로 key값이 그대로 유니크 키로 적용 된다는 점이다.&lt;/p&gt;
+&lt;p&gt;또한 각 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;에는 &lt;code class=&quot;language-text&quot;&gt;count&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;for_each&lt;/code&gt; 둘 중 하나만 사용이 가능하다.&lt;/p&gt;
+&lt;h3 id=&quot;24-provider&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#24-provider&quot; aria-label=&quot;24 provider permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.4 provider&lt;/h3&gt;
+&lt;p&gt;각 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;provider&lt;/code&gt;를 명시적으로 지정 해준다. 예를 들어 다른 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;는 다 서울 리전을 쓰는데 특정 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;만 도쿄 리전을 사용해야한다던가 할때 유용하다(멀티 리전).&lt;/p&gt;
+&lt;h3 id=&quot;25-lifecycle&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#25-lifecycle&quot; aria-label=&quot;25 lifecycle permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.5 lifecycle&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;lifecycle&lt;/code&gt; 관련된 설정 값으로 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;가 생성, 변경, 삭제 관련해서 추가로 지정 된 액션을 하도록 설정 할 수 있다.&lt;/p&gt;
+&lt;h4 id=&quot;251-createbeforedestroy&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#251-createbeforedestroy&quot; aria-label=&quot;251 createbeforedestroy permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.5.1 create&lt;em&gt;before&lt;/em&gt;destroy&lt;/h4&gt;
+&lt;p&gt;기본적으로 &lt;code class=&quot;language-text&quot;&gt;terraform&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;를 수정 해야하는데 만약 해당 &lt;code class=&quot;language-text&quot;&gt;resource&lt;/code&gt;가 무중단 업데이트가 불가능하다고 판단되면 삭제 후 다시 생성한다.&lt;/p&gt;
+&lt;p&gt;예를 들어 만약 보안관련 리소스(&lt;code class=&quot;language-text&quot;&gt;security group&lt;/code&gt; 같은거)를 수정하다가 해당 &lt;code class=&quot;language-text&quot;&gt;role&lt;/code&gt;이 삭제되는 짧은 순간 보안적으로 문제가 생길 수도 있다. 이런상황을 대비하여 이 옵션을 걸어두면 &lt;code class=&quot;language-text&quot;&gt;old 조건&lt;/code&gt;이 삭제 전 &lt;code class=&quot;language-text&quot;&gt;new 조건&lt;/code&gt;이 추가되니까 특별히 문제가 될 것이 없다&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;보안 관련 리소스 생성&lt;/li&gt;
+&lt;li&gt;해당 resource에 적용&lt;/li&gt;
+&lt;li&gt;이전 보안 관련 리소스 삭제&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;이런식으로 안전하게 처리가 가능하다.&lt;/p&gt;
+&lt;h4 id=&quot;252-prevent_destroy&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#252-prevent_destroy&quot; aria-label=&quot;252 prevent_destroy permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.5.2 prevent_destroy&lt;/h4&gt;
+&lt;p&gt;리소스가 삭제되는 걸 방지한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런식으로 삭제 방지 옵션을 주고 terraform destroy를 하면&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;╷
+│ Error: Instance cannot be destroyed
+│
+│   on main.tf line 44:
+│   44: resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+│
+│ Resource aws_instance.server has lifecycle.prevent_destroy set, but the plan calls for this resource to be destroyed. To avoid this error
+│ and continue with the plan, either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target flag.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;만약 충분히 다 인지하고 진짜로 resource를 삭제하고 싶으면 &lt;code class=&quot;language-text&quot;&gt;prevent_destroy&lt;/code&gt;옵션을 주석 처리하고 destroy 하면 된다.&lt;/p&gt;
+&lt;h4 id=&quot;253-ignore_changes&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#253-ignore_changes&quot; aria-label=&quot;253 ignore_changes permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.5.3 Ignore_changes&lt;/h4&gt;
+&lt;p&gt;최초 apply 시에만 적용하고, 그 이후의 변화는 무시할 때 사용된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+  availability_zone = &amp;quot;ap-northeast-2a&amp;quot;
+
+  lifecycle {
+    ignore_changes = [무시할_argument_목록]
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;26-provisioner&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#26-provisioner&quot; aria-label=&quot;26 provisioner permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.6 Provisioner&lt;/h3&gt;
+&lt;p&gt;해당 리소스에 특정 작업을 수행하기 위해 리소스 로컬 ㄸ는 원격 시스템에서 스크립트를 실행 하고 싶을때 사용된다.&lt;/p&gt;
+&lt;h4 id=&quot;261-local-exec&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#261-local-exec&quot; aria-label=&quot;261 local exec permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.6.1 local-exec&lt;/h4&gt;
+&lt;p&gt;내 로컬에서 실행되는 명령어를 정의한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &amp;quot;aws_instance&amp;quot; &amp;quot;server&amp;quot; {
+  ami               = &amp;quot;ami-014009fa4a1467d53&amp;quot;
+  instance_type     = &amp;quot;t2.micro&amp;quot;
+
+  provisioner &amp;quot;local-exec&amp;quot; {
+    command = &amp;quot;hostname&amp;quot;
+  }
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;apply하면 아래처럼 표출된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;aws_instance.server: Creating...
+aws_instance.server: Still creating... [10s elapsed]
+aws_instance.server: Still creating... [20s elapsed]
+aws_instance.server: Provisioning with &amp;#39;local-exec&amp;#39;...
+aws_instance.server (local-exec): Executing: [&amp;quot;/bin/sh&amp;quot; &amp;quot;-c&amp;quot; &amp;quot;hostname&amp;quot;]
+aws_instance.server (local-exec): 내꺼_개인_컴퓨터_hostname
+aws_instance.server: Creation complete after 27s [id=i-0f2157fc11e6ba5a9]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;또한 &lt;code class=&quot;language-text&quot;&gt;when&lt;/code&gt; 옵션을 줘서 실행 주기를 바꿀 수가 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;provisioner &amp;quot;local-exec&amp;quot; {
+  when    = destroy
+  command = &amp;quot;echo &amp;#39;Destroy-time provisioner&amp;#39;&amp;quot;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이렇게 하면 리소스가 삭제되는 시기에 명령어가 실행된다. 명령어 실행이 실패를 대비한 옵션(&lt;code class=&quot;language-text&quot;&gt;on_failure&lt;/code&gt;) 옵션도 제공해준다.&lt;/p&gt;
+&lt;h4 id=&quot;262-remote-exec&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#262-remote-exec&quot; aria-label=&quot;262 remote exec permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.6.2 remote-exec&lt;/h4&gt;
+&lt;p&gt;해당 리소스에서 직접 실행되는 명령어이다. ec2라면 &lt;code class=&quot;language-text&quot;&gt;connection&lt;/code&gt; 정보를 줘서 ssh로 접근 한 후, 명령어를 실행 시킬 수가 있다.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;주의!&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: Provisioners should only be used as a last resort. For most common situations there are better alternatives.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;왠만하면 쓰지 말라고 한다… &lt;code class=&quot;language-text&quot;&gt;ec2&lt;/code&gt;는 비슷한 역할을 하는 &lt;code class=&quot;language-text&quot;&gt;user_data&lt;/code&gt;라는 옵션도 있으니 필요하면 이 옵션을 사용하면 될 것이다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.terraform.io/language/resources/syntax#meta-arguments&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://www.terraform.io/language/resources/syntax#meta-arguments&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[Terraform - 기본]]></title><description><![CDATA[테라폼 기본 설명 + Provider 역할]]></description><link>https://qweasd147.github.io/posts/etc/etc-tf-provider/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-tf-provider/</guid><pubDate>Wed, 30 Mar 2022 05:56:58 GMT</pubDate><content:encoded>&lt;p&gt;예전엔 인프라 구성이라고 해봤자 그냥 리눅스 서버 한대 올리고 그곳에 모든 어플리케이션(웹서버, db, was 등등)을 설치하고 사용해서 프로비저닝에 대한 별다른 불편함을 느끼지 못했다. 근데 요즘엔 클라우드 서비스 중에서 &lt;code class=&quot;language-text&quot;&gt;IaaS&lt;/code&gt;를 제공해 주는곳도 많고 그 종류도 다양해져서, 그 사이 연관관계의 복잡함, 한번 설치하고 다른곳에 똑같이 설치하는데에도 실수나 시간도 많이 걸리는 단점이 눈에 띄게 생겨났다. 이런 서비스들 설치와 연관관계 등을 소스코드로 관리하고 설치 할 수 있다면 휴먼에러나 시간을 줄일 수가 있는데, 이런 방식을 IaC(&lt;code class=&quot;language-text&quot;&gt;Infrastructure as Code&lt;/code&gt;)라고 하며, &lt;code class=&quot;language-text&quot;&gt;Terraform&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;IaC&lt;/code&gt;를 위한 도구로 사용된다.&lt;/p&gt;
 &lt;h1 id=&quot;1-terraform-구성-요소&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-terraform-%EA%B5%AC%EC%84%B1-%EC%9A%94%EC%86%8C&quot; aria-label=&quot;1 terraform 구성 요소 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Terraform 구성 요소&lt;/h1&gt;
 &lt;h2 id=&quot;provider&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#provider&quot; aria-label=&quot;provider permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;provider&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Infrastructure&lt;/code&gt;를 제공해주는 곳을 말한다. 대표적으로 &lt;code class=&quot;language-text&quot;&gt;aws&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;GCP&lt;/code&gt; , &lt;code class=&quot;language-text&quot;&gt;Azure&lt;/code&gt; 가 있지만 다른것들은 사실 관심없고 앞으로 다룰 모든 예제는 &lt;code class=&quot;language-text&quot;&gt;aws&lt;/code&gt;로만 할꺼다.&lt;/p&gt;
