@@ -73,7 +73,6 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "netlify-cms-app": "^2.12.3",
-    "node-sass": "^7.0.0",
     "normalize-scss": "^7.0.1",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
@@ -112,6 +111,7 @@
     "postcss-pxtorem": "5.1.1",
     "react-test-renderer": "16.13.1",
     "rimraf": "3.0.2",
+    "sass": "^1.50.0",
     "stylelint": "13.3.0",
     "stylelint-config-recommended-scss": "4.2.0",
     "stylelint-scss": "3.16.0"
