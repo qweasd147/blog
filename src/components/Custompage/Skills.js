@@ -12,7 +12,7 @@ const Skills = () => {
 
   return (
     <div className={styles['skills-layout']} ref={skillRef}>
-      <Link className={styles['skills-layout__home-button']} to="/">
+      <Link className={styles['skills-layout__back-button']} to="/">
         전체
       </Link>
       <div>

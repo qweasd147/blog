@@ -2,7 +2,8 @@
 @import '../../assets/scss/mixins';
 
 .skills-layout {
-  &__home-button {
+  &__back-button {
+    cursor: pointer;
     display: block;
     max-width: 90px;
     height: $button-height;
@@ -79,7 +80,7 @@
 
 @include breakpoint-md {
   .skills-layout {
-    &__home-button {
+    &__back-button {
       position: fixed;
       max-width: auto;
       margin: 0;

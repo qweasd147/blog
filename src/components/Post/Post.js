@@ -1,6 +1,6 @@
 // @flow strict
 import React from 'react';
-import { Link } from 'gatsby';
+import { navigate } from '@gatsbyjs/reach-router';
 import Author from './Author';
 import Comments from './Comments';
 import Content from './Content';
@@ -20,9 +20,15 @@ const Post = ({ post }: Props) => {
 
   return (
     <div className={styles['post']}>
-      <Link className={styles['post__home-button']} to="/">
-        전체
-      </Link>
+      <a
+        className={styles['post__back-button']}
+        onClick={e => {
+          e.preventDefault();
+          navigate(-1);
+        }}
+      >
+        뒤로가기
+      </a>
       <div className={styles['post__content']}>
         <Content body={html} title={title} />
       </div>

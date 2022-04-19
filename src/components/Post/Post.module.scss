@@ -14,7 +14,8 @@
     padding: 0 15px;
   }
 
-  &__home-button {
+  &__back-button {
+    cursor: pointer;
     display: block;
     max-width: 90px;
     height: $button-height;
@@ -34,9 +35,7 @@
     &:focus {
       color: $color-primary;
     }
-
   }
-
 }
 
 @include breakpoint-md {
@@ -49,14 +48,12 @@
       padding: 0;
     }
 
-    &__home-button {
+    &__back-button {
       position: fixed;
       max-width: auto;
       margin: 0;
       top: 30px;
-      left: 30px
+      left: 30px;
     }
-
   }
-
 }
