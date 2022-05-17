@@ -203,18 +203,6 @@
   Link: </blog/component---src-templates-post-template-js-4fe3da645a5c05165643.js>; rel=preload; as=script
   Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </blog/page-data/posts/aws/aws-lambda-edge/page-data.json>; rel=preload; as=fetch; crossorigin
-/blog/posts/aws/aws-serverless/
-  Link: </blog/webpack-runtime-a630ce88f35a94866344.js>; rel=preload; as=script
-  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
-  Link: </blog/framework-99708135f20a48422ed8.js>; rel=preload; as=script
-  Link: </blog/532a2f07-1d2a7bbc1a68ccd5edd4.js>; rel=preload; as=script
-  Link: </blog/app-82ed98f8319edf21b02d.js>; rel=preload; as=script
-  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
-  Link: </blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-cf5d7dbd0b99d5546fa0.js>; rel=preload; as=script
-  Link: </blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js>; rel=preload; as=script
-  Link: </blog/component---src-templates-post-template-js-4fe3da645a5c05165643.js>; rel=preload; as=script
-  Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </blog/page-data/posts/aws/aws-serverless/page-data.json>; rel=preload; as=fetch; crossorigin
 /blog/posts/etc/etc-db-optimizer/
   Link: </blog/webpack-runtime-a630ce88f35a94866344.js>; rel=preload; as=script
   Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
@@ -275,6 +263,18 @@
   Link: </blog/component---src-templates-post-template-js-4fe3da645a5c05165643.js>; rel=preload; as=script
   Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
   Link: </blog/page-data/posts/etc/etc-rabbitmq/page-data.json>; rel=preload; as=fetch; crossorigin
+/blog/posts/aws/aws-serverless/
+  Link: </blog/webpack-runtime-a630ce88f35a94866344.js>; rel=preload; as=script
+  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
+  Link: </blog/framework-99708135f20a48422ed8.js>; rel=preload; as=script
+  Link: </blog/532a2f07-1d2a7bbc1a68ccd5edd4.js>; rel=preload; as=script
+  Link: </blog/app-82ed98f8319edf21b02d.js>; rel=preload; as=script
+  Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
+  Link: </blog/b85ce96f5d2f4665e19992ddb57b3614f7b5719c-cf5d7dbd0b99d5546fa0.js>; rel=preload; as=script
+  Link: </blog/d4f3f45f3b97a996ebac05174393e9dafe15c3a1-4deb2450f60e37cf9a36.js>; rel=preload; as=script
+  Link: </blog/component---src-templates-post-template-js-4fe3da645a5c05165643.js>; rel=preload; as=script
+  Link: </blog/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </blog/page-data/posts/aws/aws-serverless/page-data.json>; rel=preload; as=fetch; crossorigin
 /blog/posts/etc/etc-tf-provider/
   Link: </blog/webpack-runtime-a630ce88f35a94866344.js>; rel=preload; as=script
   Link: </blog/styles-083a06cb5740baaf347d.js>; rel=preload; as=script
