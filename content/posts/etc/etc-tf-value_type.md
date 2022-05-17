@@ -13,7 +13,7 @@ description: '테라폼 입력/출력값 및 type 종류'
 
 테라폼에서 사용되는 값(입출력 값)들을 기반으로 인프라를 구성 할 수가 있고, 생성 된 리소스를 기반으로 또 다른 리소스를 구성 할 수가 있다.
 
-## variable(input value)
+## 1. variable(input value)
 
 입력 값을 기반으로 인프라를 구성하기 위해 사용된다. 즉, 소스 베이스는 그대로 인데 몇가지 값을 입력받아 구성하려고 할때 사용된다.
 
@@ -33,7 +33,7 @@ resource "aws_instance" "test-ec2" {
 `ec2`를 만들기 위한 `ami` 값을 외부에서 받기위해 `variable`로 분리해서 받고 있고, `var.ec2-ami`로 접근해서 입력 된 변수에 접근하고 있다.
 `variable`은 type과 default value를 지정 할 수가 있다. 위 처럼 default value로 처리 할 수도 있지만 외부에서 값을 입력받는 대표적인 방법은 입력값들을 모아놓은 별도의 `file`로 분리하던가, 아님 cli를 통해 값을 입력 받을 수도 있다.
 
-### 1. cli 명령어를 통한 variable 입력
+### 1.1 cli 명령어를 통한 variable 입력
 
 ```
 variable "ec2-ami1" {
@@ -63,7 +63,7 @@ resource "aws_instance" "test-ec2-2" {
 $ terraform plan -var ec2-ami1="ami-014009fa4a1467d53" -var ec2-ami2="ami-014009fa4a1467d53"
 ```
 
-### 2. 파일을 통합 variable 입력
+### 1.2 파일을 통합 variable 입력
 
 `terraform` 파일이 있는 동일한 위치에 `terraform.tfvars` 파일을 위치 시킨후, 명령어를 실행하면 자동으로 해당 파일을 읽어들인다.
 
@@ -85,7 +85,7 @@ test-map = {
 
 이런식으로 입력해도 map형태의 `test-map`라는 `variable`을 입력 할 수가 있다.
 
-### validation
+### 1.3 validation
 
 입력값 검증이 필요할 때 사용된다.
 
@@ -112,11 +112,11 @@ variable "val_1" {
 
 validation 하는 방법은 여러가지가 존재하고 그 중엔 정규 식도 가능하다 `can(regex(정규식_조건, 검사_대상))`,
 
-## output
+## 2. output
 
 값을 출력 할때 사용된다. 생성 된 `resource`의 `arn`을 확인하기 위해 사용하거나 차후 이 `output` 값을 기반으로 다른 모듈을 구성하기 위해 참조용으로 사용된다.
 
-### 기본 사용법
+### 2.1 기본 사용법
 
 ```
 variable "test-value" {
@@ -149,7 +149,7 @@ Changes to Outputs:
 
 이런식으로 resource를 생성(위 샘플은 plan)시, arn 값 등을 알 수가 있다.
 
-### sensitive
+### 2.2 sensitive
 
 혹시나 생성 되는 값 노출을 숨겨야하지만 다른곳에서 참조해야 할 경우가 있을때, `sensitive` 값을 줘서 화면에 노출되는 것을 막을 수가 있다.
 
@@ -174,7 +174,7 @@ Changes to Outputs:
 
 이런식으로 값이 숨겨져서 출력된다.
 
-## locals
+## 3. locals
 
 `locals`는 입/출력 용도가 아닌 테라폼을 구성할 때 사용 할 임시 변수용도로 사용된다. 말 그대로 로컬용 변수값 이다.
 
@@ -217,7 +217,7 @@ Changes to Outputs:
 
 > 지금은 변수가 단순한 형태로 사용해서 별 필요성을 못느끼지만 값이 점점 복잡해지면 가독성을 위해서라도 많이 쓰게 된다.
 
-#### locals를 활용한 공통 tags 샘플
+#### 3.1 locals를 활용한 공통 tags 샘플
 
 ```
 locals {
@@ -251,7 +251,7 @@ resource "aws_instance" "test_ec2" {
   }
 ```
 
-## Type
+## 4. Type
 
 테라폼에선 기본 타입(`string`, `number`, `bool` 등)으로 타입을 지정 할 수도 있지만 `collection` 타입도 사용이 가능하다.
 
