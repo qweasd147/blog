@@ -10,8 +10,6 @@ tags:
 description: '테라폼 대부분에 넣을 수 있는 기본 argument들'
 ---
 
-# Meta-Arguments
-
 모든 `Resource` 에서 기본적으로 사용 할 수 있는 `arguments` 들로, 바꿔말하면 특정 리소스에 종속 되지 않고 제공되는 기본적인 arguments 이다
 
 ## 1. depends_on
