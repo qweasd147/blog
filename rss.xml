@@ -1,4 +1,138 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>https://qweasd147.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 14 Jun 2022 14:06:42 GMT</lastBuildDate><item><title><![CDATA[Terraform - Meta-Arguments]]></title><description><![CDATA[테라폼 대부분에 넣을 수 있는 기본 argument들]]></description><link>https://qweasd147.github.io/posts/etc/etc-tf-meta_arguments/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-tf-meta_arguments/</guid><pubDate>Tue, 14 Jun 2022 13:38:51 GMT</pubDate><content:encoded>&lt;p&gt;모든 &lt;code class=&quot;language-text&quot;&gt;Resource&lt;/code&gt; 에서 기본적으로 사용 할 수 있는 &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt; 들로, 바꿔말하면 특정 리소스에 종속 되지 않고 제공되는 기본적인 arguments 이다&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>https://qweasd147.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 18 Jun 2022 16:09:10 GMT</lastBuildDate><item><title><![CDATA[Git - 알면 유용한 명령어들]]></title><description><![CDATA[alias, hooks, rebase 중 merge commit 유지하기]]></description><link>https://qweasd147.github.io/posts/etc/etc-git-alias_hooks_merge/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-git-alias_hooks_merge/</guid><pubDate>Sat, 18 Jun 2022 16:04:47 GMT</pubDate><content:encoded>&lt;h1 id=&quot;1-alias&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-alias&quot; aria-label=&quot;1 alias permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. alias&lt;/h1&gt;
+&lt;p&gt;git 명령어 중 옵션이 너무 많아서 기억하기 힘들거나 타이핑이 귀찮은 경우, 연속되는 명령줄을 alias로 묶어 한방에 처리할 때 유용하다.
+개념자체는 간단하지만 alais를 사용하기 위해선 git 명령어의 적용 범위를 먼저 알아야 한다.&lt;/p&gt;
+&lt;h3 id=&quot;11-config-scope&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#11-config-scope&quot; aria-label=&quot;11 config scope permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1.1 Config Scope&lt;/h3&gt;
+&lt;p&gt;git 최초 설정을 할때 한번쯤은 &lt;code class=&quot;language-text&quot;&gt;user name&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;email&lt;/code&gt; 등을 지정하기 위해 &lt;code class=&quot;language-text&quot;&gt;$ git config ~~~~&lt;/code&gt; 이런 명령어들 써봤을 것이라 생각된다. 이런 명령어가 설정값 적용 범위를 지정해 놓기 위해 설정한건데 설정값 범위는 크게 3가지 종류로 구분 된다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;System&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;전체적인 시스템에 일괄 적용되며 &lt;code class=&quot;language-text&quot;&gt;/etc/gitconfig&lt;/code&gt; 에 저장된다. 모든 사용자를 대상으로 설정값을 지정하기 위해서 적용한다.&lt;/p&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;Global&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;global 설정으로, 이 값을 설정하면 해당 user의 모든 git repository에 적용된다. 위치는 해당 사용자를 위한 설정 값이니까&lt;/p&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;Local&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;특정 &lt;code class=&quot;language-text&quot;&gt;repository&lt;/code&gt;에 적용하기 위해 사용된다. 저장 위치는 &lt;code class=&quot;language-text&quot;&gt;/프로젝트경로/.git/config&lt;/code&gt; 가 된다.&lt;/p&gt;
+&lt;p&gt;다시 좀 전에 말했던 걸로 되돌아가서, git commit 작성자 정보를 지정하기 위해 &lt;code class=&quot;language-text&quot;&gt;git config --global user.name&lt;/code&gt; 이런식으로 git 설정값을 건드려 본적 있을텐데, 이제 보면 알겠지만 global 설정, 즉 내 계정의 모든 git repository에 적용하기 위한 scope를 지정한 것이고 반대로 &lt;code class=&quot;language-text&quot;&gt;--local&lt;/code&gt; 옵션을 주면 해당 repository에만 적용된다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;적용 우선 순위는 local -&gt; global -&gt; system 순으로 적용된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;12-alias-적용&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#12-alias-%EC%A0%81%EC%9A%A9&quot; aria-label=&quot;12 alias 적용 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1.2 Alias 적용&lt;/h3&gt;
+&lt;p&gt;일단 예제는 global scope를 대상으로 했다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;등록&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;$ cd ~/프로젝트 위치
+$ git config --global alias.b &amp;#39;branch&amp;#39; # git branch 명령 alia
+$ git b # 위에서 적용한 alias (git branch 명령어) 사용
+# 현재 로컬의 브랜치 목록 표출&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;적용 된 목록&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;$ git config --global --list | grep alias&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;삭제&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;git config --global --unset alias.b&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;
+여러 사람과 git 작업 + 공통 브랜치(git flow 같은거) 공유하면서 사용하다 보면 공통 브랜치를 항상 pull 받기 귀찮을 수도 있다. 이런거 alias 등록 해놓으면 편하게 사용 가능하다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ cd ~/프로젝트_위치
+$ vi ./.git/config&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;~~~ 로컬 설정값 + branch들 ~~~~~
+[alias]
+	pull-all = &amp;quot;!git checkout master &amp;amp;&amp;amp; git pull origin \
+	; git checkout develop &amp;amp;&amp;amp; git pull origin \&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런식으로 설정하고 &lt;code class=&quot;language-text&quot;&gt;$ git pull-all&lt;/code&gt; 명령어로 한번에 여러 브랜치 pull을 할 수도 있다&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;참고로 alias 명령어는 중간에 &lt;code class=&quot;language-text&quot;&gt;_&lt;/code&gt; 이거 넣으면 안되니까 주의하자&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;2-hooks&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-hooks&quot; aria-label=&quot;2 hooks permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. hooks&lt;/h1&gt;
+&lt;p&gt;어렵게 생각 할것 없이 그냥 특정 조건에 만족되면 실행되는 로직을 hook 이라고 이해하면 된다. git에서도 자체적으로 이런 Hooks들을 지원하는데 git 커밋 전후나 push 전후에 실행되는 로직을 스크립트로 관리 해줄 수 있게 지원해주고 있다.&lt;/p&gt;
+&lt;h3 id=&quot;21-대표적인-hooks-종류들&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#21-%EB%8C%80%ED%91%9C%EC%A0%81%EC%9D%B8-hooks-%EC%A2%85%EB%A5%98%EB%93%A4&quot; aria-label=&quot;21 대표적인 hooks 종류들 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.1 대표적인 hooks 종류들&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;pre-commit - 커밋 직전 실행되는 hook&lt;/li&gt;
+&lt;li&gt;commit-msg - 커밋 메세지 쓰고 저장 직전에 실행되는 hook&lt;/li&gt;
+&lt;li&gt;post-commit - 커밋을 완료 된 후 실행되는 hook&lt;/li&gt;
+&lt;li&gt;pre-push - 푸시 직전에 실행되는 hook&lt;/li&gt;
+&lt;li&gt;pre-rebase - 리베이스 직전에 실행되는 hook&lt;/li&gt;
+&lt;li&gt;post-rewrite - 리베이스나 커밋을 수정한 직후 실행 되는 hook&lt;/li&gt;
+&lt;li&gt;post-merge - 머지 직후 실행되는 hook&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;pre로 시작되는 hooks는 해당 action을 reject 시킬 수도 있다&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;22-사용법&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#22-%EC%82%AC%EC%9A%A9%EB%B2%95&quot; aria-label=&quot;22 사용법 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.2 사용법&lt;/h3&gt;
+&lt;p&gt;그냥 특정 위치에 지정된 파일명으로 스크립트 짜 넣으면 알아서 실행된다.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;.git/hooks&lt;/code&gt; 디렉토리 하위에 위에 적어놓은 &lt;code class=&quot;language-text&quot;&gt;hooks 종류&lt;/code&gt; 이름으로 파일로 만들면 자동으로 실행된다. 주의점은 &lt;strong&gt;실행 가능한 스크립트&lt;/strong&gt; 이어야 한다는 점이다. 뭐 특별히 어려운건 없고 그냥 &lt;code class=&quot;language-text&quot;&gt;rwx&lt;/code&gt; 옵션에서 x 옵션 잘 잇나 확인하면 된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;#pre-commit
+cho &amp;#39;action pre-commit&amp;#39;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ ls -l .git/hooks # 지정 된 위치에 hooks 잘 있나 확인
+-rwxr-xr-x  1 (기본 파일정보) pre-commit
+
+$ git add . # 변경 된 파일 전부 스테이지에 올림
+$ git commit -m &amp;#39;git hooks test&amp;#39; # git 커밋&amp;amp;커밋 메세지
+action pre-commit # git hooks 스크립트에 저장된 echo 실행된거
+[master 6f4b9fa] git hooks test&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런식으로 쉽게 사용이 가능하다.&lt;/p&gt;
+&lt;h3 id=&quot;23-단점&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#23-%EB%8B%A8%EC%A0%90&quot; aria-label=&quot;23 단점 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3 단점&lt;/h3&gt;
+&lt;p&gt;git hooks 관련해서 가장 큰 단점은 이 스크립트들이 .git 디렉토리 하위에 있어야 하다보니 버전관리하기가 힘들다. 그래서 실상은 개개인 별로 쓰거나 그냥 서드파티 라이브러리에 의존해서 많이 쓰인다. 또한 강제성이 없다는것도 큰 단점이다. 뭐 어찌어찌 버전관리하고 스크립트도 알아서 설치(지정된 위치로 이동or심볼릭 링크) 해놔도 그냥 로컬에서 빼버리면 그만이라서 정말 warning 정도로만 많이 쓰게 된다. 물론 git cloud 서버 측에서 관리 할수 있는 hook도 있다(pre-receive, update, post-receive). 단점이 너무 커서 애매하긴 하지만 일단 ‘이렇게도 사용 할 수 있다’는 정도로 마스터 브랜치는 rebase를 막는 &lt;code class=&quot;language-text&quot;&gt;pre-rebase&lt;/code&gt; 는 기록해 둔다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;#pre-rebase
+branch=&amp;quot;$(git rev-parse --abbrev-ref HEAD)&amp;quot;
+
+if [ &amp;quot;$branch&amp;quot; = &amp;quot;master&amp;quot; ]; then
+  echo &amp;quot;마스터 브랜치는 리베이스 허용 안함&amp;quot;
+  exit 1
+fi&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;$ git checkout master # master 브랜치로 이동
+$ git rebase test-rebase # master 브랜치 리베이스 시도
+마스터 브랜치는 리베이스 허용 안함
+fatal: 리베이스 전 후크에서 리베이스를 거부했습니다.
+
+# 반대로 test-rebase 브랜치를 master로 리베이스 시도
+$ git checkout test-rebase
+&amp;#39;test-rebase&amp;#39; 브랜치로 전환합니다
+$ git rebase master
+Successfully rebased and updated refs/heads/test-rebase. #다른 브랜치는 rebase 가능&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rebase는 히스토리 관리 측면에선 안좋으니까 master 브랜치는 rebase가 안되게 설정을 많이 해놓는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;3-rebase-과정-중-merge-커밋-유지&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-rebase-%EA%B3%BC%EC%A0%95-%EC%A4%91-merge-%EC%BB%A4%EB%B0%8B-%EC%9C%A0%EC%A7%80&quot; aria-label=&quot;3 rebase 과정 중 merge 커밋 유지 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. rebase 과정 중 merge 커밋 유지&lt;/h1&gt;
+&lt;p&gt;git rebase는 파괴적인 작업이다. 이름에서 부터 알수 있듯이 re + base로 기존 작업의 히스토리를 직접적으로 덮어쓰기 형태로 작업하여 잘못하면 커밋을 날려먹을 수가 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;정확히는 내부적으로 직접 커밋을 수정하는게 아니라 새로운 커밋을 만들어 이어 붙인 다음, 접근할수 없는 이전 커밋은 자연스럽게 버려지는 구조이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;개인적으로 rebase를 자주 사용하는데 특정 커밋을 합치거나(squash) 삭제, 수정 등등 case by case로 쉬운방법을 골라서 쓰고 있지만 이런 작업 중 중간에 merge commit 이 섞여들어가면 진짜 귀찮아진다(물론 내가 몰랐을때)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;상황 설명을 위한 기본 branch 상황&lt;/strong&gt;
+&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-1.png&quot; alt=&quot;img1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;이 상태에서 rebase 작업을 하려다가 그냥 빠져나와도 git 그래프는 바껴있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;$ git checkout master # master 브랜치에서 작업
+$ git rebase -i HEAD~2 # HEAD를 기준으로 최근 2개 커밋을 핸들링 한다.
+
+~~~
+대충 대화식 화면. 별다른 수정 없이 :wq 를 통해 빠져나왔다고 가정
+~~~&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-2.png&quot; alt=&quot;img2&quot;&gt;&lt;/p&gt;
+&lt;p&gt;그나마 별다른 수정없이 빠져나와서 눈치 챈거지, 추가로 작업도 하고 rebase 종료 &amp;#x26; 이렇게 flat하게 바껴버리면 진짜 내가 뭘 한건지 인지하기 힘들다. 아무튼 이럴때 쓰는게 -r 옵션(—rebase-merges)을 써서 rebase 과정 중에 merge 커밋을 유지한다는 옵션을 쓰면 된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;$ git checkout master
+$ git rebase -i -r HEAD~2&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이러면 옵션을 안줬을 때와 다르게 merge 커밋과 label(그냥 있는 그대로 라벨이다. 큰 의미는 갖지 않아도 됨) 정보가 함께 보여준다.
+&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-3.png&quot; alt=&quot;img3&quot;&gt;&lt;/p&gt;
+&lt;p&gt;이런 다음 다시 그대로 wq로 빠져나오면 rebase 전후로 달라진게 없다는걸 알 수있다.
+조금더 연장선 &amp;#x26; 응용 하면 merge 커밋만 지우거나 기능 브랜치에서 특정 커밋만 삭제 후 병합 한걸로 한방에 작업 된걸로 처리가 가능하다&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Case 1. 머지커밋 되돌리기&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-4.png&quot; alt=&quot;img4&quot;&gt;&lt;/p&gt;
+&lt;p&gt;맨 밑의 merge commit(해시 아이디가 ed80daa 커밋. 이전에 작업한거 몇번 시도해서 첫번째 이미지랑 아이디가 달라진건 이해 부탁드립니다)을 d 옵션을 줘서 삭제하면 merge 자체를 되돌릴 수가 있다(근데 최근 merge 커밋 되돌리는건 reset이 압도적으로 편하다)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Case 2. feature/fature-1 커밋의 특정 커밋만 재외하고 merge&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;이미 머지 되어있는 상황에서 기능브랜치의 특정 커밋만 뺀 다음 merge하는 효과를 주고 싶을때
+&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-5.png&quot; alt=&quot;img5&quot;&gt;&lt;/p&gt;
+&lt;p&gt;이런식으로 &lt;code class=&quot;language-text&quot;&gt;작업 2-2&lt;/code&gt; 커밋을 삭제(d) 처리하면 이 커밋만 빼놓고 병합한 효과를 줄 수가 있다.&lt;/p&gt;
+&lt;p&gt;이렇게 종료 되면 아래 결과처럼 바껴잇다
+&lt;img src=&quot;/blog/media/git/rebase_merge/git-rebase-merge-6.png&quot; alt=&quot;img5&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;참고로 merge commit을 유지하는 기능으로 비슷한 역할을 하는 —preserve-merges 라는 옵션이 있는데 이건 deprecated 됬다. 라벨 정보가 오히려 익숙하지 않은 사람은 임시로 이걸 쓰는것도 괜찮다(사용법이 오히려 이게 더 직관적이라고 생각된다).&lt;/p&gt;
+&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[Terraform - Meta-Arguments]]></title><description><![CDATA[테라폼 대부분에 넣을 수 있는 기본 argument들]]></description><link>https://qweasd147.github.io/posts/etc/etc-tf-meta_arguments/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/etc-tf-meta_arguments/</guid><pubDate>Tue, 14 Jun 2022 13:38:51 GMT</pubDate><content:encoded>&lt;p&gt;모든 &lt;code class=&quot;language-text&quot;&gt;Resource&lt;/code&gt; 에서 기본적으로 사용 할 수 있는 &lt;code class=&quot;language-text&quot;&gt;arguments&lt;/code&gt; 들로, 바꿔말하면 특정 리소스에 종속 되지 않고 제공되는 기본적인 arguments 이다&lt;/p&gt;
 &lt;h2 id=&quot;1-depends_on&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-depends_on&quot; aria-label=&quot;1 depends_on permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. depends_on&lt;/h2&gt;
 &lt;p&gt;각 resource 들의 생성 되는 순서, 의존관계를 명시하기 위해 사용된다.&lt;/p&gt;
 &lt;p&gt;예를 들어, &lt;code class=&quot;language-text&quot;&gt;EC2&lt;/code&gt; 와 거기에 붙일 &lt;code class=&quot;language-text&quot;&gt;EBS&lt;/code&gt; 를 생성해야 한다면 먼저 &lt;code class=&quot;language-text&quot;&gt;EBS&lt;/code&gt; 를 먼저 생성하고, &lt;code class=&quot;language-text&quot;&gt;ec2&lt;/code&gt; 에 연결을 해 줘야 할 것이다. 그럴 때 아래와 같이 사용 할 수가 있다.&lt;/p&gt;
