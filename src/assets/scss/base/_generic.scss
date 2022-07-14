@@ -1,25 +1,25 @@
-/** 
- * Generic
- */
+@import "../variables";
+@import "../mixins";
+
 html {
   font-size: $typographic-root-font-size;
 }
 
 body {
-  margin: 0 0 0 calc(100vw - 100%);
-  font-family: $typographic-font-family;
   color: $typographic-base-font-color;
-  line-height: $typographic-base-line-height;
+  font-family: $typographic-font-family;
   font-size: $typographic-base-font-size;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: $typographic-base-line-height;
+  margin: 0 0 0 calc(100vw - 100%);
+  text-rendering: optimizelegibility;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
-h1,
 h2,
+h1,
 h3,
 h4,
 h5,
@@ -31,28 +31,28 @@ h6 {
 h1 {
   font-size: $typographic-base-font-size * 2.5;
   @include line-height(2);
-  @include margin-top(1.5);
+  @include margin-top(4);
   @include margin-bottom(1);
 }
 
 h2 {
   font-size: $typographic-base-font-size * 1.6875;
   @include line-height(1.5);
-  @include margin-top(1.5);
+  @include margin-top(2);
   @include margin-bottom(0.5);
 }
 
 h3 {
   font-size: $typographic-base-font-size * 1.375;
   @include line-height(1);
-  @include margin-top(1);
+  @include margin-top(2);
   @include margin-bottom(0.5);
 }
 
 h4 {
   font-size: $typographic-base-font-size * 1.2;
   @include line-height(1);
-  @include margin-top(1);
+  @include margin-top(1.5);
   @include margin-bottom(0.5);
 }
 
@@ -72,21 +72,11 @@ h6 {
 
 img {
   border: 0;
-  max-width: 100%;
   display: block;
-  margin: inherit auto;
+  max-width: 100%;
 }
 
 hr {
-  margin-top: 52px;
-  margin-bottom: 52px;
-  border: 0;
-  color: $color-base;
-  display: block;
-  height: 26px;
-  margin-right: auto;
-  margin-left: auto;
-  background-size: 100% 26px;
   background-image: linear-gradient(
     to bottom,
     transparent 1px,
@@ -96,6 +86,12 @@ hr {
     transparent 15px,
     transparent 26px
   );
+  background-size: 100% 26px;
+  border: 0;
+  color: $color-base;
+  display: block;
+  height: 26px;
+  margin: 52px auto;
   width: 100px;
 }
 
@@ -120,8 +116,8 @@ ul {
   @include margin-bottom(1);
 
   & li {
-    padding: 0 5px;
     margin-bottom: 10px;
+    padding: 0 5px;
   }
 }
 
@@ -145,8 +141,8 @@ blockquote {
 
 figure {
   display: block;
-  width: 100%;
   height: auto;
+  width: 100%;
 }
 
 figcaption {
