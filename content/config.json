@@ -1,0 +1,66 @@
+{
+  "title": "Blog by joohyung",
+  "url": "https://qweasd147.github.io",
+  "subtitle": "",
+  "copyright": "© All rights reserved.",
+  "googleAnalyticsId": "",
+  "disqusShortname": "",
+  "postsLimit": 4,
+  "pathPrefix": "/",
+  "menu": [
+    {
+      "label": "전체",
+      "path": "/"
+    },
+    {
+      "label": "Java",
+      "path": "/category/java"
+    },
+    {
+      "label": "Javascript",
+      "path": "/category/javascript"
+    },
+    {
+      "label": "Spring",
+      "path": "/category/spring"
+    },
+    {
+      "label": "AWS",
+      "path": "/category/aws"
+    },
+    {
+      "label": "Etc",
+      "path": "/category/etc"
+    },
+    {
+      "label": "태그 목록",
+      "path": "/tags"
+    },
+    {
+      "label": "Skill",
+      "path": "/skills"
+    }
+  ],
+  "author": {
+    "name": "Kim joohyung",
+    "photo": "",
+    "bio": "",
+    "contacts": {
+      "rss": "",
+      "email": "qweasd_147@naver.com",
+      "github": "qweasd147",
+      "facebook": "",
+      "telegram": "",
+      "twitter": "",
+      "linkedin": "joohyung-a184aa1aa",
+      "instagram": "",
+      "line": "",
+      "weibo": "",
+      "gitlab": "",
+      "medium": "",
+      "youtube": "",
+      "codepen": "",
+      "soundcloud": ""
+    }
+  }
+}

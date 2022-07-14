@@ -103,3 +103,5 @@ servlerless로 Provisioned Concurrency 핸들링
 ### 2.5 remove
 
 `$ sls remove` 옵션을 사용하여 원격 배포된 `serverless` 내용을 없앨수 있다. 하지만 이는 매우매우 위험하다. 만약 db등의 리소스가 `serverless`에 등록되어 있다면 `remove`시에 함께 테이블 정보도 싹다 날라간다. 당연히 `cloud watch`에 쌓인 로그도 함께 날라간다. 따라서 이를 방지하려면 귀찮더라도 DB는 `serverless`에서 관리되는게 아닌 그냥 직접 관리해서 접근 하거나 그냥 함부로 삭제가 아닌 소스 업데이트만 사용해야 한다.
+
+### 2.6 callbackWaitsForEmptyEventLoop
