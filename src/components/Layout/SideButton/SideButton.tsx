@@ -27,9 +27,6 @@ const isTooShortDoc = (docHeight: number): boolean => {
    */
   const viewPortHeight = window?.innerHeight;
 
-  console.log("viewPortHeight", viewPortHeight);
-  console.log("docHeight", docHeight);
-
   if (!Number.isInteger(viewPortHeight)) return false;
   const viewPortPercent = (viewPortHeight / docHeight) * 100;
 

@@ -31,12 +31,11 @@ const CategoryTemplate: React.FC<Props> = ({ data, pageContext }: Props) => {
       : `${group} - ${siteTitle}`;
 
   // 첫글자를 대문자로 변환
-  const title = group?.length
-    ? group.replace(/\b[a-z]/, (firstChar) => firstChar.toUpperCase())
-    : group;
-
-  console.log("title", title);
-  console.log("group", group);
+  /*
+   *const title = group?.length
+   *? group.replace(/\b[a-z]/, (firstChar) => firstChar.toUpperCase())
+   *: group;
+   */
 
   return (
     <Layout title={pageTitle} description={siteSubtitle}>
