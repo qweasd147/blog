@@ -6,7 +6,7 @@
   "googleAnalyticsId": "",
   "disqusShortname": "",
   "postsLimit": 4,
-  "pathPrefix": "/",
+  "pathPrefix": "/blog",
   "menu": [
     {
       "label": "전체",
