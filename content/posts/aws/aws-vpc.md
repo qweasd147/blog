@@ -1,21 +1,15 @@
 ---
-title: 'Session Manager'
-date: '2016-02-08T22:40:32.169Z'
-template: 'post'
+title: "AWS- Network"
+date: "2022-08-25T04:20:10.125Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'infra'
-  - 'ec2'
-  - 'ssh'
-description: 'SSH로 ec2 접근이 아닌 IAM에 의존한 ec2 접근 방식'
+  - "infra"
+  - "aws"
+  - "network"
+description: "AWS 기본적인 네트워크 용어 정리"
 ---
-
-# Session Manager
-
-일반적으로 ec2 서버에 접근하려면 ssh가 필요하다. ssh
-
-https://docs.aws.amazon.com/ko_kr/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html#install-plugin-macos-signed
 
 ## VPC(virtual private cloud)
 

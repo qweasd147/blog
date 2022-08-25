@@ -18,12 +18,14 @@ const skillData: Props[] = [
   {
     mainName: "BackEnd",
     mainTrees: [
-      { subName: "Java", subTrees: ["Java 8", "RxJava(현재 공부중)"] },
+      {
+        subName: "Java",
+        subTrees: ["Kotlin", "Java 8", "RxJava(현재 공부중)"],
+      },
       {
         subName: "Spring",
         subTrees: [
           "Spring boot",
-          "Spring Security",
           "Spring Security OAuth2",
           "Spring Cloud",
           "Web Flux(현재 공부중)",
@@ -31,7 +33,7 @@ const skillData: Props[] = [
       },
       {
         subName: "NodeJS",
-        subTrees: ["Express", "Koa", "ES8"],
+        subTrees: ["Express", "Koa", "ES6 이상"],
       },
     ],
   },
@@ -41,7 +43,7 @@ const skillData: Props[] = [
       { subName: "SQL", subTrees: ["Oracle", "MySQL", "MariaDB"] },
       {
         subName: "NoSQL",
-        subTrees: ["DynamoDB(AWS)", "MongoDB", "ElasticSearch", "Redis"],
+        subTrees: ["DynamoDB(AWS)", "ElasticSearch", "Redis"],
       },
     ],
   },
