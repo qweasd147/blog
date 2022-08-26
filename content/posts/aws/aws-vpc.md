@@ -13,7 +13,7 @@ description: "AWS 기본적인 네트워크 용어 정리"
 
 ## VPC(virtual private cloud)
 
-- aws 크ㄹ라우드에서 논리적으로 격리된 공간
+- aws 클라우드에서 논리적으로 격리된 공간
 - 가상 네트워크 공간이라 생각하면 됨
 
 ## AZ
