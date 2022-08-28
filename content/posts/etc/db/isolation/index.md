@@ -8,12 +8,14 @@ tags:
   - "rds"
   - "db"
   - "mysql"
-description: "RBD에서 Transaction의 Isolation 관계"
+description: "RDB(Mysql)에서 Transaction의 Isolation 종류 및 설명"
 ---
 
 ## Isolation
 
-`isolation`은 트랜잭션 간의 격리 수준을 말한다. `lock`이랑 많이 헤깔릴 수도 있는데 `lock`은 특정 데이터를 대상으로 `lock`을 걸어 읽기 or 쓰기를 막는거지만 `isolation`은 트랜잭션 간의 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -> 비지니스 로직과 연관된다).
+`isolation`은 트랜잭션 간의 격리 수준을 말한다. `lock`이랑 많이 헤깔릴 수도 있는데 `lock`은 특정 데이터를 대상으로 `lock`을 걸어 읽기 or 쓰기 동시접근을 막는거지만 `isolation`은 트랜잭션 간의 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -> 비지니스 로직과 연관된다).
+
+쉽게 말해 일반적으로 말하는 `Lock`은 대상이 데이터, `isolation`은 대상이 트랜잭션이 되고, `isolation`의 레벨을 높게 잡으면 Lock과 동일하게 처리량이 떨어지게 된다.
 
 ## 1. READ UNCOMMITTED
 
