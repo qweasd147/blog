@@ -95,8 +95,9 @@ export default {
           {
             resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 960,
+              maxWidth: 950,
               withWebp: true,
+              quality: 100,
             },
           },
           {
