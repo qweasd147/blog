@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 28 Aug 2022 12:39:20 GMT</lastBuildDate><item><title><![CDATA[Mysql - Isolation]]></title><description><![CDATA[RDB(Mysql)에서 Transaction의 Isolation 종류 및 설명]]></description><link>https://qweasd147.github.io/posts/etc/db/isolation/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/db/isolation/</guid><pubDate>Fri, 26 Aug 2022 09:08:34 GMT</pubDate><content:encoded>&lt;h2 id=&quot;isolation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#isolation&quot; aria-label=&quot;isolation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Isolation&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 29 Aug 2022 04:19:35 GMT</lastBuildDate><item><title><![CDATA[Mysql - Isolation]]></title><description><![CDATA[RDB(Mysql)에서 Transaction의 Isolation 종류 및 설명]]></description><link>https://qweasd147.github.io/posts/etc/db/isolation/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/db/isolation/</guid><pubDate>Fri, 26 Aug 2022 09:08:34 GMT</pubDate><content:encoded>&lt;h2 id=&quot;isolation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#isolation&quot; aria-label=&quot;isolation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Isolation&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 트랜잭션 간의 격리 수준을 말한다. &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;이랑 많이 헤깔릴 수도 있는데 &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;은 특정 데이터를 대상으로 &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;을 걸어 읽기 or 쓰기 동시접근을 막는거지만 &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 트랜잭션 간의 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -&gt; 비지니스 로직과 연관된다).&lt;/p&gt;
 &lt;p&gt;쉽게 말해 일반적으로 말하는 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt;은 대상이 데이터, &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 대상이 트랜잭션이 되고, &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;의 레벨을 높게 잡으면 Lock과 동일하게 처리량이 떨어지게 된다.&lt;/p&gt;
 &lt;h2 id=&quot;1-read-uncommitted&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-read-uncommitted&quot; aria-label=&quot;1 read uncommitted permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. READ UNCOMMITTED&lt;/h2&gt;
@@ -11,39 +11,39 @@
 &lt;p&gt;커밋 안된 것을 읽을 수 있다보니, &lt;code class=&quot;language-text&quot;&gt;rollback&lt;/code&gt; 되어버리면 해당 데이터는 정합성 문제가 발생 될 수 있다. 이런 상황을 &lt;code class=&quot;language-text&quot;&gt;Dirty Read&lt;/code&gt;라고 한다.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/22c86/img_read-uncommited.png&quot;
+    href=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/c9a4d/img_read-uncommited.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 49.583333333333336%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQoz32R2W7bMBBF9SXWQoqkRFrUZjmuEzeuHXhR49o10P7/l5xCSpwgAdKHgwsOBpczcwMzdeRNiW1rdK5JhEAI8a5SIIVA5zl5XeG6FttWpDpFCImQcuy7EZiyIW8bjC8RSpHEMUmSIF4Jw/Dtg3ggkcRRQjSZEIUhYRgRRRFxHI8apNaTOUeWGZRKUVKiU0mmUjKtiOJ4NJZaoytHmhsSaxA2JzUZWkuSJGYymYyfB64ssX6KcRpjB1P1gXHaYWWd0d0taNqWumtp5x2zeUfb1njn8VOPs46gWjwyrRq0UWij0Uqhh2n0iw5mUgpya/l1vvJ8unA4njj2Jw79if75zH7Q02/Wmy1BFL/c6Y0o/PgOQ6SUpELQfj8y3/1ltrnQ/Lgw215Z7P9QPPSU6wt6WhPErwf9isHQWYstHKZ06MKRZjkqd6jMokyGMoZUG5Q2BLd0PhvdakOKw8q+anhYbbmb3zP/tmKxXLNcPLLsFsybjlk1oyzK/xve6kOC3pecL1cOh5/sdseR/aFnd+hZb5542vUs71dfG34mEQlFMaXwnsIXY0hVXVMUBTKVb33/ACoWK/3eOHhSAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 49.57983193277311%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQoz32R2W7bMBBF9SXWQoqkRFrUZjmuEzeuHXhR49o10P7/l5xCSpwgAdKHgwsOBpczcwMzdeRNiW1rdK5JhEAI8a5SIIVA5zl5XeG6FttWpDpFCImQcuy7EZiyIW8bjC8RSpHEMUmSIF4Jw/Dtg3ggkcRRQjSZEIUhYRgRRRFxHI8apNaTOUeWGZRKUVKiU0mmUjKtiOJ4NJZaoytHmhsSaxA2JzUZWkuSJGYymYyfB64ssX6KcRpjB1P1gXHaYWWd0d0taNqWumtp5x2zeUfb1njn8VOPs46gWjwyrRq0UWij0Uqhh2n0iw5mUgpya/l1vvJ8unA4njj2Jw79if75zH7Q02/Wmy1BFL/c6Y0o/PgOQ6SUpELQfj8y3/1ltrnQ/Lgw215Z7P9QPPSU6wt6WhPErwf9isHQWYstHKZ06MKRZjkqd6jMokyGMoZUG5Q2BLd0PhvdakOKw8q+anhYbbmb3zP/tmKxXLNcPLLsFsybjlk1oyzK/xve6kOC3pecL1cOh5/sdseR/aFnd+hZb5542vUs71dfG34mEQlFMaXwnsIXY0hVXVMUBTKVb33/ACoWK/3eOHhSAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;picture&gt;
           &lt;source
-              srcset=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/8ac56/img_read-uncommited.webp 240w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/d3be9/img_read-uncommited.webp 480w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/e46b2/img_read-uncommited.webp 960w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/7e370/img_read-uncommited.webp 1143w&quot;
-              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              srcset=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/24599/img_read-uncommited.webp 238w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/69f92/img_read-uncommited.webp 475w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/cebde/img_read-uncommited.webp 950w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/db205/img_read-uncommited.webp 1143w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
               type=&quot;image/webp&quot;
             /&gt;
           &lt;source
-            srcset=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/8ff5a/img_read-uncommited.png 240w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/e85cb/img_read-uncommited.png 480w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/d9199/img_read-uncommited.png 960w,
-/blog/static/e0d47f49efef57e0654aa29eaedeb271/22c86/img_read-uncommited.png 1143w&quot;
-            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            srcset=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/da2e6/img_read-uncommited.png 238w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/abae4/img_read-uncommited.png 475w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/68327/img_read-uncommited.png 950w,
+/blog/static/e0d47f49efef57e0654aa29eaedeb271/c9a4d/img_read-uncommited.png 1143w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
             type=&quot;image/png&quot;
           /&gt;
           &lt;img
             class=&quot;gatsby-resp-image-image&quot;
-            src=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/d9199/img_read-uncommited.png&quot;
+            src=&quot;/blog/static/e0d47f49efef57e0654aa29eaedeb271/68327/img_read-uncommited.png&quot;
             alt=&quot;read-uncommited-img&quot;
             title=&quot;read-uncommited-img&quot;
             loading=&quot;lazy&quot;
@@ -69,39 +69,39 @@
 &lt;h3 id=&quot;21-문제점---non-repeatable-read&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#21-%EB%AC%B8%EC%A0%9C%EC%A0%90---non-repeatable-read&quot; aria-label=&quot;21 문제점   non repeatable read permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.1 문제점 - Non Repeatable Read&lt;/h3&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/35252/img_read-commited.png&quot;
+    href=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/1ea01/img_read-commited.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 60%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAAB/0lEQVQoz32SW3LiMBBFvY9QWLZkSbb8CkwIjxAYSGxjcDL738yZkiE1TD7ycatVKul09+0OdO6wjwXprEZpSRiGCCEIhbjGUBDFMcZaVJKgC0c6r0hnJTKJELf3IoqIoojAFBW2fiTJC1TqsK7AaEVmNFopnDUoKcdPSZJgqxpbl5hZhakKTOowRhNHHi4IfPZYSuJEEmuFVAoZxygZE49RjplFJLDW0p0G+n6gPZ15b3uatuftrRnjYrH0FZboTKNMPErcWr2Xt8HDk0SzXq85HI687vasVmt+Hw68vO54Wq5wzvkKFUJEhNPwqvB/eeB0OkVKiVIKkQiEFEzDcJT3WIiQycMDk8mEQGuFMclVVmOswaQGY/7Je+eB2hg2uyOr9Su/VhueX3Ysl1uWiyVP8wWP9Ywgnz9RPj9TrZZkdUFWZrg6G+EepLUeK/NAD2/ajuHjk8vwyak/c7mdj003th6ksw06nyMzh0wdiU7ROhnX4HvLHu6VWktVVrjMURQFZVmOg/Xvg0iEiHB6Uzj64SHRba+iG9hXmTmHLXOyOsfWDls50tJh03TcBp80uP/4XV9gH/2U8zyn7T9ouoHmPNBe/vDeXjgeGrbbPZvN9gr8XtFP0LbrRt/Olw/a9sR5+KTtevaHd7a7/c/Ae9jXnR/U/fR9u34zfDLv4V8H52Y8d2s2GQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 60.08403361344538%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAAB/0lEQVQoz32SW3LiMBBFvY9QWLZkSbb8CkwIjxAYSGxjcDL738yZkiE1TD7ycatVKul09+0OdO6wjwXprEZpSRiGCCEIhbjGUBDFMcZaVJKgC0c6r0hnJTKJELf3IoqIoojAFBW2fiTJC1TqsK7AaEVmNFopnDUoKcdPSZJgqxpbl5hZhakKTOowRhNHHi4IfPZYSuJEEmuFVAoZxygZE49RjplFJLDW0p0G+n6gPZ15b3uatuftrRnjYrH0FZboTKNMPErcWr2Xt8HDk0SzXq85HI687vasVmt+Hw68vO54Wq5wzvkKFUJEhNPwqvB/eeB0OkVKiVIKkQiEFEzDcJT3WIiQycMDk8mEQGuFMclVVmOswaQGY/7Je+eB2hg2uyOr9Su/VhueX3Ysl1uWiyVP8wWP9Ywgnz9RPj9TrZZkdUFWZrg6G+EepLUeK/NAD2/ajuHjk8vwyak/c7mdj003th6ksw06nyMzh0wdiU7ROhnX4HvLHu6VWktVVrjMURQFZVmOg/Xvg0iEiHB6Uzj64SHRba+iG9hXmTmHLXOyOsfWDls50tJh03TcBp80uP/4XV9gH/2U8zyn7T9ouoHmPNBe/vDeXjgeGrbbPZvN9gr8XtFP0LbrRt/Olw/a9sR5+KTtevaHd7a7/c/Ae9jXnR/U/fR9u34zfDLv4V8H52Y8d2s2GQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;picture&gt;
           &lt;source
-              srcset=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/8ac56/img_read-commited.webp 240w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/d3be9/img_read-commited.webp 480w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/e46b2/img_read-commited.webp 960w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/01875/img_read-commited.webp 1204w&quot;
-              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              srcset=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/24599/img_read-commited.webp 238w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/69f92/img_read-commited.webp 475w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/cebde/img_read-commited.webp 950w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/dbf17/img_read-commited.webp 1204w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
               type=&quot;image/webp&quot;
             /&gt;
           &lt;source
-            srcset=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/8ff5a/img_read-commited.png 240w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/e85cb/img_read-commited.png 480w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/d9199/img_read-commited.png 960w,
-/blog/static/bc18d9b33745f17ac812a2c7ba0082be/35252/img_read-commited.png 1204w&quot;
-            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            srcset=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/da2e6/img_read-commited.png 238w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/abae4/img_read-commited.png 475w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/68327/img_read-commited.png 950w,
+/blog/static/bc18d9b33745f17ac812a2c7ba0082be/1ea01/img_read-commited.png 1204w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
             type=&quot;image/png&quot;
           /&gt;
           &lt;img
             class=&quot;gatsby-resp-image-image&quot;
-            src=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/d9199/img_read-commited.png&quot;
+            src=&quot;/blog/static/bc18d9b33745f17ac812a2c7ba0082be/68327/img_read-commited.png&quot;
             alt=&quot;img_read-commited&quot;
             title=&quot;img_read-commited&quot;
             loading=&quot;lazy&quot;
@@ -129,39 +129,39 @@
 &lt;h3 id=&quot;31-문제점---phantom-read&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#31-%EB%AC%B8%EC%A0%9C%EC%A0%90---phantom-read&quot; aria-label=&quot;31 문제점   phantom read permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3.1 문제점 - Phantom Read&lt;/h3&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 960px; &quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/159fb/img_repeatable-read.png&quot;
+    href=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/f5df9/img_repeatable-read.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 74.16666666666667%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAAACXBIWXMAAAsTAAALEwEAmpwYAAACVklEQVQ4y42T646bOhSF50EawHfAEHI9M9M5bUIICWSaRH3/h/mO7DQzOVJV9ccSWGx/Xl578+TqmmLe4J9X5E2JVAIhbpJaorVGW4NrphTLGdXLmmLm/1f3qCdTFtjaI22BtI4syz6UJAlKqSghNUIYpLIIoeJ3EesEIhMfe56qf/6leX6hmjfM1nOcs5TOUpdFPDECtSJTGdIJpBFkIiMT4pc+DUSHUmqkkMgsQ4VrSolSEq0UaZpGoLGW6eqFZrGgXq2plkv8bEVdr5j6mrIob04DMEm+kGZJPClJ0whJkl+a3K5cVTXDcGEcznS7I113ZN+PtG1P1w30+wFjbNz79LzpWLyumS4qfOXx/qaqqjDGRGCe53zfbDgOA7t9z6bdsW07htOJ7nDk69tbvFnM0OUeoy1KqltHHxQKjDbxPc0myJCjFggZMkyQMjQjZTKZfGaYpkm0+tjdxy4HoHWOollQTmvK5Rz/OsevlxR+RpmX5Db/BP5ulu4KwODOl57D4cJwuDAerxyPZ7ruRLsdaDcHhsOZsvSxPgLv9Lvu6+jQGPK8YNNuOV8vDKd3juMYs/xxudCPJ9p9j8vzW1P+BhgUMlMhPxEGOiVLE5S8rZPJF9JkEvP8I/DeFFc4TNVgK49yFary6HKKcTXWWLQt0MUMU1S/Bz6Ctb6NzX5/oe/OfPt2YLsbaXcnttuRzfee3e49rpU2f3YYMgmwppmx3bWcr2fG9x8xu67vuf78yfl6ZdPteX37Sp67v3GoKcsSZ218D39NXdfxoPCsvP8YMecc/wHgPb3cfVRXNwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 74.36974789915966%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAAACXBIWXMAAAsTAAALEwEAmpwYAAACVklEQVQ4y42T646bOhSF50EawHfAEHI9M9M5bUIICWSaRH3/h/mO7DQzOVJV9ccSWGx/Xl578+TqmmLe4J9X5E2JVAIhbpJaorVGW4NrphTLGdXLmmLm/1f3qCdTFtjaI22BtI4syz6UJAlKqSghNUIYpLIIoeJ3EesEIhMfe56qf/6leX6hmjfM1nOcs5TOUpdFPDECtSJTGdIJpBFkIiMT4pc+DUSHUmqkkMgsQ4VrSolSEq0UaZpGoLGW6eqFZrGgXq2plkv8bEVdr5j6mrIob04DMEm+kGZJPClJ0whJkl+a3K5cVTXDcGEcznS7I113ZN+PtG1P1w30+wFjbNz79LzpWLyumS4qfOXx/qaqqjDGRGCe53zfbDgOA7t9z6bdsW07htOJ7nDk69tbvFnM0OUeoy1KqltHHxQKjDbxPc0myJCjFggZMkyQMjQjZTKZfGaYpkm0+tjdxy4HoHWOollQTmvK5Rz/OsevlxR+RpmX5Db/BP5ulu4KwODOl57D4cJwuDAerxyPZ7ruRLsdaDcHhsOZsvSxPgLv9Lvu6+jQGPK8YNNuOV8vDKd3juMYs/xxudCPJ9p9j8vzW1P+BhgUMlMhPxEGOiVLE5S8rZPJF9JkEvP8I/DeFFc4TNVgK49yFary6HKKcTXWWLQt0MUMU1S/Bz6Ctb6NzX5/oe/OfPt2YLsbaXcnttuRzfee3e49rpU2f3YYMgmwppmx3bWcr2fG9x8xu67vuf78yfl6ZdPteX37Sp67v3GoKcsSZ218D39NXdfxoPCsvP8YMecc/wHgPb3cfVRXNwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;picture&gt;
           &lt;source
-              srcset=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/8ac56/img_repeatable-read.webp 240w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/d3be9/img_repeatable-read.webp 480w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/e46b2/img_repeatable-read.webp 960w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/6b83e/img_repeatable-read.webp 1019w&quot;
-              sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+              srcset=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/24599/img_repeatable-read.webp 238w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/69f92/img_repeatable-read.webp 475w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/cebde/img_repeatable-read.webp 950w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/ae3a3/img_repeatable-read.webp 1019w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
               type=&quot;image/webp&quot;
             /&gt;
           &lt;source
-            srcset=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/8ff5a/img_repeatable-read.png 240w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/e85cb/img_repeatable-read.png 480w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/d9199/img_repeatable-read.png 960w,
-/blog/static/9d76a6b62ab9fa90619941fa608a0c39/159fb/img_repeatable-read.png 1019w&quot;
-            sizes=&quot;(max-width: 960px) 100vw, 960px&quot;
+            srcset=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/da2e6/img_repeatable-read.png 238w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/abae4/img_repeatable-read.png 475w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/68327/img_repeatable-read.png 950w,
+/blog/static/9d76a6b62ab9fa90619941fa608a0c39/f5df9/img_repeatable-read.png 1019w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
             type=&quot;image/png&quot;
           /&gt;
           &lt;img
             class=&quot;gatsby-resp-image-image&quot;
-            src=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/d9199/img_repeatable-read.png&quot;
+            src=&quot;/blog/static/9d76a6b62ab9fa90619941fa608a0c39/68327/img_repeatable-read.png&quot;
             alt=&quot;img_repeatable-read&quot;
             title=&quot;img_repeatable-read&quot;
             loading=&quot;lazy&quot;
@@ -199,33 +199,33 @@ innodb_locks_unsafe_for_binlog=1&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/14060/img_serializable.png&quot;
+    href=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/44e31/img_serializable.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 27.500000000000004%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAABD0lEQVQY002PbW7jMAxEfY9iLYmkSFmxXcf92N0Evf+xXhG7LfrjYQByMOQMfb+y3t9Z73+5vMxoFUQUEcGi4u6ICmZG9Ebfdy5vV9aPf6y3d2I59w//g8GmQFujWCMXJaVEyvnUX5gpqoZYIOqINbQ2ci7knH8Ylv835pedaVuZ33ZqNdyU8IrXepjOQENFSOMf0jj+aE7pJKczcFpfiWhMEVymhpsxudPDCXdy+gpUpUal9gm/BO3asR6IO1oDq/U4OuT8hHpBaiFLPrRYQexrVjJpTNTHx1Pg84b3Tiwb9Xk5mTdaX+h9Yni+3embEbNhTfHZ8K60WfHFKFqOwNYaKnpUfVQ86n6TRtJB4hN1ZqvofQCoywAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 27.73109243697479%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAGCAYAAADDl76dAAAACXBIWXMAAAsTAAALEwEAmpwYAAABD0lEQVQY002PbW7jMAxEfY9iLYmkSFmxXcf92N0Evf+xXhG7LfrjYQByMOQMfb+y3t9Z73+5vMxoFUQUEcGi4u6ICmZG9Ebfdy5vV9aPf6y3d2I59w//g8GmQFujWCMXJaVEyvnUX5gpqoZYIOqINbQ2ci7knH8Ylv835pedaVuZ33ZqNdyU8IrXepjOQENFSOMf0jj+aE7pJKczcFpfiWhMEVymhpsxudPDCXdy+gpUpUal9gm/BO3asR6IO1oDq/U4OuT8hHpBaiFLPrRYQexrVjJpTNTHx1Pg84b3Tiwb9Xk5mTdaX+h9Yni+3embEbNhTfHZ8K60WfHFKFqOwNYaKnpUfVQ86n6TRtJB4hN1ZqvofQCoywAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;picture&gt;
           &lt;source
-              srcset=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/8ac56/img_serializable.webp 240w,
-/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/d3be9/img_serializable.webp 480w,
-/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/108af/img_serializable.webp 949w&quot;
+              srcset=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/24599/img_serializable.webp 238w,
+/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/69f92/img_serializable.webp 475w,
+/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/d22a1/img_serializable.webp 949w&quot;
               sizes=&quot;(max-width: 949px) 100vw, 949px&quot;
               type=&quot;image/webp&quot;
             /&gt;
           &lt;source
-            srcset=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/8ff5a/img_serializable.png 240w,
-/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/e85cb/img_serializable.png 480w,
-/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/14060/img_serializable.png 949w&quot;
+            srcset=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/da2e6/img_serializable.png 238w,
+/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/abae4/img_serializable.png 475w,
+/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/44e31/img_serializable.png 949w&quot;
             sizes=&quot;(max-width: 949px) 100vw, 949px&quot;
             type=&quot;image/png&quot;
           /&gt;
           &lt;img
             class=&quot;gatsby-resp-image-image&quot;
-            src=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/14060/img_serializable.png&quot;
+            src=&quot;/blog/static/d7d6f4af1d6c6fafb315ff3bf2f7aba8/44e31/img_serializable.png&quot;
             alt=&quot;img_serializable&quot;
             title=&quot;img_serializable&quot;
             loading=&quot;lazy&quot;
