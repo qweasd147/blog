@@ -1,14 +1,14 @@
 ---
-title: 'Terraform - Resource'
-date: '2022-04-15T01:28:28.137Z'
-template: 'post'
+title: "Terraform - Resource"
+date: "2022-04-15T01:28:28.137Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'terraform'
-  - 'iac'
-  - 'aws'
-description: '테라폼으로 provider(aws) 서비스를 사용하려고 할때 + Meta-Arguments'
+  - "terraform"
+  - "iac"
+  - "aws"
+description: "테라폼으로 provider(aws) 서비스를 사용하려고 할때 + Meta-Arguments"
 ---
 
 ## 1. Resource

@@ -1,15 +1,15 @@
 ---
-title: 'Spring Cloud - Zuul'
-date: '2020-09-25T07:19:37.572Z'
-template: 'post'
+title: "Spring Cloud - Zuul"
+date: "2020-09-25T07:19:37.572Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'cloud'
-  - 'msa'
-  - 'gateway'
-description: 'MSA 환경에서 API-Gateway를 담당'
+  - "spring"
+  - "cloud"
+  - "msa"
+  - "gateway"
+description: "MSA 환경에서 API-Gateway를 담당"
 ---
 
 여기서 설명할 내용 및 샘플은 [spring-cloud zuul 샘플](https://github.com/qweasd147/spring-cloud/tree/master/api-gateway) 여기서 확인 가능

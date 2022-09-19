@@ -1,10 +1,10 @@
 ---
 title: Generic
-date: '2016-12-01T22:40:32.169Z'
-template: 'post'
+date: "2016-12-01T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'java'
-description: '타입의 정확성과 유연함을 갖춰야 할때'
+category: "java"
+description: "타입의 정확성과 유연함을 갖춰야 할때"
 ---
 
 # Generics.

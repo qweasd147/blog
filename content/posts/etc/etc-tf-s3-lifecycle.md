@@ -1,15 +1,15 @@
 ---
-title: 'aws - S3 Life cycle'
-date: '2022-06-20T01:35:28.075Z'
-template: 'post'
+title: "aws - S3 Life cycle"
+date: "2022-06-20T01:35:28.075Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'terraform'
-  - 'iac'
-  - 'aws'
-  - 's3'
-description: 's3의 lifecycle 기본 설명 + 테라폼으로 구현'
+  - "terraform"
+  - "iac"
+  - "aws"
+  - "s3"
+description: "s3의 lifecycle 기본 설명 + 테라폼으로 구현"
 ---
 
 ## 1. S3 Storage Class

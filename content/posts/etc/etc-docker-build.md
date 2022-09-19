@@ -1,14 +1,14 @@
 ---
-title: 'Docker - build cache'
-date: '2020-06-24T01:14:51.261Z'
-template: 'post'
+title: "Docker - build cache"
+date: "2020-06-24T01:14:51.261Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'docker'
-  - 'devOps'
-  - 'infra'
-description: 'Docker image 생성 시 레이어 캐시를 유도하여 빠르게 빌드 & 멀티 스테이지로 빌드 환경, 실행환경 분리'
+  - "docker"
+  - "devOps"
+  - "infra"
+description: "Docker image 생성 시 레이어 캐시를 유도하여 빠르게 빌드 & 멀티 스테이지로 빌드 환경, 실행환경 분리"
 ---
 
 # Docker image 구조

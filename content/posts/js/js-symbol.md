@@ -1,13 +1,13 @@
 ---
-title: 'Symbol'
-date: '2021-09-30T15:06:06.220Z'
-template: 'post'
+title: "Symbol"
+date: "2021-09-30T15:06:06.220Z"
+template: "post"
 draft: false
-category: 'javascript'
+category: "javascript"
 tags:
-  - 'js'
-  - 'iterator'
-description: '유일한 프로퍼티 키값을 만들고 싶을때.'
+  - "js"
+  - "iterator"
+description: "유일한 프로퍼티 키값을 만들고 싶을때."
 ---
 
 # Symbol
@@ -17,15 +17,15 @@ description: '유일한 프로퍼티 키값을 만들고 싶을때.'
 js에서 몇 안되는 원시타입 중 하나. `Symbol`을 통해 생성되면 항상 유니크한 식별자가 보장된다(예외 경우도 있다)
 
 ```javascript
-Symbol('test') == Symbol('test'); //false
+Symbol("test") == Symbol("test"); //false
 
 const obj = {};
 
-const keyA1 = Symbol('A');
-const keyA2 = Symbol('A');
+const keyA1 = Symbol("A");
+const keyA2 = Symbol("A");
 
-obj[keyA1] = 'A1';
-obj[keyA2] = 'A2';
+obj[keyA1] = "A1";
+obj[keyA2] = "A2";
 
 console.log(obj);
 /*
@@ -47,11 +47,11 @@ console.log(obj);
 ```javascript
 const obj = {};
 
-const keyA1 = Symbol.for('A');
-const keyA2 = Symbol.for('A');
+const keyA1 = Symbol.for("A");
+const keyA2 = Symbol.for("A");
 
-obj[keyA1] = 'A1';
-obj[keyA2] = 'A2';
+obj[keyA1] = "A1";
+obj[keyA2] = "A2";
 
 console.log(obj);
 /*

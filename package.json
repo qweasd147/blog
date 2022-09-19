@@ -13,6 +13,7 @@
     "build": "npm run clean && gatsby build",
     "clean": "rimraf .cache public",
     "format": "npm run format:ts && npm run format:scss",
+    "format:content": "prettier --write \"content/**/*.md\"",
     "format:scss": "stylelint \"src/**/*.scss\" --fix",
     "format:ts": "eslint \"src\" --ext .tsx,.ts --fix && prettier --write .",
     "lint": "npm run lint:ts && npm run lint:scss",

@@ -1,10 +1,10 @@
 ---
 title: Kotlin - 변성
-date: '2021-04-16T08:36:05.678Z'
-template: 'post'
+date: "2021-04-16T08:36:05.678Z"
+template: "post"
 draft: false
-category: 'java'
-description: 'generic 타입의 상위, 하위 타입의 제한 사항 및 일부 유연하게 사용하고 싶을때'
+category: "java"
+description: "generic 타입의 상위, 하위 타입의 제한 사항 및 일부 유연하게 사용하고 싶을때"
 ---
 
 ## 변성

@@ -1,14 +1,14 @@
 ---
-title: 'RabbitMQ'
-date: '2020-05-26T00:36:37.672Z'
-template: 'post'
+title: "RabbitMQ"
+date: "2020-05-26T00:36:37.672Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'messagequeue'
-  - 'mq'
-  - 'rabbitmq'
-description: '메세지 큐를 사용하는 이유 및 사용 방법. with RabbitMQ'
+  - "messagequeue"
+  - "mq"
+  - "rabbitmq"
+description: "메세지 큐를 사용하는 이유 및 사용 방법. with RabbitMQ"
 ---
 
 # RabbitMQ.

@@ -1,16 +1,16 @@
 ---
-title: 'AWS - Cloud Front - 기본'
-date: '2020-08-10T05:58:14.024Z'
-template: 'post'
+title: "AWS - Cloud Front - 기본"
+date: "2020-08-10T05:58:14.024Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'cloudfront'
-  - 'cdn'
-  - 'web server'
-  - 'infra'
-description: 'Cloud Front를 사용해서 CDN 서버 구축'
+  - "aws"
+  - "cloudfront"
+  - "cdn"
+  - "web server"
+  - "infra"
+description: "Cloud Front를 사용해서 CDN 서버 구축"
 ---
 
 # CloudFront

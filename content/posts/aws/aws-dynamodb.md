@@ -1,14 +1,14 @@
 ---
-title: 'Dynamo DB'
-date: '2016-02-07T22:40:32.169Z'
-template: 'post'
+title: "Dynamo DB"
+date: "2016-02-07T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'nosql'
-  - 'db'
-description: 'aws의 No SQL 완전관리형 DB'
+  - "aws"
+  - "nosql"
+  - "db"
+description: "aws의 No SQL 완전관리형 DB"
 ---
 
 # Dynamodb

@@ -1,14 +1,14 @@
 ---
-title: 'Terraform - value/type'
-date: '2022-05-03T05:29:50.878Z'
-template: 'post'
+title: "Terraform - value/type"
+date: "2022-05-03T05:29:50.878Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'terraform'
-  - 'iac'
-  - 'provider'
-description: '테라폼 입력/출력값 및 type 종류'
+  - "terraform"
+  - "iac"
+  - "provider"
+description: "테라폼 입력/출력값 및 type 종류"
 ---
 
 테라폼에서 사용되는 값(입출력 값)들을 기반으로 인프라를 구성 할 수가 있고, 생성 된 리소스를 기반으로 또 다른 리소스를 구성 할 수가 있다.

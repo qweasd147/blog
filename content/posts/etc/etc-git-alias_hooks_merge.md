@@ -1,14 +1,14 @@
 ---
-title: 'Git - 알면 유용한 명령어들'
-date: '2022-06-18T16:04:47.302Z'
-template: 'post'
+title: "Git - 알면 유용한 명령어들"
+date: "2022-06-18T16:04:47.302Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'git'
-  - 'alias'
-  - 'hooks'
-description: 'alias, hooks, rebase 중 merge commit 유지하기'
+  - "git"
+  - "alias"
+  - "hooks"
+description: "alias, hooks, rebase 중 merge commit 유지하기"
 ---
 
 # 1. alias

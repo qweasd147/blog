@@ -1,15 +1,15 @@
 ---
-title: 'AWS - Lambda@Edge - 기본'
-date: '2021-01-14T02:31:18.369Z'
-template: 'post'
+title: "AWS - Lambda@Edge - 기본"
+date: "2021-01-14T02:31:18.369Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'cloudfront'
-  - 'cdn'
-  - 'lambda'
-description: 'Cloud Front, Origin Server 서버 요청 전후로 Lambda 함수 실행'
+  - "aws"
+  - "cloudfront"
+  - "cdn"
+  - "lambda"
+description: "Cloud Front, Origin Server 서버 요청 전후로 Lambda 함수 실행"
 ---
 
 ## Lambda@Edge

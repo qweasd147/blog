@@ -1,14 +1,14 @@
 ---
-title: 'Terraform - 기본'
-date: '2022-03-30T05:56:58.276Z'
-template: 'post'
+title: "Terraform - 기본"
+date: "2022-03-30T05:56:58.276Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'terraform'
-  - 'iac'
-  - 'provider'
-description: '테라폼 기본 설명 + Provider 역할'
+  - "terraform"
+  - "iac"
+  - "provider"
+description: "테라폼 기본 설명 + Provider 역할"
 ---
 
 예전엔 인프라 구성이라고 해봤자 그냥 리눅스 서버 한대 올리고 그곳에 모든 어플리케이션(웹서버, db, was 등등)을 설치하고 사용해서 프로비저닝에 대한 별다른 불편함을 느끼지 못했다. 근데 요즘엔 클라우드 서비스 중에서 `IaaS`를 제공해 주는곳도 많고 그 종류도 다양해져서, 그 사이 연관관계의 복잡함, 한번 설치하고 다른곳에 똑같이 설치하는데에도 실수나 시간도 많이 걸리는 단점이 눈에 띄게 생겨났다. 이런 서비스들 설치와 연관관계 등을 소스코드로 관리하고 설치 할 수 있다면 휴먼에러나 시간을 줄일 수가 있는데, 이런 방식을 IaC(`Infrastructure as Code`)라고 하며, `Terraform`은 `IaC`를 위한 도구로 사용된다.

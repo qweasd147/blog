@@ -1,15 +1,15 @@
 ---
-title: 'Spring Cloud - Config Server'
-date: '2020-10-30T00:58:25.297Z'
-template: 'post'
+title: "Spring Cloud - Config Server"
+date: "2020-10-30T00:58:25.297Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'cloud'
-  - 'msa'
-  - 'config'
-description: 'MSA 환경에서 여러 설정값을 한곳에서 관리'
+  - "spring"
+  - "cloud"
+  - "msa"
+  - "config"
+description: "MSA 환경에서 여러 설정값을 한곳에서 관리"
 ---
 
 여기서 설명할 내용 및 샘플은 [spring-cloud MSA 샘플](https://github.com/qweasd147/spring-cloud/tree/master/config-server) 여기서 확인 가능

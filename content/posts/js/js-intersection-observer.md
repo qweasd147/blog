@@ -1,14 +1,14 @@
 ---
-title: 'InterSection Observer'
-date: '2020-11-18T01:32:47.518Z'
-template: 'post'
+title: "InterSection Observer"
+date: "2020-11-18T01:32:47.518Z"
+template: "post"
 draft: false
-category: 'javascript'
+category: "javascript"
 tags:
-  - 'js'
-  - 'react'
-  - 'event driven'
-description: 'event driven 기반으로 하는 dom 노출 여부를 감지하는 Observer'
+  - "js"
+  - "react"
+  - "event driven"
+description: "event driven 기반으로 하는 dom 노출 여부를 감지하는 Observer"
 ---
 
 블로그를 하나씩 개선하면서 이번에 처음 `IntersectionObserver`를 써봤는데 너무 편해서 기록
@@ -17,8 +17,7 @@ description: 'event driven 기반으로 하는 dom 노출 여부를 감지하는
 
 `IntersectionObserver`는 기본 설정값을 기준으로 설명하면 `viewport`, 그니까 현재 화면에 보여지는 영역에 특정 `dom element`가 노출되거나 사라지는 시점을 감지하는 `Observer`이다
 
-보통 무한 스크롤에 많이 쓰이긴 하지만 내 블로그에서 쓰인 경험을 바탕으로 설명하자면 PC 버전 기준으로 문서를 거의 끝까지 읽으면 우측 하단에 `Up` 버튼이 표출되는 기능이 있다.
-`IntersectionObserver`적용 전에는 스크롤 이벤트를 추가해서 문서 위치 정보를 판단해서 `Up`버튼 표출 여부를 결정했다
+보통 무한 스크롤에 많이 쓰이긴 하지만 내 블로그에서 쓰인 경험을 바탕으로 설명하자면 PC 버전 기준으로 문서를 거의 끝까지 읽으면 우측 하단에 `Up` 버튼이 표출되는 기능이 있다. `IntersectionObserver`적용 전에는 스크롤 이벤트를 추가해서 문서 위치 정보를 판단해서 `Up`버튼 표출 여부를 결정했다
 
 기존 코드 일부분
 
@@ -40,8 +39,8 @@ const handleScroll = () => {
 };
 
 useEffect(() => {
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
 }, []);
 ```
 

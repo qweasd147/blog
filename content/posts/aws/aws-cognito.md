@@ -1,14 +1,14 @@
 ---
-title: 'AWS - Cognito'
-date: '2020-08-03T02:09:50.508Z'
-template: 'post'
+title: "AWS - Cognito"
+date: "2020-08-03T02:09:50.508Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'cognito'
-  - 'oauth'
-description: 'cognito를 써서 독립적인 인증서버 구축 & user pool로 data 마이그레이션 구현'
+  - "aws"
+  - "cognito"
+  - "oauth"
+description: "cognito를 써서 독립적인 인증서버 구축 & user pool로 data 마이그레이션 구현"
 ---
 
 # Cognito
@@ -46,7 +46,7 @@ Cognito를 사용함으로써 생각하는 장점
 구현한 소스는 기존 `data source`가 따로 없으므로, 그냥 요청 이메일 도메인이 `google`이면 사용자 정보를 추가하도록 구성하였다.
 
 ```javascript
-if (!email?.endsWith('gmail.com')) {
+if (!email?.endsWith("gmail.com")) {
   callback(null, event);
   return;
 }
@@ -54,11 +54,11 @@ if (!email?.endsWith('gmail.com')) {
 //이메일 도메인이 google인 것들만 마이그레이션 허용
 event.response.userAttributes = {
   email: event.userName,
-  email_verified: 'true',
-  name: 'temp_name',
+  email_verified: "true",
+  name: "temp_name",
 };
-event.response.finalUserStatus = 'CONFIRMED';
-event.response.messageAction = 'SUPPRESS';
+event.response.finalUserStatus = "CONFIRMED";
+event.response.messageAction = "SUPPRESS";
 
 context.succeed(event);
 ```

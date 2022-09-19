@@ -1,13 +1,13 @@
 ---
-title: 'Virtual Scroll'
-date: '2022-02-15T01:04:52.214Z'
-template: 'post'
+title: "Virtual Scroll"
+date: "2022-02-15T01:04:52.214Z"
+template: "post"
 draft: false
-category: 'javascript'
+category: "javascript"
 tags:
-  - 'js'
-  - 'react'
-description: '화면에 너무 많은 아이템이 그려져 dom 그려지는게 느려질 때'
+  - "js"
+  - "react"
+description: "화면에 너무 많은 아이템이 그려져 dom 그려지는게 느려질 때"
 ---
 
 구현 된 샘플은 [여기서](https://github.com/qweasd147/ReactStudy/tree/master/virtual-scroll) 직접 확인이 가능하다.

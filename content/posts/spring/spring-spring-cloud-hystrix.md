@@ -1,14 +1,14 @@
 ---
-title: 'Spring Cloud - Hystrix'
-date: '2020-10-15T01:30:21.250Z'
-template: 'post'
+title: "Spring Cloud - Hystrix"
+date: "2020-10-15T01:30:21.250Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'cloud'
-  - 'msa'
-description: 'MSA 환경에서 에러 전파 방지. +(Feign, Ribbon, Circuit Breaker) 셋팅'
+  - "spring"
+  - "cloud"
+  - "msa"
+description: "MSA 환경에서 에러 전파 방지. +(Feign, Ribbon, Circuit Breaker) 셋팅"
 ---
 
 여기서 설명할 내용 및 샘플은 [spring-cloud MSA 샘플](https://github.com/qweasd147/spring-cloud/tree/master/service-a) 여기서 확인 가능

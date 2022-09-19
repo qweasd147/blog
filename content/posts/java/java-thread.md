@@ -1,13 +1,13 @@
 ---
-title: 'Thread'
-date: '2016-02-05T22:40:32.169Z'
-template: 'post'
+title: "Thread"
+date: "2016-02-05T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'thread'
-  - 'java'
-description: 'Thread'
+  - "thread"
+  - "java"
+description: "Thread"
 ---
 
 # Thread

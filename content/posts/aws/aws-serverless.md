@@ -1,15 +1,15 @@
 ---
-title: 'Serverless'
-date: '2016-02-08T22:40:32.169Z'
-template: 'post'
+title: "Serverless"
+date: "2016-02-08T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'serverless'
-  - 'aws'
-  - 'lambda'
-  - 'nodejs'
-description: '서버 리소스 관리가 귀찮을때'
+  - "serverless"
+  - "aws"
+  - "lambda"
+  - "nodejs"
+description: "서버 리소스 관리가 귀찮을때"
 ---
 
 # serverless

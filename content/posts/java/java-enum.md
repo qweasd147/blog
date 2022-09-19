@@ -1,14 +1,14 @@
 ---
 title: Enum
-date: '2016-09-01T23:46:37.121Z'
-template: 'post'
+date: "2016-09-01T23:46:37.121Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'java'
-  - 'enum'
-description: 'enum 정의'
-socialImage: '/media/image-2.jpg'
+  - "java"
+  - "enum"
+description: "enum 정의"
+socialImage: "/media/image-2.jpg"
 ---
 
 # enum.

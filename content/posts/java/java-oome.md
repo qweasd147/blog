@@ -1,15 +1,15 @@
 ---
-title: 'Java OOME 종류'
-date: '2022-02-10T05:55:23.624Z'
-template: 'post'
+title: "Java OOME 종류"
+date: "2022-02-10T05:55:23.624Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'jvm'
-  - 'java'
-  - 'heap'
-  - 'GC'
-description: 'OOME(Out Of Memory Error) 종류 및 발생 조건'
+  - "jvm"
+  - "java"
+  - "heap"
+  - "GC"
+description: "OOME(Out Of Memory Error) 종류 및 발생 조건"
 ---
 
 미리 말하면 샘플 코드들은 OOME 발생을 쉽게 하기 위해 힙/메타스페이스 메모리 공간을 상당히 적게 만들고 테스트 하였다

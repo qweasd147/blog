@@ -1,13 +1,13 @@
 ---
-title: 'Generator'
-date: '2020-05-21T00:37:15.710Z'
-template: 'post'
+title: "Generator"
+date: "2020-05-21T00:37:15.710Z"
+template: "post"
 draft: false
-category: 'javascript'
+category: "javascript"
 tags:
-  - 'js'
-  - 'async'
-description: '비동기 로직을 동기식으로 & 메세징 통신을 하고 싶을때'
+  - "js"
+  - "async"
+description: "비동기 로직을 동기식으로 & 메세징 통신을 하고 싶을때"
 ---
 
 # Generator.
@@ -24,9 +24,9 @@ javascript에서 기본적인 함수의 완전 실행이 아닌 중간중간 `ge
 
 ```javascript
 function* foo() {
-  console.log('point 1');
+  console.log("point 1");
   yield;
-  console.log('point 2');
+  console.log("point 2");
 }
 
 var _it = foo();
@@ -43,7 +43,7 @@ _it.next(); //point 2
 function* bar() {
   var _bar = 10;
   yield _bar;
-  console.log('end');
+  console.log("end");
 }
 
 var _barIt = bar();
@@ -78,12 +78,12 @@ console.log(res.value);
 function* genWithTryCath() {
   var cnt = 1;
   while (true) {
-    console.log('break ', cnt);
+    console.log("break ", cnt);
     cnt++;
     try {
       yield;
     } catch (e) {
-      console.log('error 감지. ', e);
+      console.log("error 감지. ", e);
     }
   }
 }
@@ -92,7 +92,7 @@ var it1 = genWithTryCath();
 
 it1.next(); //break 1
 it1.next(); //break 2
-it1.throw('외부에서 에러 발생!'); //error 감지.  외부에서 에러 발생!
+it1.throw("외부에서 에러 발생!"); //error 감지.  외부에서 에러 발생!
 //break 3
 console.log(it1.return().done); //true
 ```
@@ -105,12 +105,12 @@ console.log(it1.return().done); //true
 function* genWithTryCath() {
   var cnt = 1;
   while (true) {
-    console.log('break ', cnt);
+    console.log("break ", cnt);
     cnt++;
     try {
       yield;
     } catch (e) {
-      console.log('error 감지. ', e);
+      console.log("error 감지. ", e);
     }
   }
 }

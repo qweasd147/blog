@@ -1,15 +1,15 @@
 ---
-title: 'Lambda'
-date: '2016-02-02T22:40:32.169Z'
-template: 'post'
+title: "Lambda"
+date: "2016-02-02T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'lambda'
-  - 'java'
-  - 'functional'
-  - 'function'
-description: '중요한 로직만 작성하여 가독성을 높이고 functional interface에 적합하게 사용하고 싶을때'
+  - "lambda"
+  - "java"
+  - "functional"
+  - "function"
+description: "중요한 로직만 작성하여 가독성을 높이고 functional interface에 적합하게 사용하고 싶을때"
 ---
 
 # Lambda.
@@ -29,8 +29,6 @@ description: '중요한 로직만 작성하여 가독성을 높이고 functional
 java에선 기본적으로 함수 개념이 없다. 하지만 함수를 주고 받아야 하기 때문에 조금 편법을 사용한다.
 
 interface에 하나의 메소드만 선언 해 놓고, 이 메소드의 구현하여 interface를 주고 받는 것이다.
-  
-
 
 ```java
 public interface LambdaInterface {

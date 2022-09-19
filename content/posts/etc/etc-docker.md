@@ -1,14 +1,14 @@
 ---
-title: 'Docker - 기본'
-date: '2020-06-10T00:40:53.901Z'
-template: 'post'
+title: "Docker - 기본"
+date: "2020-06-10T00:40:53.901Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'docker'
-  - 'devOps'
-  - 'infra'
-description: '배포 환경을 쉽게 구축하고 서버 확장을 유연하게 하고 싶을때 & 컴퓨터 리소스를 효율적으로 사용하고 싶을 때'
+  - "docker"
+  - "devOps"
+  - "infra"
+description: "배포 환경을 쉽게 구축하고 서버 확장을 유연하게 하고 싶을때 & 컴퓨터 리소스를 효율적으로 사용하고 싶을 때"
 ---
 
 # Docker

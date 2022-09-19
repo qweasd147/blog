@@ -1,14 +1,14 @@
 ---
-title: 'Spring Cloud - 기본 설명'
-date: '2020-09-03T00:55:55.498Z'
-template: 'post'
+title: "Spring Cloud - 기본 설명"
+date: "2020-09-03T00:55:55.498Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'cloud'
-  - 'msa'
-description: 'MSA 환경에서 여러 어플리케이션을 효과적으로 개발 및 관리'
+  - "spring"
+  - "cloud"
+  - "msa"
+description: "MSA 환경에서 여러 어플리케이션을 효과적으로 개발 및 관리"
 ---
 
 여기서 설명할 내용 및 샘플은 [spring-cloud 샘플](https://github.com/qweasd147/spring-cloud) 여기서 확인 가능

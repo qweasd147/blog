@@ -1,12 +1,12 @@
 ---
-title: '구조 분해 & 할당'
-date: '2021-04-06T00:41:24.507Z'
-template: 'post'
+title: "구조 분해 & 할당"
+date: "2021-04-06T00:41:24.507Z"
+template: "post"
 draft: false
-category: 'javascript'
+category: "javascript"
 tags:
-  - 'js'
-description: 'Object를 그때그때 유연하게 spread 하여 사용'
+  - "js"
+description: "Object를 그때그때 유연하게 spread 하여 사용"
 ---
 
 # Destructuring

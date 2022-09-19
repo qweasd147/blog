@@ -1,15 +1,15 @@
 ---
-title: 'AWS - Lambda@Edge - 이미지 리사이징'
-date: '2021-01-22T02:48:08.854Z'
-template: 'post'
+title: "AWS - Lambda@Edge - 이미지 리사이징"
+date: "2021-01-22T02:48:08.854Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'cloudfront'
-  - 'cdn'
-  - 'lambda'
-description: 'Cloud Front, Lambda를 활용해서 이미지 실시간 리사이징'
+  - "aws"
+  - "cloudfront"
+  - "cdn"
+  - "lambda"
+description: "Cloud Front, Lambda를 활용해서 이미지 실시간 리사이징"
 ---
 
 ## Lambda@Edge 활용한 이미지 리사이징

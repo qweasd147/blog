@@ -1,14 +1,14 @@
 ---
-title: 'Stream'
-date: '2016-02-03T22:40:32.169Z'
-template: 'post'
+title: "Stream"
+date: "2016-02-03T22:40:32.169Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'stream'
-  - 'java'
-  - 'functional'
-description: '많은 데이터를 손쉽게 처리'
+  - "stream"
+  - "java"
+  - "functional"
+description: "많은 데이터를 손쉽게 처리"
 ---
 
 # Stream.

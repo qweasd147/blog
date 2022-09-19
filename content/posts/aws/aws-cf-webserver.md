@@ -1,16 +1,16 @@
 ---
-title: 'AWS - Cloud Front - WebServer'
-date: '2020-08-12T07:52:44.005Z'
-template: 'post'
+title: "AWS - Cloud Front - WebServer"
+date: "2020-08-12T07:52:44.005Z"
+template: "post"
 draft: false
-category: 'aws'
+category: "aws"
 tags:
-  - 'aws'
-  - 'cloudfront'
-  - 'cdn'
-  - 'web server'
-  - 'infra'
-description: 'Cloud Front를 써서 React로 만들어진 어플리케이션 배포'
+  - "aws"
+  - "cloudfront"
+  - "cdn"
+  - "web server"
+  - "infra"
+description: "Cloud Front를 써서 React로 만들어진 어플리케이션 배포"
 ---
 
 # 웹서버 구축

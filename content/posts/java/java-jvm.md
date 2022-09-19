@@ -1,15 +1,15 @@
 ---
-title: 'JVM Heap 구조 및 GC'
-date: '2022-02-03T09:47:11.834Z'
-template: 'post'
+title: "JVM Heap 구조 및 GC"
+date: "2022-02-03T09:47:11.834Z"
+template: "post"
 draft: false
-category: 'java'
+category: "java"
 tags:
-  - 'jvm'
-  - 'java'
-  - 'heap'
-  - 'GC'
-description: 'JVM에서 Heap & Metaspace, GC(Garbage Collector) 이해와 종류'
+  - "jvm"
+  - "java"
+  - "heap"
+  - "GC"
+description: "JVM에서 Heap & Metaspace, GC(Garbage Collector) 이해와 종류"
 ---
 
 개발 하면서 메모리 구조를 알면 좋을 때가 종종 있다. 개인적으로 일하면서 서버가 터져 버렸을 때(...) 어디서 어떻게 터진지 알아야 빠르게 원인 및 대처가 가능한데 이러한 구조를 몰랐을 땐 `Heap`이 왜 터지는지, `Metaspace`는 또 뭔지 당황했었던 기억이 있다. 물론 알아도 당황스럽긴 하지만 빠른 원인 파악에 도움되고 추가로 이러한 것도 알야야 메모리 튜닝이 가능하니까 한번쯤 공부해보고 추가로 GC가 무엇인지, 자바 버전별 어떤 GC를 쓰고 있는지 아는게 꽤 도움이 되는거 같다(운영중인 서비스의 java 버전업 동기부여로 좋은거 같다)

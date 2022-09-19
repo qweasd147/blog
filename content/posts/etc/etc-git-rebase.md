@@ -1,13 +1,13 @@
 ---
-title: 'Git Rebase'
-date: '2020-06-09T00:50:06.996Z'
-template: 'post'
+title: "Git Rebase"
+date: "2020-06-09T00:50:06.996Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'git'
-  - 'rebase'
-description: '소스를 병합 하고 싶을때, 아니면 최신 코드와 동기화 하고 싶을 때'
+  - "git"
+  - "rebase"
+description: "소스를 병합 하고 싶을때, 아니면 최신 코드와 동기화 하고 싶을 때"
 ---
 
 # Rebase

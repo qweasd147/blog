@@ -1,15 +1,15 @@
 ---
-title: 'OAuth2 with spring boot'
-date: '2020-04-27T01:07:59.877Z'
-template: 'post'
+title: "OAuth2 with spring boot"
+date: "2020-04-27T01:07:59.877Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'oauth'
-  - 'oauth2'
-  - 'auth'
-description: 'OAuth2 + Spring boot를 사용하여 인증 Provider 제작 및 고려 사항'
+  - "spring"
+  - "oauth"
+  - "oauth2"
+  - "auth"
+description: "OAuth2 + Spring boot를 사용하여 인증 Provider 제작 및 고려 사항"
 ---
 
 `OAuth2.0`을 `Spring Security OAuth`에서 제공해주는 라이브러리를 사용해 구현 및 필요한 설명 추가.

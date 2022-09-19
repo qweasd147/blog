@@ -1,14 +1,14 @@
 ---
-title: 'JPA'
-date: '2020-11-27T03:08:42.258Z'
-template: 'post'
+title: "JPA"
+date: "2020-11-27T03:08:42.258Z"
+template: "post"
 draft: false
-category: 'spring'
+category: "spring"
 tags:
-  - 'spring'
-  - 'jpa'
-  - 'orm'
-description: 'Spring DATA JPA & QueryDSL를 써보면서 느낀 주의점 & 고난'
+  - "spring"
+  - "jpa"
+  - "orm"
+description: "Spring DATA JPA & QueryDSL를 써보면서 느낀 주의점 & 고난"
 ---
 
 여기서 설명할 내용 및 샘플은 [JPA 샘플](https://github.com/qweasd147/springboot-jpa) 여기서 확인 가능

@@ -1,14 +1,14 @@
 ---
-title: 'Mysql Optimizer'
-date: '2021-12-30T13:17:17.507Z'
-template: 'post'
+title: "Mysql Optimizer"
+date: "2021-12-30T13:17:17.507Z"
+template: "post"
 draft: false
-category: 'etc'
+category: "etc"
 tags:
-  - 'db'
-  - 'mysql'
-  - 'optimizer'
-description: 'mysql 옵티마이저의 함정 요소. 옵티마이저를 너무 믿으면 안되는 이유'
+  - "db"
+  - "mysql"
+  - "optimizer"
+description: "mysql 옵티마이저의 함정 요소. 옵티마이저를 너무 믿으면 안되는 이유"
 ---
 
 ### 사전지식 1. 옵티마이저
