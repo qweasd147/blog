@@ -59,7 +59,7 @@
         gtag('config', '', {"send_page_view":false});
       }
       </script><link rel="sitemap" type="application/xml" href="/blog/sitemap/sitemap-index.xml"/><link rel="icon" href="/blog/favicon-32x32.png?v=a0e002f394141892bab003cbb7dcfd9b" type="image/png"/><link rel="manifest" href="/blog/manifest.webmanifest" crossorigin="anonymous"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png?v=a0e002f394141892bab003cbb7dcfd9b"/><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><title data-react-helmet="true">Mysql - Isolation - Blog by joohyung</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--LJM9v"><div class="Post-module--post--OplAV"><a class="Post-module--button--Ufj7H">뒤로가기</a><div class="Post-module--content--PG5Wp"><div class="Content-module--content--gNWBo"><h1 class="Content-module--title--CVBL0">Mysql - Isolation</h1><div class="Content-module--body--cmwhi"><h2 id="isolation" style="position:relative;"><a href="#isolation" aria-label="isolation permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Isolation</h2>
-<p><code class="language-text">isolation</code>은 트랜잭션 간의 격리 수준을 말한다. <code class="language-text">lock</code>이랑 많이 헤깔릴 수도 있는데 <code class="language-text">lock</code>은 특정 데이터를 대상으로 <code class="language-text">lock</code>을 걸어 읽기 or 쓰기 동시접근을 막는거지만 <code class="language-text">isolation</code>은 트랜잭션 간의 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -> 비지니스 로직과 연관된다).</p>
+<p><code class="language-text">isolation</code>은 트랜잭션 간의 격리 수준을 말한다. <code class="language-text">lock</code>이랑 많이 헤깔릴 수도 있는데 <code class="language-text">lock</code>은 특정 데이터를 대상으로 <code class="language-text">lock</code>을 걸어 읽기 또는 쓰기 동시접근을 막는거지만 <code class="language-text">isolation</code>은 트랜잭션 간 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -> 비지니스 로직과 연관된다).</p>
 <p>쉽게 말해 일반적으로 말하는 <code class="language-text">Lock</code>은 대상이 데이터, <code class="language-text">isolation</code>은 대상이 트랜잭션이 되고, <code class="language-text">isolation</code>의 레벨을 높게 잡으면 Lock과 동일하게 처리량이 떨어지게 된다.</p>
 <h2 id="1-read-uncommitted" style="position:relative;"><a href="#1-read-uncommitted" aria-label="1 read uncommitted permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. READ UNCOMMITTED</h2>
 <p>커밋 안 된 것을 다른 트랜잭션에서 읽을 수 있다. 사실상 <code class="language-text">Isolation</code>가 없는 상태이다.</p>
@@ -187,6 +187,75 @@
 <p>트랜잭션 단위로 동일한 select 조건이라면 동일한 결과가 나올 수 있게 보장 해준다. 자연스럽게 <code class="language-text">Non Repeatable Read</code>문제가 해결 되지만 DB 내부적으로 <code class="language-text">트랜잭션 ID</code>에 따른 <code class="language-text">snapshot</code>을 떠서 관리하고, 이 버전보다 높은 결과는 반영하지 않게 된다(조회 불가). 이에 따라 DB 부하가 있을 수 있다.</p>
 <div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token keyword">SET</span> <span class="token keyword">SESSION</span> <span class="token keyword">TRANSACTION</span> <span class="token keyword">ISOLATION</span> <span class="token keyword">LEVEL</span> <span class="token keyword">REPEATABLE</span> <span class="token keyword">READ</span><span class="token punctuation">;</span></code></pre></div>
 <h3 id="31-문제점---phantom-read" style="position:relative;"><a href="#31-%EB%AC%B8%EC%A0%9C%EC%A0%90---phantom-read" aria-label="31 문제점   phantom read permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.1 문제점 - Phantom Read</h3>
+<p>먼저 데이터 구조</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">| idx | title           | contents           |
+| --- | --------------- | ------------------ |
+| 4   | article title 4 | article contents 4 |
+| 5   | article title 5 | article contents 5 |
+| 8   | article title 8 | article contents 8 |
+| 9   | article title 9 | article contents 9 |</code></pre></div>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/d166f696c042decde3067c8bcdfa020d/faa7d/img_phantom-read.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 59.66386554621849%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAMCAYAAABiDJ37AAAACXBIWXMAAAsTAAALEwEAmpwYAAAB90lEQVQoz4WT65KiMBSEfRAFQu5B5KIYFJ2LqLPv/0LfFqmaqZkfu/Oj63CSrj5Jd1iJUiC9R9cVpm2QTpNla7Iso5QlhSiQzqHrLbZv0cGSZ5u0n33V7KtflWWJMBVCB4QLFNoilEUpSVEUCcI4pHfIukLWllxqSqkSr5AaIRW5kBTKsRJCkAtBIQX5AlVSLORlTRTkeU53ODKeJ46nE+1woB8iwxDpDpGm29PtD7T9IfVJsAwVpqmx3RZdG0SZk2cZm80mCff7A4+PP7zPd+b7k/N0IZ7OvN1m7s8PTtMlDRyOkZXWGtMc8G1DFRzOGqxSaKXIiwKlFKEKyc+u7znGI8Mw4L2n73tijIzjSFUFfKhYLeS6j4S6Tr4tAz5hzFINRmuKvMAai3ee4ANKKqy1SXi73SbO0q+Wa23WazbrTbridyz+hRAwweF3HpvgcDuPrz3GOrSxXzDWs/oZ+88nkGc5SivGlzeut5lpnjnN7xxf3zm/vDJMb+zHC8P5wuF0Ybjc/i24nHCpUirieEqh3OYH9/uTabqmIG73B4/nB9PlynR9IY7j74KLl1W1RUpJjGMKoaoqtDEcY6RtW3a7XQrPh/B/wcXDZLxzyeeu65JA0zRpULPbJbH9fp9ehbXud8HlTypthVCGLJ06T+ufvOX7e/8XC05g7nBNyEYAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/d166f696c042decde3067c8bcdfa020d/24599/img_phantom-read.webp 238w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/69f92/img_phantom-read.webp 475w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/cebde/img_phantom-read.webp 950w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/77a69/img_phantom-read.webp 1087w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/d166f696c042decde3067c8bcdfa020d/da2e6/img_phantom-read.png 238w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/abae4/img_phantom-read.png 475w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/68327/img_phantom-read.png 950w,
+/blog/static/d166f696c042decde3067c8bcdfa020d/faa7d/img_phantom-read.png 1087w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/d166f696c042decde3067c8bcdfa020d/68327/img_phantom-read.png"
+            alt="img_phantom-read"
+            title="img_phantom-read"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>위의 설명해서 <code class="language-text">snapshot</code>을 통해 <code class="language-text">Repeatable Read</code>을 서포트 한다고 하였다. 문제는 update를 하려고 하면 해당 <code class="language-text">snapshot</code>의 대상 row를 갱신 시켜 버린다. 따라서 동일한 트랜잭션(위 이미지에서 <code class="language-text">transaction2</code>)이라고 하더라도 update를 목적으로 하는 <code class="language-text">for update</code> 를 통해 조회하면 가장 최신의 row가 조회 된다. 이런식으로 하나의 트랜잭션 내에서 <strong>똑같은 쿼리</strong>로 조회해도 결과적으로 <code class="language-text">Non Repeatable Read</code>가 일어나는 현상을 <code class="language-text">Phantom Read</code> 라고 한다.</p>
+<ul>
+<li>#1, #2 <code class="language-text">트랜잭션1</code>, <code class="language-text">트랜잭션2</code> 시작</li>
+<li>#3 <code class="language-text">트랜잭션2</code>에서 5~9를 <code class="language-text">select ... for update</code>을 통한 조회(5,8,9 조회 됨)</li>
+<li>#4, #5 <code class="language-text">트랜잭션1</code>에서 5~9 사이에 있는 6의 값을 입력 및 <code class="language-text">commit</code></li>
+<li>#6 <code class="language-text">트랜잭션2</code>에서 <strong>똑같은 쿼리</strong>로 조회 시 <code class="language-text">6</code>의 값이 추가되어 조회됨 -> <code class="language-text">Phantom Read</code></li>
+</ul>
+<h3 id="312-phantom-read-발생-조건" style="position:relative;"><a href="#312-phantom-read-%EB%B0%9C%EC%83%9D-%EC%A1%B0%EA%B1%B4" aria-label="312 phantom read 발생 조건 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.1.2 Phantom Read 발생 조건</h3>
+<p><code class="language-text">mysql</code>에선 <code class="language-text">REPEATABLE READ</code>라고 <code class="language-text">Phantom Read</code>가 발생하지 않는다. 이유는 <code class="language-text">gap-lock &amp; next-key-lock</code>을 통해 <code class="language-text">Phantom Read</code>를 방지하고 있다(차후 다른 포스트 or 현재 포스트를 업데이트 하여 설명 할 예정) 위의 현상은 <code class="language-text">mysql</code> 설정값을 변경하여 <code class="language-text">next-key-lock</code> 옵션을 꺼서 재현 해보았다.</p>
+<p><strong>설정파일 옵션</strong></p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">[mysqld]
+innodb_locks_unsafe_for_binlog=1</code></pre></div>
+<p><code class="language-text">innodb_locks_unsafe_for_binlog=1</code> 설정을 통해 <code class="language-text">next-key-lock</code>을 끌 수가 있고, 이 옵션은 실행 중에 바꿀 수는 없고 바꿀려면 설정값을 바꾼 후, DB를 재시작해야 한다.</p>
+<blockquote>
+<p>사소한 문제로 이 <code class="language-text">innodb_locks_unsafe_for_binlog</code>옵션은 <code class="language-text">mysql 5.6.3</code> 부터 <code class="language-text">deprecated</code> 되었다. 그 이후 <code class="language-text">mysql 8.0</code>부터 코드 상에서 제거되어 작동되지도 않으므로, 이 옵션을 적용하고 싶으면 그 보다 낮은 버전에서 테스트 해봐야한다.</p>
+</blockquote>
+<h3 id="32-문제점---공유되지-않는-snapshot" style="position:relative;"><a href="#32-%EB%AC%B8%EC%A0%9C%EC%A0%90---%EA%B3%B5%EC%9C%A0%EB%90%98%EC%A7%80-%EC%95%8A%EB%8A%94-snapshot" aria-label="32 문제점   공유되지 않는 snapshot permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.2 문제점 - 공유되지 않는 <code class="language-text">snapshot</code></h3>
+<p><code class="language-text">Phantom Read</code>에서 동일한 쿼리를 실행 했을때, 조건에 따라 다른 결과값이 나올 수 있다고 하였다. <code class="language-text">mysql</code>에선 <code class="language-text">next-key-lock</code>을 통해 <code class="language-text">Phantom Read</code>를 방지한다고 하였지만 이것도 결국 <code class="language-text">lock</code>이 걸어서 방지하는 방법이라 <code class="language-text">lock</code>이 풀리면 <code class="language-text">snapshot</code>이 새롭게 생성되어 관리된다.</p>
 <p><span
       class="gatsby-resp-image-wrapper"
       style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
@@ -231,7 +300,6 @@
         </picture>
   </a>
     </span></p>
-<p>위의 설명해서 <code class="language-text">snapshot</code>을 통해 <code class="language-text">Repeatable Read</code>을 서포트 한다고 하였다. 문제는 update를 하려고 하면 해당 <code class="language-text">snapshot</code>의 대상 row를 갱신 시켜 버린다. 따라서 동일한 트랜잭션(위 이미지에서 <code class="language-text">transaction2</code>)이라고 하더라도 update를 목적으로 하는 <code class="language-text">for update</code> 를 통해 조회하면 가장 최신의 row가 조회 된다. 이런 현상을 <code class="language-text">Phantom Read</code> 라고 한다.</p>
 <ul>
 <li>#1, #2 <code class="language-text">트랜잭션1</code>, <code class="language-text">트랜잭션2</code> 시작</li>
 <li>#3 <code class="language-text">트랜잭션1</code>에서 데이터 입력</li>
@@ -240,15 +308,9 @@
 <li>#6 <code class="language-text">트랜잭션2</code>에서 일반 <code class="language-text">select</code>를 통해 데이터 조회 -> 출력되지 않음 (<code class="language-text">repeatable read</code>)</li>
 <li>#7 <code class="language-text">트랜잭션2</code>에서 <code class="language-text">select ... for update</code>를 통해 데이터 조회 -> 출력됨</li>
 </ul>
-<p><code class="language-text">#7</code> 과정에서 snapshot이 갱신되면서 <code class="language-text">Phantom Read</code>가 발생된다.</p>
-<h3 id="32-phantom-read-발생-조건" style="position:relative;"><a href="#32-phantom-read-%EB%B0%9C%EC%83%9D-%EC%A1%B0%EA%B1%B4" aria-label="32 phantom read 발생 조건 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3.2 Phantom Read 발생 조건</h3>
-<p><code class="language-text">mysql</code>에선 <code class="language-text">REPEATABLE READ</code>라고 <code class="language-text">Phantom Read</code>가 발생하지 않는다. 이유는 <code class="language-text">gap-lock &amp; next-key-lock</code>을 통해 <code class="language-text">Phantom Read</code>를 방지하고 있다(차후 다른 포스트 or 현재 포스트를 업데이트 하여 설명 할 예정) 위의 현상은 <code class="language-text">mysql</code> 설정값을 변경하여 <code class="language-text">next-key-lock</code> 옵션을 꺼서 재현 해보았다.</p>
-<p><strong>설정파일 옵션</strong></p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">[mysqld]
-innodb_locks_unsafe_for_binlog=1</code></pre></div>
-<p><code class="language-text">innodb_locks_unsafe_for_binlog=1</code> 설정을 통해 <code class="language-text">next-key-lock</code>을 끌 수가 있고, 이 옵션은 실행 중에 바꿀 수는 없고 바꿀려면 설정값을 바꾼 후, DB를 재시작해야 한다.</p>
+<p><code class="language-text">#5</code> 전후로 <code class="language-text">트랜잭션2</code>에서 <code class="language-text">select</code>와 <code class="language-text">select ... for update</code> 쿼리는 동일한 레코드 11을 바라보지만 결과값이 달라지는걸 확인할수 있다.</p>
 <blockquote>
-<p>혹시나 그냥 <code class="language-text">default</code> 설정으로 테스트 해보면 그냥 lock이 걸린다</p>
+<p>이걸 <code class="language-text">Phantom Read</code>라고 설명하는곳도 있지만 그럼 mysql <code class="language-text">REPEATABLE READ</code>에선 발생하면 안된다. 하지만 <code class="language-text">isolation</code> 레벨과 무관하게 발생되기도 하고 발생 조건도 조금 다르다. <code class="language-text">Phantom Read</code>는 <strong>동일한 쿼리</strong>를 실행해도 결과가 달라지는점, 이건 <code class="language-text">snapshot</code>이 공유되지 않아 별도로 발생하므로 다르게 생각하는게 맞지 않을까 생각된다.</p>
 </blockquote>
 <h2 id="4-serializable" style="position:relative;"><a href="#4-serializable" aria-label="4 serializable permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4. SERIALIZABLE</h2>
 <p>모든 <code class="language-text">select</code> 쿼리에 최소 <code class="language-text">shared lock</code>을 걸어버린다. 즉 <code class="language-text">transaction 1</code>에서 쓰기 작업 중(<code class="language-text">insert</code>, <code class="language-text">delete</code>, <code class="language-text">for update</code>)이라면 다른 트랜잭션에선 해당 데이터 조회가 불가능하다(<code class="language-text">locking</code>)</p>
