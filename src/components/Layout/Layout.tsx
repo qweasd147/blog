@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import Helmet from "react-helmet";
+
+import { useLocation } from "@gatsbyjs/reach-router";
 
 import { useSiteMetadata } from "@/hooks";
 
@@ -15,6 +17,9 @@ interface Props {
   children: React.ReactNode;
 }
 
+// 시작페이지('/')도 숨긴다.
+const hideSideButtnUrl: Array<string> = ["/category", "/tag", "/page"];
+
 const Layout: React.FC<Props> = ({
   children,
   title,
@@ -27,6 +32,20 @@ const Layout: React.FC<Props> = ({
 
   const layoutRef = useRef<HTMLDivElement>(null);
   const observeRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  const isHideSideButton = useMemo(
+    function () {
+      if (location.pathname === "/") {
+        return true;
+      }
+
+      return hideSideButtnUrl.some(function (hideUrl) {
+        return location.pathname.startsWith(hideUrl);
+      });
+    },
+    [location.pathname],
+  );
 
   return (
     <div className={styles.layout} ref={layoutRef}>
@@ -43,11 +62,13 @@ const Layout: React.FC<Props> = ({
       </Helmet>
       {children}
       <div ref={observeRef} className={styles.layoutDocMask} />
-      <SideButton
-        buttonText="Up"
-        docTarget={layoutRef}
-        observeTarget={observeRef}
-      />
+      {!isHideSideButton && (
+        <SideButton
+          buttonText="Up"
+          docTarget={layoutRef}
+          observeTarget={observeRef}
+        />
+      )}
     </div>
   );
 };
