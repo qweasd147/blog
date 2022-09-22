@@ -33,6 +33,7 @@ const useSiteMetadata = () => {
               label
             }
             url
+            pathPrefix
             title
             subtitle
             copyright

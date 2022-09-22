@@ -11,7 +11,7 @@ interface Props {
 }
 
 const toTop = (docTarget: RefObject<HTMLElement>): void => {
-  docTarget?.current?.scrollIntoView({ behavior: "smooth" });
+  docTarget.current?.scrollIntoView({ behavior: "smooth" });
 };
 
 /**
