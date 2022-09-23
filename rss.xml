@@ -1,4 +1,307 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 22 Sep 2022 08:23:43 GMT</lastBuildDate><item><title><![CDATA[Mysql - Isolation]]></title><description><![CDATA[RDB(Mysql)에서 Transaction의 Isolation 종류 및 설명]]></description><link>https://qweasd147.github.io/posts/etc/db/isolation/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/db/isolation/</guid><pubDate>Fri, 26 Aug 2022 09:08:34 GMT</pubDate><content:encoded>&lt;h2 id=&quot;isolation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#isolation&quot; aria-label=&quot;isolation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Isolation&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 23 Sep 2022 02:00:57 GMT</lastBuildDate><item><title><![CDATA[Mysql - 비관적 락]]></title><description><![CDATA[Mysql에서 데이터 충돌을 대비하여 직접적인 Lock을 걸고 싶을 때(Perssimistic Lock)]]></description><link>https://qweasd147.github.io/posts/etc/db/perssimistic-lock/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/db/perssimistic-lock/</guid><pubDate>Fri, 23 Sep 2022 01:49:22 GMT</pubDate><content:encoded>&lt;h2 id=&quot;1-lock&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-lock&quot; aria-label=&quot;1 lock permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. Lock&lt;/h2&gt;
+&lt;p&gt;Lock이란 같은 데이터를 동시에 필요로 할때 미리 데이터를 선점하여 동시에 읽기/쓰기를 방지하기 위해 사용된다. &lt;code class=&quot;language-text&quot;&gt;Mysql&lt;/code&gt;에서 Lock은 크게 &lt;code class=&quot;language-text&quot;&gt;Mysql 엔진 레벨&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;스토리지 엔진 레벨&lt;/code&gt;로 나눌 수 있고, 이런 Lock 들은 목적에 따라 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt; 또는 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt; 이라고 하는 추가적인 특성을 가질 수 있다. 이러한 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;과 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt; 두 Lock은 &lt;code class=&quot;language-text&quot;&gt;비관적 락 (Perssimistic Lock)&lt;/code&gt; 이라고도 한다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Perssimistic Lock은 물리적으로 리소스가 충돌이 이루어 질 경우가 많을 것이라 생각되어, 이에 대비해서 특정 리소스(일반적으로 테이블의 레코드라 생각하면 된다)에 정말 물리적인 Lock을 거는것을 말한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Lock 전체를 나열한건 아니지만 대략적으로 Lock 종류는 아래와 같이 나눠진다. &lt;code class=&quot;language-text&quot;&gt;Perssimistic Lock&lt;/code&gt;은 이러한 Lock 종류 중에 Lock 거는 속성 정도 라고 생각하면 된다.&lt;/p&gt;
+&lt;h3 id=&quot;11-스토리지-엔진-레벨innodb&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#11-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%97%94%EC%A7%84-%EB%A0%88%EB%B2%A8innodb&quot; aria-label=&quot;11 스토리지 엔진 레벨innodb permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1.1 스토리지 엔진 레벨(InnoDB)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;레코드 락(Record Lock)&lt;/li&gt;
+&lt;li&gt;갭락(Gap Lock)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;12-mysql-엔진-레벨&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#12-mysql-%EC%97%94%EC%A7%84-%EB%A0%88%EB%B2%A8&quot; aria-label=&quot;12 mysql 엔진 레벨 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1.2 Mysql 엔진 레벨&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;글로벌 락(Global Lock)&lt;/li&gt;
+&lt;li&gt;테이블 락(Table Lock)&lt;/li&gt;
+&lt;li&gt;네임드 락(Named Lock)&lt;/li&gt;
+&lt;li&gt;메타데이터 락(Metadata Lock)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;이름만 봐도 Lock을 거는 대상이 어느것인지 예측이 가능할꺼라 생각 된다. 기억해야 할 사항으로는 &lt;code class=&quot;language-text&quot;&gt;Mysql엔진 레벨&lt;/code&gt;의 Lock은 모든 &lt;code class=&quot;language-text&quot;&gt;스토리지 엔진 레벨&lt;/code&gt;의 Lock에 영향을 주고, &lt;code class=&quot;language-text&quot;&gt;스토리지 엔진 레벨&lt;/code&gt;의 Lock은 다른 스토리지 엔진에 영향이 없다는 점이다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;레코드 락은 &lt;code class=&quot;language-text&quot;&gt;Shared/Exclusive Lock&lt;/code&gt; 둘 다 사용 가능하지만 Gap Lock 같은 경우엔 항상 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;이 걸린다. 여기서 하고 싶은 말은 위에서 나열한 Lock과 &lt;code class=&quot;language-text&quot;&gt;Perssimistic Lock&lt;/code&gt;은 다르게 생각해야 한다는 점이다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;개발자가 어플리케이션을 개발할 땐 레코드 락을 자주 사용하게 된다. 그래서 아래 나올 설명/예시 들은 항상 레코드를 대상으로 거는 레코드 락이 대부분이다.&lt;/p&gt;
+&lt;h2 id=&quot;2-exclusive-lock&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-exclusive-lock&quot; aria-label=&quot;2 exclusive lock permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Exclusive Lock&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;쓰기 락&lt;/code&gt;이라고도 하는데 동일한 자원에서 읽기/쓰기 행위를 막는데 사용된다. 아래 이미지는 &lt;code class=&quot;language-text&quot;&gt;for update&lt;/code&gt;를 써서 &lt;code class=&quot;language-text&quot;&gt;Perssimistic Lock&lt;/code&gt;걸었을 때 상황을 설명한다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/736561bb6115c026ea9b74bfd0b37481/95b97/img_perssimistic-lock-insert.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 26.050420168067223%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVQY01WQSw7DIAxEc48abPMxBBK1idT7H20qSFWliydYDGb8FlWFWEbYGmKrYHHw7CfOjTtPmBmSM7Q1hG2DxABHNDN3FlFF2A/YviMeB8K+QZThxcPRFSIizI9FwF+E/cyJyh9LjBGaMmJKUDNoqRBh8I0xNOeE+nyhnwfW84X6PlF6gTWDVYOtF0vrK/rxRN0LrKaLEWrfULPZTkezaAjJZgEuHZ4F9CAQXVsMFu+HL8U4fy7o3ws5hzCGpgIOEY4e058fjsf7Gx8jXotpcG+IrQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/736561bb6115c026ea9b74bfd0b37481/24599/img_perssimistic-lock-insert.webp 238w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/69f92/img_perssimistic-lock-insert.webp 475w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/cebde/img_perssimistic-lock-insert.webp 950w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/e017b/img_perssimistic-lock-insert.webp 1283w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/736561bb6115c026ea9b74bfd0b37481/da2e6/img_perssimistic-lock-insert.png 238w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/abae4/img_perssimistic-lock-insert.png 475w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/68327/img_perssimistic-lock-insert.png 950w,
+/blog/static/736561bb6115c026ea9b74bfd0b37481/95b97/img_perssimistic-lock-insert.png 1283w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/736561bb6115c026ea9b74bfd0b37481/68327/img_perssimistic-lock-insert.png&quot;
+            alt=&quot;perssimistic-lock&quot;
+            title=&quot;perssimistic-lock&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;#1, #2 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt; 시작&lt;/li&gt;
+&lt;li&gt;#3 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;idx=1&lt;/code&gt;인 데이터 &lt;code class=&quot;language-text&quot;&gt;Perssimistic Lock&lt;/code&gt; 걸고 조회&lt;/li&gt;
+&lt;li&gt;#4 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 해당 데이터를 &lt;code class=&quot;language-text&quot;&gt;Perssimistic Lock&lt;/code&gt; 걸고 시도 -&gt; waiting&lt;/li&gt;
+&lt;li&gt;#5 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 해야 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 waiting이 풀리고 출력&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;참고로 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 밑에서 설명할 Shared Lock으로 시도해도 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;이 종료 될 때까지 대기가 걸린다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;위의 예제로써 &lt;code class=&quot;language-text&quot;&gt;for update&lt;/code&gt;를 쓰긴 했지만 update, delete도 똑같이 쓰기 행위이므로 다 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt;이 걸린다&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/678f5333e153eecd63617866d2b8bceb/95b97/img_perssimistic-lock-update.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 26.050420168067223%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAyUlEQVQY012QW27DMAwEfRCLpCRSgtPETv2T+59sCtlGk/ZjsADB1+7UeqetG23faduGd8ebU2s9cHfMDFPFaqCxYO2GqpHmREp/mXwMPb65v158bXd6OLlksmVyPhGRY6lmvRC0Glb04LdelGk0ziIUD2otqCkiiSQJ0VPnlDBT8u1xuPF1JT+faDHERp8gdjJVr+RlofaMlnFZMTdsfHDpsNJbp7VOuBMRRDTC44jkk2nYETtt/c/jk1oy8dipyx2VdOZqeumbH1kMi2nZ5wl9AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/678f5333e153eecd63617866d2b8bceb/24599/img_perssimistic-lock-update.webp 238w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/69f92/img_perssimistic-lock-update.webp 475w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/cebde/img_perssimistic-lock-update.webp 950w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/e017b/img_perssimistic-lock-update.webp 1283w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/678f5333e153eecd63617866d2b8bceb/da2e6/img_perssimistic-lock-update.png 238w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/abae4/img_perssimistic-lock-update.png 475w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/68327/img_perssimistic-lock-update.png 950w,
+/blog/static/678f5333e153eecd63617866d2b8bceb/95b97/img_perssimistic-lock-update.png 1283w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/678f5333e153eecd63617866d2b8bceb/68327/img_perssimistic-lock-update.png&quot;
+            alt=&quot;perssimistic-lock&quot;
+            title=&quot;perssimistic-lock&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;3-shared-lock&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#3-shared-lock&quot; aria-label=&quot;3 shared lock permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;3. Shared Lock&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;읽기 락&lt;/code&gt; 이라고도 하는데, 동일한 자원을 여러 곳에서 읽는 행위는 허용하는 Lock이다. Lock이라고 무조건 모든 행위를 막아버리면 병목이 심해 질 수 있으므로, 이러한 상황을 방지하기 위해 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;을 쓰면 다른곳에서 동일한 리소스를 읽기는 허용 되어도, 쓰기는 불가능하도록 막기 위해 사용된다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/4423c/img_shared-lock01.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 39.49579831932773%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABU0lEQVQoz12SSZLDIAxFfZKYSUzGhjixk9z/YK8L3Fl0L159ppK+JCbvhbCu5HujvA6WR0OCw2iDdRbnBREhlIW8N8r7YH09CIvHGIu1f5mcs9jgkSUhZUFKxAYz0FYz32acc2ht0UbQpgcS1Kwu1F9GwHg/qeeH9bGTXif5/cY6g9LXo+5QGz0SGPfFYMUM1Uqj9cU0Hmsz7Jtx2NduXH4diDgkJWLdiK0Q9pXwWEl7Y6kZHwSl5sHkved2uzHP84W6tAf6aggBSZnUGrGuhL0Sj0psO6UV0pZxaUVCZso5jx6Jk6H/6U774Hqffcmjx7IlpPaeZ0IJxBrw24LkxNRaI+fIUhJlK78sQ3syYwy1bdR9pz0O2vOgvV+0z8n99eF5PNmfO+18cz8/TD44ZKvEe8OIwkaDCXrQJ9xLjiHg00qqT4xWGKUvtBoV9C9m9LX/Af+z6F1jvkoSAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/24599/img_shared-lock01.webp 238w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/69f92/img_shared-lock01.webp 475w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/cebde/img_shared-lock01.webp 950w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/57ca4/img_shared-lock01.webp 1036w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/da2e6/img_shared-lock01.png 238w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/abae4/img_shared-lock01.png 475w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/68327/img_shared-lock01.png 950w,
+/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/4423c/img_shared-lock01.png 1036w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/6678b0ca9abae5bebfbaa3999e0cb551/68327/img_shared-lock01.png&quot;
+            alt=&quot;perssimistic-lock&quot;
+            title=&quot;perssimistic-lock&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;#1, #2 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt; 시작&lt;/li&gt;
+&lt;li&gt;#3 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;idx=1&lt;/code&gt;인 데이터 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt; 걸고 조회&lt;/li&gt;
+&lt;li&gt;#4 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 해당 데이터를 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt; 없이 조회 시도 -&gt; 바로 출력&lt;/li&gt;
+&lt;li&gt;#5 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 해당 데이터를 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;으로 조회 시도 -&gt; 바로 출력&lt;/li&gt;
+&lt;li&gt;#6 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 해당 데이터를 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt;으로 조회 시도 -&gt; waiting&lt;/li&gt;
+&lt;li&gt;#7 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;commit&lt;/code&gt;을 해야 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt; waiting이 종료 되고 출력&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Shared Lock은 일단 Lock을 걸어도 다른곳에서 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;을 사용해도 읽기는 가능하다는 점에서 Exclusive Lock 보다 병목 현상이 줄어든다&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;추가로 아래 표는 &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt; 과 &lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt; 관계를 보여주는데 동일한 리소스에 어떤 Lock에 걸려있는지에 따라 &lt;code class=&quot;language-text&quot;&gt;Conflict&lt;/code&gt;가 나는지, &lt;code class=&quot;language-text&quot;&gt;Compatible&lt;/code&gt;가 되는지 보여준다.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;X&lt;/th&gt;
+&lt;th&gt;S&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;X&lt;/td&gt;
+&lt;td&gt;Conflict&lt;/td&gt;
+&lt;td&gt;Conflict&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;S&lt;/td&gt;
+&lt;td&gt;Conflict&lt;/td&gt;
+&lt;td&gt;Compatible&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Exclusive Lock&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;X&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Shared Lock&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;S&lt;/code&gt;로 표현하였는데 mysql 8.0 이상을 기준으로 &lt;code class=&quot;language-text&quot;&gt;performance_schema.data_locks&lt;/code&gt;테이블을 살펴보면 해당 락을 이렇게 표현한다. 이 테이블은 나중에 추가로 분석 예정&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;4-gap-lock-next-key-lock&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#4-gap-lock-next-key-lock&quot; aria-label=&quot;4 gap lock next key lock permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;4. Gap Lock, Next Key Lock&lt;/h2&gt;
+&lt;p&gt;트랜잭션 &lt;code class=&quot;language-text&quot;&gt;Isolation&lt;/code&gt;을 쓸 때 잠깐 설명한 적이 있는데 &lt;code class=&quot;language-text&quot;&gt;Mysql&lt;/code&gt;에선 이런 &lt;code class=&quot;language-text&quot;&gt;Next Key Lock&lt;/code&gt;을 통해 &lt;code class=&quot;language-text&quot;&gt;Phantom Read&lt;/code&gt;를 방지한다고 하였다. &lt;code class=&quot;language-text&quot;&gt;Gap Lock&lt;/code&gt;은 단독으로 사용되지 않고 &lt;code class=&quot;language-text&quot;&gt;Next Key Lock&lt;/code&gt;과 함께 사용되는 것인데 &lt;code class=&quot;language-text&quot;&gt;Gap Lock&lt;/code&gt;은 범위를 통한 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt;을 걸었을 때 레코드에 빈 데이터가 있으면 중간 &lt;code class=&quot;language-text&quot;&gt;Gap&lt;/code&gt;에 Lock을 걸어버리는걸 의미한다. &lt;code class=&quot;language-text&quot;&gt;Next Key Lock&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;Gap Lock&lt;/code&gt; + 레코드 락이 합쳐진 락이라고 이해하면 된다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/e7189a27b29834ec01b6e3527c882902/e5cc9/img_gap-lock.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 42.016806722689076%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABRUlEQVQoz43R62rjMBCGYd9HHJ/lyDrZ8jnNJmkbkqXt373/W3mXqEtpKQv98TCDQMMMX1RIidCauvWUsiZJtiRJ8iHLc9IsI88ySqmojKXu+vAnzRLSNP0ialqP6Hp2TiF1TVkKsiz7Js9zkm3C9ovtN1F7fEVe/iDnJ7Rtsd1IVZZUVfWhKIrg8+b/Ex2OZw6nC+vyQN9PrOsD4zjRth3OOXznQ38fGMebd5tP4g2bOCb+JzqeH3l5e+P5+pvL9cbhdObX6ZHn643byyvnp0t4E1XFTlv0MKBHj5o6zDRgfIvzNlBaERljkFIyzQvruqfve5RSzPPMfr8PdV4Wmqah0Q5lO5RrUe2992jrsMZg9bvIWoMQgnEcg/sAay3ee4ZxZFkWhnEKCf7o5J1zKG8QSgS1FtSmDkQjyPMipPyTQO6h/AVPv+sJWTdGxAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/e7189a27b29834ec01b6e3527c882902/24599/img_gap-lock.webp 238w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/69f92/img_gap-lock.webp 475w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/cebde/img_gap-lock.webp 950w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/1de89/img_gap-lock.webp 1058w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/e7189a27b29834ec01b6e3527c882902/da2e6/img_gap-lock.png 238w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/abae4/img_gap-lock.png 475w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/68327/img_gap-lock.png 950w,
+/blog/static/e7189a27b29834ec01b6e3527c882902/e5cc9/img_gap-lock.png 1058w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/e7189a27b29834ec01b6e3527c882902/68327/img_gap-lock.png&quot;
+            alt=&quot;perssimistic-lock&quot;
+            title=&quot;perssimistic-lock&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;#1, #2 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt; 시작&lt;/li&gt;
+&lt;li&gt;#3 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;idx&lt;/code&gt;값이 4~8인 레코드들을 &lt;code class=&quot;language-text&quot;&gt;select ... for update&lt;/code&gt;를 통한 조회&lt;/li&gt;
+&lt;li&gt;#4 &lt;code class=&quot;language-text&quot;&gt;트랜잭션2&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;idx&lt;/code&gt; 값이 5인 레코드 입력을 시도하지만 바로 처리가 안되고 대기 상태가 된다
+&lt;blockquote&gt;
+&lt;p&gt;물리적으로 진짜 존재하는 4,6,8은 &lt;code class=&quot;language-text&quot;&gt;record lock&lt;/code&gt;, 중간중간 값이 없는 5,7은 &lt;code class=&quot;language-text&quot;&gt;gap lock&lt;/code&gt;이 걸린다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;#5 &lt;code class=&quot;language-text&quot;&gt;트랜잭션1&lt;/code&gt;에서 commit을 해야 &lt;code class=&quot;language-text&quot;&gt;#4&lt;/code&gt;의 대기상태가 풀리고 처리된다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;추가로 &lt;code class=&quot;language-text&quot;&gt;gap lock&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;쓰기 lock&lt;/code&gt;이라고 이해 해야한다. &lt;code class=&quot;language-text&quot;&gt;select ... for update&lt;/code&gt;을 통해 5,7인 가상의 값들은 &lt;code class=&quot;language-text&quot;&gt;gap lock&lt;/code&gt;이 걸렸지만 &lt;code class=&quot;language-text&quot;&gt;select&lt;/code&gt;는 가능하다(출력되는건 당연히 없지만). &lt;code class=&quot;language-text&quot;&gt;gap lock&lt;/code&gt;은 insert를 방지하여 하나의 transaction내에서 동일한 결과, 즉 &lt;code class=&quot;language-text&quot;&gt;Repeatable Read&lt;/code&gt;를 보장한다.&lt;/p&gt;
+&lt;h2 id=&quot;6-lock-주의사항&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#6-lock-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD&quot; aria-label=&quot;6 lock 주의사항 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;6. Lock 주의사항&lt;/h2&gt;
+&lt;p&gt;굉장히 중요한 얘기를 짧게 설명하자면 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt;은 항상 &lt;code class=&quot;language-text&quot;&gt;index&lt;/code&gt;를 대상으로 Lock이 걸린다는 점이다.&lt;/p&gt;
+&lt;p&gt;현재 테스트 대상으로 위와 같이 셋팅 된 &lt;code class=&quot;language-text&quot;&gt;article&lt;/code&gt; 테이블이 있고 &lt;code class=&quot;language-text&quot;&gt;idx&lt;/code&gt;만 PK로 지정되어 있다고 가정&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;| idx | title           | contents           |
+| --- | --------------- | ------------------ |
+| 2   | article 2 title | article 2 contents |
+| 3   | article 3 title | article 3 contents |
+| 4   | article 4 title | article 4 contents |
+| 6   | article 6       | article content 6  |
+| 7   | article 7       | article content 7  |
+| 10  | article 10      | article10          |
+| 12  | article 6       | article content 6  |&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런 상태에서 &lt;code class=&quot;language-text&quot;&gt;title&lt;/code&gt; 컬럼을 기준으로 Lock을 걸고, &lt;code class=&quot;language-text&quot;&gt;performance_schema.data_locks&lt;/code&gt;테이블을 조회하면 아래와 같이 나온다&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sql&quot;&gt;&lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# 1. title로 특정 row Locking&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; article
+&lt;span class=&quot;token keyword&quot;&gt;where&lt;/span&gt; title &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;article 3 title&apos;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 2. 현재 Lock Data 확인&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;select&lt;/span&gt; OBJECT_NAME&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; INDEX_NAME&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; LOCK_TYPE&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; LOCK_DATA &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; performance_schema&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;data_locks&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;출력된-lock-data&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%B6%9C%EB%A0%A5%EB%90%9C-lock-data&quot; aria-label=&quot;출력된 lock data permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;출력된 Lock Data&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;| OBJECT_NAME | INDEX_NAME | LOCK_TYPE | LOCK_DATA              |
+| ----------- | ---------- | --------- | ---------------------- |
+| article     | &amp;lt;null&gt;     | TABLE     | &amp;lt;null&gt;                 |
+| article     | PRIMARY    | RECORD    | supremum pseudo-record |
+| article     | PRIMARY    | RECORD    | 2                      |
+| article     | PRIMARY    | RECORD    | 3                      |
+| article     | PRIMARY    | RECORD    | 4                      |
+| article     | PRIMARY    | RECORD    | 12                     |
+| article     | PRIMARY    | RECORD    | 6                      |
+| article     | PRIMARY    | RECORD    | 7                      |
+| article     | PRIMARY    | RECORD    | 10                     |&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;결과를 보면 idx값이 2~14인 모든 레코드 들이 Lock이 걸린것을 확인 할수 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;INDEX_NAME&lt;/code&gt;이 &lt;code class=&quot;language-text&quot;&gt;PRIMARY&lt;/code&gt; -&gt; PK기반으로 Lock이 걸림 -&gt; LOCK_DATA가 PK값을 의미한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;LOCK_TYPE&lt;/code&gt;이 &lt;code class=&quot;language-text&quot;&gt;Table&lt;/code&gt;인 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;Intention Locks&lt;/code&gt;이라고 하여 &lt;code class=&quot;language-text&quot;&gt;Table&lt;/code&gt; 레벨에 Lock을 걸어버린다. 다른 트랜잭션에서 Lock을 확인하기 위해 사용되는데 일단 성능 최적화 정도로 이해하면 된다&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;LOCK_DATA&lt;/code&gt;가 &lt;code class=&quot;language-text&quot;&gt;supremum pseudo-record&lt;/code&gt;인 Lock은 이것으로 인해 Mysql에서 &lt;code class=&quot;language-text&quot;&gt;Phantom Read&lt;/code&gt;를 방지한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이런이유로 Index가 걸리지 않은 컬럼을 Lock을 거는건 지양해야하고, Index가 걸린 컬럼이라도 &lt;code class=&quot;language-text&quot;&gt;Unique Index&lt;/code&gt;가 아니라면 또는 &lt;code class=&quot;language-text&quot;&gt;Where&lt;/code&gt; 조건에 따라 &lt;code class=&quot;language-text&quot;&gt;Gap Lock&lt;/code&gt;이 걸릴수도 있다는걸 같이 기억 해야한다. 혹시나마 lock을 걸고 싶으면 차라리 검색 후, pk(또는 unique index)기반으로 lock을 걸어야 원하는 record만 lock이 걸리도록 유도해야한다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Mysql - Isolation]]></title><description><![CDATA[RDB(Mysql)에서 Transaction의 Isolation 종류 및 설명]]></description><link>https://qweasd147.github.io/posts/etc/db/isolation/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/etc/db/isolation/</guid><pubDate>Fri, 26 Aug 2022 09:08:34 GMT</pubDate><content:encoded>&lt;h2 id=&quot;isolation&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#isolation&quot; aria-label=&quot;isolation permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Isolation&lt;/h2&gt;
 &lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 트랜잭션 간의 격리 수준을 말한다. &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;이랑 많이 헤깔릴 수도 있는데 &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;은 특정 데이터를 대상으로 &lt;code class=&quot;language-text&quot;&gt;lock&lt;/code&gt;을 걸어 읽기 또는 쓰기 동시접근을 막는거지만 &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 트랜잭션 간 데이터 접근 수준을 정의하는걸 말한다(트랜잭션 그 자체 집중 -&gt; 비지니스 로직과 연관된다).&lt;/p&gt;
 &lt;p&gt;쉽게 말해 일반적으로 말하는 &lt;code class=&quot;language-text&quot;&gt;Lock&lt;/code&gt;은 대상이 데이터, &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;은 대상이 트랜잭션이 되고, &lt;code class=&quot;language-text&quot;&gt;isolation&lt;/code&gt;의 레벨을 높게 잡으면 Lock과 동일하게 처리량이 떨어지게 된다.&lt;/p&gt;
 &lt;h2 id=&quot;1-read-uncommitted&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-read-uncommitted&quot; aria-label=&quot;1 read uncommitted permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. READ UNCOMMITTED&lt;/h2&gt;
