@@ -36,7 +36,11 @@ const Layout: React.FC<Props> = ({
 
   const isHideSideButton = useMemo(
     function () {
-      if (location.pathname === "/" || location.pathname === pathPrefix) {
+      if (
+        location.pathname === "/" ||
+        location.pathname === pathPrefix ||
+        location.pathname === pathPrefix + "/"
+      ) {
         return true;
       }
 
