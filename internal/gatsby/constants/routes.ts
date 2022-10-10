@@ -6,6 +6,7 @@ const routes = Object.freeze({
   tagRoute: "/tag",
   indexRoute: "/",
   mySkillsRoute: "/skills",
+  totalSearchRoute: "/search",
 });
 
 export default routes;

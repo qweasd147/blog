@@ -1,0 +1,36 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/mixins";
+
+.search {
+  padding: 16px 0;
+  display: flex;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.search-keyword {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 16px;
+  height: 48px;
+  padding: 0 16px;
+}
+
+@include breakpoint-md {
+  .skills-layout {
+    &__back-button {
+      position: fixed;
+      max-width: auto;
+      margin: 0;
+      top: 30px;
+      left: 30px;
+    }
+
+    .skills-wrap {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

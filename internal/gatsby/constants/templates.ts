@@ -13,8 +13,12 @@ const templates = Object.freeze({
   categoriesTemplate: path.resolve(
     "./src/templates/CategoriesTemplate/CategoriesTemplate.tsx",
   ),
-  mySkillsPage: path.resolve("./src/components/Custompage/Skills.tsx"),
+  mySkillsPage: path.resolve("./src/components/Custompage/Skills/Skills.tsx"),
+  totalSearchPage: path.resolve(
+    "./src/components/Custompage/TotalSearch/TotalSearch.tsx",
+  ),
   tagTemplate: path.resolve("./src/templates/TagTemplate/TagTemplate.tsx"),
+
   tagsTemplate: path.resolve("./src/templates/TagsTemplate/TagsTemplate.tsx"),
   pageTemplate: path.resolve("./src/templates/PageTemplate/PageTemplate.tsx"),
   postTemplate: path.resolve("./src/templates/PostTemplate/PostTemplate.tsx"),

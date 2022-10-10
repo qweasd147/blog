@@ -33,6 +33,10 @@
       "path": "/category/etc"
     },
     {
+      "label": "게시글 검색",
+      "path": "/search"
+    },
+    {
       "label": "태그 목록",
       "path": "/tags"
     },
