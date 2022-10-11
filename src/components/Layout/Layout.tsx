@@ -1,6 +1,8 @@
 import React, { useMemo, useRef } from "react";
 import Helmet from "react-helmet";
 
+import { useLocation } from "@gatsbyjs/reach-router";
+
 import { useSiteMetadata } from "@/hooks";
 
 import SideButton from "./SideButton";
@@ -30,6 +32,7 @@ const Layout: React.FC<Props> = ({
 
   const layoutRef = useRef<HTMLDivElement>(null);
   const observeRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const isHideSideButton = useMemo(
     function () {
