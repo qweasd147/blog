@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import { useLocation } from "@gatsbyjs/reach-router";
+import { navigate } from "gatsby";
 
 import { Feed } from "@/components/Feed";
 import { Layout } from "@/components/Layout";
@@ -60,11 +63,28 @@ const TotalSearchView = ({
   </Layout>
 );
 
+const useQuery = (key: string): string | undefined => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+
+  return params.get(key) || undefined;
+};
+
 const TotalSearch = () => {
   const { title, subtitle: description } = useSiteMetadata();
-  const [keyword, setKeyword] = useState<string | undefined>(undefined);
 
-  const items: Edge[] = useTotalSearchList(keyword ?? "");
+  const query = useQuery("q") ?? undefined;
+  const items: Edge[] = useTotalSearchList(query ?? "");
+  const [keyword, setKeyword] = useState<string | undefined>(query);
+
+  useEffect(() => {
+    if (keyword) {
+      navigate(`/search?q=${encodeURIComponent(keyword)}`, {
+        replace: true,
+        state: { shouldUpdateScroll: false },
+      });
+    }
+  }, [keyword]);
 
   return (
     <TotalSearchView
