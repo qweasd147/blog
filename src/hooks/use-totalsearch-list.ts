@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { graphql, useStaticQuery } from "gatsby";
 
 import { Edge } from "@/types";
@@ -11,6 +13,7 @@ interface TotalSearchListQueryResult {
 interface TotalSearchItems {
   Props: {
     keyword: string;
+    replaceKeyword?: boolean;
   };
 
   items: {
@@ -31,8 +34,20 @@ interface TotalSearchItems {
   };
 }
 
-const searchTotalPosts = ({ keyword }: TotalSearchItems["Props"]): Edge[] => {
+const searchTotalPosts = ({
+  keyword,
+  replaceKeyword = true,
+}: TotalSearchItems["Props"]): Edge[] => {
   if (keyword.length === 0) return [];
+
+  let searchKeyword: string;
+  if (replaceKeyword) {
+    searchKeyword = keyword.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  } else {
+    searchKeyword = keyword;
+  }
+
+  searchKeyword = searchKeyword.toLowerCase();
 
   const { allMarkdownRemark } = useStaticQuery<TotalSearchListQueryResult>(
     graphql`
@@ -67,27 +82,44 @@ const searchTotalPosts = ({ keyword }: TotalSearchItems["Props"]): Edge[] => {
     `,
   );
 
-  const lowerKeyword = keyword.toLowerCase();
+  const copiedEdges = allMarkdownRemark.edges.map(function (edge: Edge) {
+    const html = edge.node.html
+      .replace(/(<([^>]+)>)/gi, "")
+      .replace(/\n+/g, " ");
+
+    return {
+      node: {
+        // ...edge.node,
+        html,
+      },
+    };
+  });
+
+  console.log(`call use total search list ${searchKeyword}`);
 
   const edges =
-    allMarkdownRemark?.edges?.filter(
-      (edge) =>
-        edge.node.frontmatter.category.toLowerCase().includes(lowerKeyword) ||
-        edge.node.frontmatter.title.toLowerCase().includes(lowerKeyword) ||
+    allMarkdownRemark.edges.filter(
+      (edge, idx) =>
+        edge.node.frontmatter.category.toLowerCase().includes(searchKeyword) ||
+        edge.node.frontmatter.title.toLowerCase().includes(searchKeyword) ||
         edge.node.frontmatter.description
           ?.toLowerCase()
-          ?.includes(lowerKeyword) ||
+          ?.includes(searchKeyword) ||
         edge.node.frontmatter.tags?.some((tag) =>
-          tag.toLowerCase().includes(lowerKeyword),
-        ),
+          tag.toLowerCase().includes(searchKeyword),
+        ) ||
+        copiedEdges[idx].node.html.includes(searchKeyword),
     ) ?? [];
 
   return edges;
 };
 
-const useTotalSearchList = (keyword: string): Edge[] =>
-  searchTotalPosts({ keyword });
+/*
+ * const useTotalSearchList = (keyword: string): Edge[] =>
+ *   searchTotalPosts({ keyword });
+ */
 
-// useMemo(() => searchTotalPosts({ keyword }), [keyword]);
+const useTotalSearchList = (keyword: string): Edge[] =>
+  useMemo(() => searchTotalPosts({ keyword }), [keyword]);
 
 export default useTotalSearchList;

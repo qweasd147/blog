@@ -78,7 +78,7 @@ const TotalSearch = () => {
   const [keyword, setKeyword] = useState<string | undefined>(query);
 
   useEffect(() => {
-    if (keyword) {
+    if (keyword !== undefined) {
       navigate(`/search?q=${encodeURIComponent(keyword)}`, {
         replace: true,
         state: { shouldUpdateScroll: false },
