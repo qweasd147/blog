@@ -34,21 +34,18 @@ interface TotalSearchItems {
   };
 }
 
-const searchTotalPosts = ({
-  keyword,
-  replaceKeyword = true,
-}: TotalSearchItems["Props"]): Edge[] => {
-  if (keyword.length === 0) return [];
+interface UseContentItems {
+  allMarkdownRemark: {
+    edges: Array<Edge>;
+  };
+  replaceAllMarkdownRemark: {
+    node: {
+      html: string;
+    };
+  }[];
+}
 
-  let searchKeyword: string;
-  if (replaceKeyword) {
-    searchKeyword = keyword.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  } else {
-    searchKeyword = keyword;
-  }
-
-  searchKeyword = searchKeyword.toLowerCase();
-
+const useBlogContents = (): [UseContentItems] => {
   const { allMarkdownRemark } = useStaticQuery<TotalSearchListQueryResult>(
     graphql`
       query TotalSearchListQuery {
@@ -82,44 +79,75 @@ const searchTotalPosts = ({
     `,
   );
 
-  const copiedEdges = allMarkdownRemark.edges.map(function (edge: Edge) {
-    const html = edge.node.html
-      .replace(/(<([^>]+)>)/gi, "")
-      .replace(/\n+/g, " ");
+  const replacedEdges = useMemo(
+    function () {
+      return allMarkdownRemark.edges.map(function (edge: Edge) {
+        const html = edge.node.html
+          .replace(/(<([^>]+)>)/gi, "")
+          .replace(/\n+/g, " ");
 
-    return {
-      node: {
-        // ...edge.node,
-        html,
-      },
-    };
-  });
+        return {
+          node: {
+            // ...edge.node,
+            html,
+          },
+        };
+      });
+    },
+    [allMarkdownRemark],
+  );
 
-  console.log(`call use total search list ${searchKeyword}`);
-
-  const edges =
-    allMarkdownRemark.edges.filter(
-      (edge, idx) =>
-        edge.node.frontmatter.category.toLowerCase().includes(searchKeyword) ||
-        edge.node.frontmatter.title.toLowerCase().includes(searchKeyword) ||
-        edge.node.frontmatter.description
-          ?.toLowerCase()
-          ?.includes(searchKeyword) ||
-        edge.node.frontmatter.tags?.some((tag) =>
-          tag.toLowerCase().includes(searchKeyword),
-        ) ||
-        copiedEdges[idx].node.html.includes(searchKeyword),
-    ) ?? [];
-
-  return edges;
+  return [
+    {
+      allMarkdownRemark: allMarkdownRemark,
+      replaceAllMarkdownRemark: replacedEdges,
+    },
+  ];
 };
 
-/*
- * const useTotalSearchList = (keyword: string): Edge[] =>
- *   searchTotalPosts({ keyword });
- */
+const searchTotalPosts = ({
+  keyword,
+  replaceKeyword = true,
+}: TotalSearchItems["Props"]): Edge[] => {
+  let searchKeyword: string;
+  if (replaceKeyword) {
+    searchKeyword = keyword.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  } else {
+    searchKeyword = keyword;
+  }
+
+  searchKeyword = searchKeyword.toLowerCase();
+
+  const [
+    {
+      allMarkdownRemark: originContents,
+      replaceAllMarkdownRemark: replaceContents,
+    },
+  ] = useBlogContents();
+
+  const searchResult = useMemo(
+    () =>
+      originContents.edges.filter(
+        (edge, idx) =>
+          edge.node.frontmatter.category
+            .toLowerCase()
+            .includes(searchKeyword) ||
+          edge.node.frontmatter.title.toLowerCase().includes(searchKeyword) ||
+          edge.node.frontmatter.description
+            ?.toLowerCase()
+            ?.includes(searchKeyword) ||
+          edge.node.frontmatter.tags?.some((tag) =>
+            tag.toLowerCase().includes(searchKeyword),
+          ) ||
+          replaceContents[idx].node.html.includes(searchKeyword),
+      ) ?? [],
+    [searchKeyword],
+  );
+
+  return searchResult;
+};
 
 const useTotalSearchList = (keyword: string): Edge[] =>
-  useMemo(() => searchTotalPosts({ keyword }), [keyword]);
+  searchTotalPosts({ keyword });
 
 export default useTotalSearchList;
