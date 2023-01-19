@@ -4,26 +4,11 @@ import { graphql, useStaticQuery } from "gatsby";
 
 import { Edge } from "@/types";
 
-interface TotalSearchListQueryResult {
-  allMarkdownRemark: {
-    edges: Array<Edge>;
-  };
-}
-
 interface TotalSearchItems {
   Props: {
     keyword: string;
     replaceKeyword?: boolean;
   };
-
-  items: {
-    title: string;
-    description: string;
-    tags: string[];
-    category: string;
-    date: Date;
-  }[];
-
   TagsQueryResult: {
     allMarkdownRemark: {
       group: Array<{
@@ -32,21 +17,27 @@ interface TotalSearchItems {
       }>;
     };
   };
-}
-
-interface UseContentItems {
-  allMarkdownRemark: {
-    edges: Array<Edge>;
-  };
-  replaceAllMarkdownRemark: {
-    node: {
-      html: string;
+  UseContentItems: {
+    allMarkdownRemark: {
+      edges: Array<Edge>;
     };
-  }[];
+    replaceAllMarkdownRemark: Array<{
+      node: {
+        html: string;
+      };
+    }>;
+  };
+  TotalSearchListQueryResult: {
+    allMarkdownRemark: {
+      edges: Array<Edge>;
+    };
+  };
 }
 
-const useBlogContents = (): [UseContentItems] => {
-  const { allMarkdownRemark } = useStaticQuery<TotalSearchListQueryResult>(
+const useBlogContents = (): [TotalSearchItems["UseContentItems"]] => {
+  const { allMarkdownRemark } = useStaticQuery<
+    TotalSearchItems["TotalSearchListQueryResult"]
+  >(
     graphql`
       query TotalSearchListQuery {
         allMarkdownRemark(
@@ -79,7 +70,7 @@ const useBlogContents = (): [UseContentItems] => {
     `,
   );
 
-  const replacedEdges = useMemo(
+  const replaceAllMarkdownRemark = useMemo(
     function () {
       return allMarkdownRemark.edges.map(function (edge: Edge) {
         const html = edge.node.html
@@ -99,8 +90,8 @@ const useBlogContents = (): [UseContentItems] => {
 
   return [
     {
-      allMarkdownRemark: allMarkdownRemark,
-      replaceAllMarkdownRemark: replacedEdges,
+      allMarkdownRemark,
+      replaceAllMarkdownRemark,
     },
   ];
 };
@@ -118,16 +109,11 @@ const searchTotalPosts = ({
 
   searchKeyword = searchKeyword.toLowerCase();
 
-  const [
-    {
-      allMarkdownRemark: originContents,
-      replaceAllMarkdownRemark: replaceContents,
-    },
-  ] = useBlogContents();
+  const [{ allMarkdownRemark, replaceAllMarkdownRemark }] = useBlogContents();
 
   const searchResult = useMemo(
     () =>
-      originContents.edges.filter(
+      allMarkdownRemark.edges.filter(
         (edge, idx) =>
           edge.node.frontmatter.category
             .toLowerCase()
@@ -139,7 +125,7 @@ const searchTotalPosts = ({
           edge.node.frontmatter.tags?.some((tag) =>
             tag.toLowerCase().includes(searchKeyword),
           ) ||
-          replaceContents[idx].node.html.includes(searchKeyword),
+          replaceAllMarkdownRemark[idx].node.html.includes(searchKeyword),
       ) ?? [],
     [searchKeyword],
   );

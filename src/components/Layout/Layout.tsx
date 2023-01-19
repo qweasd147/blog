@@ -13,12 +13,16 @@ interface Props {
   title: string;
   description?: string;
   socialImage?: string;
-
   children: React.ReactNode;
 }
 
 // 추가로 시작페이지('/')도 숨긴다.
-const hideSideButtnUrl: Array<string> = ["/category", "/tag", "/page"];
+const hideSideButtnUrl: Array<string> = [
+  "/category",
+  "/tag",
+  "/page",
+  "/search",
+];
 
 const Layout: React.FC<Props> = ({
   children,
