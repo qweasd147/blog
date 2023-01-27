@@ -55,6 +55,7 @@ const useBlogContents = (): [TotalSearchItems["UseContentItems"]] => {
               frontmatter {
                 template
                 title
+                date
                 tags
                 socialImage
                 draft
