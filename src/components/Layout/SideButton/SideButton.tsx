@@ -1,6 +1,10 @@
 import React, { RefObject, useEffect, useState } from "react";
 
+import { navigate } from "@gatsbyjs/reach-router";
 import classNames from "classnames/bind";
+
+import { Icon } from "@/components/Icon";
+import { getIcon } from "@/utils";
 
 import * as styles from "./SideButton.module.scss";
 
@@ -79,17 +83,41 @@ const SideButton = ({ buttonText, docTarget, observeTarget }: Props) => {
 
   return (
     <div className={styles.sides}>
-      <a
-        className={classNames(styles.sidesButton, {
-          [styles.sidesButtonHide]: !isShow,
+      <ul
+        className={classNames(styles.sidesButtons, {
+          [styles.sidesButtonsHide]: !isShow,
         })}
-        onClick={(e: React.MouseEvent): void => {
-          e.preventDefault();
-          toTop(docTarget);
-        }}
       >
-        {buttonText}
-      </a>
+        <li>
+          <a
+            className={styles.sidesButton}
+            onClick={(e: React.MouseEvent): void => {
+              e.preventDefault();
+              toTop(docTarget);
+            }}
+          >
+            {buttonText}
+          </a>
+        </li>
+        <li>
+          <a
+            className={styles.sidesButton}
+            onClick={(e: React.MouseEvent): void => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            <Icon
+              name="arrowLeftShort"
+              icon={getIcon("arrowLeftShort")}
+              textStyle={{
+                width: "2rem",
+                height: "auto",
+              }}
+            />
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };

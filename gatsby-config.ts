@@ -15,6 +15,7 @@ export default {
     postsLimit: config.postsLimit,
     disqusShortname: config.disqusShortname,
     pathPrefix: config.pathPrefix,
+    excludeSideBtnPath: config.excludeSideBtnPath,
   },
   plugins: [
     {

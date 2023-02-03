@@ -38,6 +38,7 @@ const useSiteMetadata = () => {
             subtitle
             copyright
             disqusShortname
+            excludeSideBtnPath
           }
         }
       }

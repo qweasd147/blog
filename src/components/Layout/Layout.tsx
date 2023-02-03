@@ -16,21 +16,24 @@ interface Props {
   children: React.ReactNode;
 }
 
-// 추가로 시작페이지('/')도 숨긴다.
-const hideSideButtnUrl: Array<string> = [
-  "/category",
-  "/tag",
-  "/page",
-  "/search",
-];
-
 const Layout: React.FC<Props> = ({
   children,
   title,
   description,
   socialImage = "",
 }: Props) => {
-  const { author, url, pathPrefix } = useSiteMetadata();
+  const {
+    author,
+    url,
+    pathPrefix,
+    excludeSideBtnPath,
+  }: {
+    author: any;
+    url: string;
+    pathPrefix: string;
+    excludeSideBtnPath: Array<string>;
+  } = useSiteMetadata();
+
   const metaImage = socialImage || author.photo;
   const metaImageUrl = url + metaImage;
 
@@ -48,7 +51,7 @@ const Layout: React.FC<Props> = ({
         return true;
       }
 
-      return hideSideButtnUrl.some(function (hideUrl) {
+      return (excludeSideBtnPath as Array<string>).some(function (hideUrl) {
         return (
           location.pathname.startsWith(hideUrl) ||
           location.pathname.startsWith(pathPrefix + hideUrl)

@@ -66,5 +66,6 @@
       "codepen": "",
       "soundcloud": ""
     }
-  }
+  },
+  "excludeSideBtnPath": ["/category", "/tag", "/page", "/search"]
 }
