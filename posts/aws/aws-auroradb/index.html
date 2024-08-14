@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta data-react-helmet="true" name="twitter:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" name="twitter:description" content="Terraform으로 aurora DB 구축 및 주요 옵션 설명"/><meta data-react-helmet="true" name="twitter:title" content="Terraform으로 구축하는 AWS Aurora DB - Blog by joohyung"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" property="og:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" property="og:site_name" content="Terraform으로 구축하는 AWS Aurora DB - Blog by joohyung"/><meta data-react-helmet="true" name="description" content="Terraform으로 aurora DB 구축 및 주요 옵션 설명"/><meta name="theme-color" content="hsl(31, 92%, 62%)"/><meta name="generator" content="Gatsby 4.17.0"/><style data-href="/blog/styles.a9ca0bb346ac43a02f40.css" data-identity="gatsby-global-css">html{font-size:100}body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizelegibility;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#212121;font-size:16px;line-height:1.625;margin:0 0 0 calc(100vw - 100%)}body,h1,h2,h3,h4,h5,h6{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif}h1,h2,h3,h4,h5,h6{font-weight:600}h1{font-size:40px;line-height:52px;margin-bottom:26px;margin-top:104px}h2{font-size:27px;line-height:39px}h2,h3{margin-bottom:13px;margin-top:52px}h3{font-size:22px;line-height:26px}h4{font-size:19.2px;margin-top:39px}h4,h5{line-height:26px;margin-bottom:13px}h5,h6{font-size:16px;margin-top:65px}h6{line-height:26px;margin-bottom:13px}img{max-width:100%}hr,img{border:0;display:block}hr{background-image:linear-gradient(180deg,transparent 1px,transparent 11px,#212121 0,#212121 15px,transparent 0,transparent 26px);background-size:100% 26px;color:#212121;height:26px;margin:52px auto;width:100px}a{color:#5c92ff;text-decoration:none}a:active,a:focus,a:hover{color:#f7a145}b,strong{font-weight:600}ul{list-style:square;margin-bottom:26px}ul li{margin-bottom:10px;padding:0 5px}p{line-height:26px;margin-bottom:26px}blockquote{border-left:5px solid #39f;font-style:italic;padding:0}blockquote>p{padding-left:15px}blockquote>p>code[class*=language-]{overflow-wrap:break-word}figure{display:block;height:auto;width:100%}figcaption{color:#212121;font-size:14px;font-style:italic;line-height:19.5px;margin-bottom:0;margin-top:6.5px;text-align:center}.anchor{margin-left:-30px!important;padding-right:14px!important}@media screen and (min-width:685px){figure.float-left,figure.float-right{max-width:310px;padding:0 26px}.float-right{float:right}.float-left{float:left}}body :not(pre)>code.language-text{background-color:rgba(27,31,35,.05);color:#000;display:inline-block;max-width:100%;white-space:inherit}body :not(pre)>code.language-text::selection{background-color:#d2d8fb}body code[class*=language-],body pre[class*=language-]{background-color:#000;color:#dcdcdc}body code[class*=language-] ::selection,body pre[class*=language-] ::selection{background-color:#d2d8fb;color:#fff}body .token.atrule,body .token.attr-value,body .token.keyword{color:#39f}body .token.punctuation{color:#dcdcdc}table{border-collapse:collapse;border-top:1px solid #444;width:100%}td,th{border-bottom:1px solid #444;padding:10px;text-align:center}a{overflow-wrap:break-word}code[class*=language-],pre[class*=language-]{word-wrap:normal;color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;-o-tab-size:4;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{border-radius:.3em;margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{background:#073642}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{background:#eee8d5;color:#657b83;cursor:help}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.Content-module--content--uGfLc{margin:0 auto;max-width:1100px;padding:0 15px}.Content-module--content__title--P67He{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content__body--ESt1v figure{margin-bottom:26px}.Content-module--content__body--ESt1v figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content__body--ESt1v figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content__body--ESt1v a{text-decoration:underline}.Content-module--content__body--ESt1v *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content__body--ESt1v img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--uGfLc{padding:0}.Content-module--content__title--P67He{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content__body--ESt1v,.Content-module--content__body--ESt1v p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}}.Skills-module--skills-layout__back-button--WtT2H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 24px;text-align:center}.Skills-module--skills-layout__back-button--WtT2H:focus,.Skills-module--skills-layout__back-button--WtT2H:hover{color:#5c92ff}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-column-gap:3px;grid-row-gap:2px;display:grid;grid-template-columns:none}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills--HhddO{align-items:flex-start;border-left:1px solid #e1e1e1;display:flex;flex-direction:column;flex-wrap:wrap;margin-bottom:15px;padding-left:25px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__header--6ce4u{color:#5d686f;display:block;margin-top:5px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT{padding-left:40px;padding-top:8px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul{margin-bottom:5px;margin-top:0;padding-left:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li{list-style-type:disc;margin-bottom:2px;margin-left:30px;margin-top:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li span{color:#5d686f}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD{color:#5d686f;margin:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD:not(:first-child){margin-top:0}@media screen and (min-width:960px){.Skills-module--skills-layout__back-button--WtT2H{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-template-columns:repeat(3,1fr)}}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v{margin-bottom:32.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v:last-child{margin-bottom:13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66{font-size:27px;line-height:39px;margin-bottom:13px;margin-top:0}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D{color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:hover{border-bottom:1px solid #212121;color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--description--VzSOs{font-size:16px;line-height:26px;margin-bottom:19.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--time--coZK5{color:#212121;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--divider--gaGDJ{margin:0 13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D{color:#f7a145;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:hover{color:#5c92ff}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA{color:#5c92ff;font-size:16px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Icon-module--icon--HX2j3{fill:currentcolor;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;speak:none;stroke:currentcolor;stroke-width:0;display:inline-block;font-style:normal;font-variant:normal;font-weight:400;height:1em;line-height:1em;text-align:center;text-transform:none;width:1em}.SideButton-module--sides--sxqRm{margin-bottom:26px}.SideButton-module--sides-buttons--CcMjz{bottom:10px;display:flex;flex-direction:column;list-style:none;margin:0;padding:0;position:fixed;right:15px;transition:all .5s ease-in-out}.SideButton-module--sides-buttons-hide--OdyhS{bottom:-180px!important}.SideButton-module--sides-button--pA2tl{align-items:center;background-color:#fff;border:1px solid #ebebeb;border-radius:50%;color:#212121;cursor:pointer;display:flex;height:50px;justify-content:center;line-height:50px;margin:0;padding:0;text-align:center;width:50px}.SideButton-module--sides-button--pA2tl:focus,.SideButton-module--sides-button--pA2tl:hover{color:#5c92ff}@media screen and (min-width:960px){.SideButton-module--sides--sxqRm ul{bottom:100px;right:70px}}.Layout-module--layout--LJM9v{margin-left:auto;margin-right:auto;max-width:1200px;position:relative}.Layout-module--layout--LJM9v:before{content:"";display:table}.Layout-module--layout--LJM9v:after{clear:both;content:"";display:table}.Layout-module--layout-doc-mask--qkYmG{height:30%;position:absolute;top:70%}.Page-module--page--JOA3M{margin-bottom:52px}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:26px 19.5px 0}.Page-module--page--JOA3M .Page-module--title--kDOIG{font-size:40px;font-weight:600;line-height:52px;margin-bottom:37.7px;margin-top:0}.Page-module--page--JOA3M .Page-module--body--VhxOl{font-size:16px;line-height:26px;margin:0 0 26px}@media screen and (min-width:685px){.Page-module--page--JOA3M{width:calc(58.275% - 12.5px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(12n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(12n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:32.5px 19.5px 0}}@media screen and (min-width:960px){.Page-module--page--JOA3M{width:calc(66.6% - 10px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(3n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(3n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:39px 26px 0}}.Pagination-module--pagination--1hy6\+{display:flex;margin-top:52px}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M{text-align:left;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy{text-align:right;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Author-module--author--y9MUW .Author-module--photo--l4ewo{background-clip:padding-box;border-radius:50%;display:inline-block;height:75px;margin-bottom:0;width:75px}.Author-module--author--y9MUW .Author-module--title--z35RG{font-size:18px;font-weight:600;line-height:29.25px;margin:13px 0}.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:focus,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:hover{color:#212121}.Author-module--author--y9MUW .Author-module--subtitle--huxcU{color:#878787;line-height:26px;margin-bottom:26px}.Contacts-module--contacts--CReI-{margin-bottom:26px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q{display:flex;flex-flow:row wrap;flex-grow:0;flex-shrink:0;list-style:none;margin:13px 0;max-width:150px;padding:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa{align-content:center;align-items:center;border:1px solid #ebebeb;border-radius:50%;display:flex;height:35px;justify-content:center;line-height:35px;margin:6.5px;padding:0;text-align:center;width:35px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa:nth-child(3n+1){margin-left:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4{border:0;color:#212121;display:flex}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:focus,.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:hover{color:#5c92ff}.Copyright-module--copyright--LGAkk{color:#999;font-size:14px}.Menu-module--menu--ETqdK{margin-bottom:26px}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z{list-style:none;margin:0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw{margin:13px 0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj{border:0;color:#212121;font-size:16px;font-weight:400}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:focus,.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj.Menu-module--active--bLdMz{border-bottom:1px solid #212121;color:#212121}.Sidebar-module--sidebar--G-oUa{width:100%}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:26px 19.5px 0;position:relative}@media screen and (min-width:685px){.Sidebar-module--sidebar--G-oUa{width:calc(41.625% - 17.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:32.5px 19.5px 0}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo:after{background:#e6e6e6;background:linear-gradient(180deg,#e6e6e6 0,#e6e6e6 48%,#fff);bottom:0;content:"";height:540px;position:absolute;right:-10px;top:30px;width:1px}}@media screen and (min-width:960px){.Sidebar-module--sidebar--G-oUa{width:calc(24.975% - 22.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:39px}}.TotalSearch-module--search--aZIhb{background-color:#fff;display:flex;padding:16px 0;position:-webkit-sticky;position:sticky;top:0}.TotalSearch-module--search-keyword--iOIAR{border:1px solid gray;border-radius:4px;font-size:16px;font-weight:400;height:48px;padding:0 16px;width:100%}@media screen and (min-width:960px){.TotalSearch-module--skills-layout__back-button--YjdJg{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.TotalSearch-module--skills-layout--9u5bv .TotalSearch-module--skills-wrap--mebnz{grid-template-columns:repeat(3,1fr)}}.Author-module--author--HFjbH{border-top:1px solid #e6e6e6;line-height:26px;margin-bottom:52px;margin-top:26px;max-width:950px;padding-top:26px}.Author-module--author--HFjbH .Author-module--bio--CJUED .Author-module--twitter--kGR0t{display:block;text-decoration:underline}@media screen and (min-width:685px){.Author-module--author--HFjbH{margin-left:auto;margin-right:auto}}.Content-module--content--gNWBo{margin:0 auto;max-width:1100px;padding:0 13px}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure{margin-bottom:26px}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi a{text-decoration:underline}.Content-module--content--gNWBo .Content-module--body--cmwhi *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{visibility:hidden}.Content-module--content--gNWBo .Content-module--body--cmwhi img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--gNWBo{padding:0}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content--gNWBo .Content-module--body--cmwhi,.Content-module--content--gNWBo .Content-module--body--cmwhi p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{padding-right:26px;visibility:unset}}.Meta-module--meta--2uCvT .Meta-module--date--TTDWL{font-style:italic}.Tags-module--tags--GFiVM{margin-bottom:13px}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra{list-style:none;padding:0}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ{display:inline-block;margin:13px 3.25px}@media screen and (min-width:685px){.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ:first-child{margin-left:0;padding-left:0}}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1{border:1px solid #e6e6e6;border-radius:20px;color:#212121;display:inline-block;height:35px;line-height:35px;padding:0 19.5px;text-decoration:none}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:focus,.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:hover{color:#5c92ff}.Post-module--post--OplAV .Post-module--content--PG5Wp{margin:0 auto}.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{margin:0 auto;max-width:950px;padding:0 13px}.Post-module--post--OplAV .Post-module--button--Ufj7H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 26px;text-align:center}.Post-module--post--OplAV .Post-module--button--Ufj7H:focus,.Post-module--post--OplAV .Post-module--button--Ufj7H:hover{color:#5c92ff}@media screen and (min-width:960px){.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{padding:0}.Post-module--post--OplAV .Post-module--button--Ufj7H{left:30px;margin:0;max-width:none;position:fixed;top:30px}}.Tags-module--tags--KfLu\+{grid-gap:11px 20px;display:flex;flex-wrap:wrap}.Tags-module--tags__tag--nij2v{align-items:center;background:#f1f3f5;border-radius:20px;color:#0ca678;cursor:pointer;display:inline-flex;height:35px;padding:0 10px}</style><link rel="alternate" type="application/rss+xml" title="Blog by joohyung" href="/blog/rss.xml"/><style type="text/css">
+    .anchor.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      padding-right: 4px;
+    }
+    .anchor.after {
+      display: inline-block;
+      padding-left: 4px;
+    }
+    h1 .anchor svg,
+    h2 .anchor svg,
+    h3 .anchor svg,
+    h4 .anchor svg,
+    h5 .anchor svg,
+    h6 .anchor svg {
+      visibility: hidden;
+    }
+    h1:hover .anchor svg,
+    h2:hover .anchor svg,
+    h3:hover .anchor svg,
+    h4:hover .anchor svg,
+    h5:hover .anchor svg,
+    h6:hover .anchor svg,
+    h1 .anchor:focus svg,
+    h2 .anchor:focus svg,
+    h3 .anchor:focus svg,
+    h4 .anchor:focus svg,
+    h5 .anchor:focus svg,
+    h6 .anchor:focus svg {
+      visibility: visible;
+    }
+  </style><script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var hash = window.decodeURI(location.hash.replace('#', ''))
+      if (hash !== '') {
+        var element = document.getElementById(hash)
+        if (element) {
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - 0)
+          }), 0)
+        }
+      }
+    })
+  </script><link rel="preconnect" href="https://www.googletagmanager.com"/><link rel="dns-prefetch" href="https://www.googletagmanager.com"/><script async="" src="https://www.googletagmanager.com/gtag/js?id="></script><script>
+      
+      
+      if(true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '', {"send_page_view":false});
+      }
+      </script><link rel="sitemap" type="application/xml" href="/blog/sitemap/sitemap-index.xml"/><link rel="icon" href="/blog/favicon-32x32.png?v=a0e002f394141892bab003cbb7dcfd9b" type="image/png"/><link rel="manifest" href="/blog/manifest.webmanifest" crossorigin="anonymous"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png?v=a0e002f394141892bab003cbb7dcfd9b"/><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><title data-react-helmet="true">Terraform으로 구축하는 AWS Aurora DB - Blog by joohyung</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--LJM9v"><div class="Post-module--post--OplAV"><a class="Post-module--button--Ufj7H">뒤로가기</a><div class="Post-module--content--PG5Wp"><div class="Content-module--content--gNWBo"><h1 class="Content-module--title--CVBL0">Terraform으로 구축하는 AWS Aurora DB</h1><div class="Content-module--body--cmwhi"><p>DB 구축을 주제로 blog를 쓰게 될 줄은 몰랐는데, 여지것 남이 구축 or 구축 된 환경에서만 개발하다가 막연히 어려울 것이 없을 줄 알고 딱히 관심도 없었는데 이번에 막상 구축해보니 생각보다 어렵고 삽질도 많이하게 되어 정리할 겸 쓰게 되었다. 역시 해봐야 깨닫게 되는거 같다(물론 다음에 한다면 훨씬 쉽게 구축이 가능 하리라 생각된다).</p>
+<h2 id="사전-준비" style="position:relative;"><a href="#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84" aria-label="사전 준비 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>사전 준비</h2>
+<ul>
+<li>terraform</li>
+<li>awscli(계정 &#x26; credentials 셋팅 포함)</li>
+<li>aws key pair</li>
+</ul>
+<blockquote>
+<p>key pair는 베스천 서버 구축을 위한 것으로(ec2 접속을 비밀번호가 아닌 ssh로 접속) 셋팅이 안되어 있다면 <a href="https://github.com/qweasd147/StudyNote/tree/master/terraform/key_pair" target="_blank" rel="nofollow noopener noreferrer">여기</a> 를 참고해서 privacy key를 aws에 등록 시켜놓는다.</p>
+</blockquote>
+<h1 id="구성" style="position:relative;"><a href="#%EA%B5%AC%EC%84%B1" aria-label="구성 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>구성</h1>
+<p>실행은 <a href="https://github.com/qweasd147/StudyNote/tree/master/terraform/db" target="_blank" rel="nofollow noopener noreferrer">terraform auroradb(Mysql 8.0)</a>에 다운로드 및 terraform init, apply 순서로 실행 시킨다.</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ terraform init
+$ terraform apply</code></pre></div>
+<p>최초 계정은 <code class="language-text">admin</code>/<code class="language-text">admin1234!</code> 로 생성 되며 필요에 따라 바꾸던가 <code class="language-text">terraform</code>의 <code class="language-text">random_password</code>를 사용해서 개선하여 사용하는것도 좋은 방법이다.</p>
+<p>프로비저닝이 끝나면 아래와 같은 구조로 클러스터가 만들어지는데
+<span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 585px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 91.59663865546219%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACI0lEQVQ4y22TzW7bMAzH84B7xT1BgV53GHoa2gRbt7Ur0iK9tF2SzqutWLb8QYofGiQ56ZqN0MWkfyT1JzV79/7Lh7uXAcUBsyiJcjqi4XCyh94eJJ19XJXPDeRwCEF1goFk8AJekCST4a2x6Oxfl2hQDXag0mEzkgPJ/iOaRGfgY8wY8/DwYIzxJIjEzEz89XN1t7RBhTyjZwDcbNaPj4+IPsKss9zPCEBEwoyePDERDcN4u6yuvpcULfpjyvQxwbKHEb2mvnJ7RL4oiufnbVH8KopCJV47962qr3DWCfawhklYDWFETyyS/uO9YKoKCY6CeY6BfgQ3Ugvce+6Rk+ABvWdOUrM6YAfcYYwOgCLqOcGqARA74LJB21GPrCGOFyMd5RTRZqAXC7an0Yv3XjRMsGgAwBDk5np3/qnkyL7CuV0mXZyXV99MCAxwgCleDxGbxv58qm5+FI11QXWCiaMiAFVl7u9/X1+tra1F5FBZUmUoiqKsqpdkcTgRxgyPI1TGGLOrbb2zlg8wcrw6ybQ3SCI6qQ3okSgqmtabOI8jYsSKnEYlU0ysbU1d72rbtm55e/e03qqGnKUsTW0b57rDm3mz26raNo1tbNd1I4C1drPZONemwaJzrbV133d/r/fxw8gmIs51Z2dnFxcXfd/r8aP4H6x7W6/Xq9VqsVjM5/PlcrndbnPGoyz/r3x5eXlyclJVVV3Xp6en8/k8pz6q/AeyLBMgGwpSdgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/a675385763345267f0f3ba53b67a1a52/24599/multi-az-db-cluster.webp 238w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/69f92/multi-az-db-cluster.webp 475w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/b1df6/multi-az-db-cluster.webp 585w"
+              sizes="(max-width: 585px) 100vw, 585px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/a675385763345267f0f3ba53b67a1a52/da2e6/multi-az-db-cluster.png 238w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/abae4/multi-az-db-cluster.png 475w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png 585w"
+            sizes="(max-width: 585px) 100vw, 585px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png"
+            alt="multi-az-cluster"
+            title="multi-az-cluster"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>대표적으로 하나의 <code class="language-text">Writer DB Instance</code>와 여러 <code class="language-text">Reader DB Instance</code>가 각자 다른 <code class="language-text">AZ</code>에 구축이 된다. 이는 <code class="language-text">subnet group</code>에 영향을 받는 점 참고 하면 된다.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">resource "aws_db_subnet_group" "db-subnet-group" {
+  name        = "db-pri-subnet-group"
+  subnet_ids  = var.pri-subnets-id
+  description = "Private DB Subnet Group"
+}</code></pre></div>
+<p>이런식으로 여러 서브넷을 그룹으로 묶은 다음, <code class="language-text">cluster</code>에 지정하면 알아서 Mutli AZ 구성이 끝나게 된다.</p>
+<blockquote>
+<p>물론 subnet들의 az는 여러개로 구성되게 만들고, private subnet에 구성 하는걸 추천한다.</p>
+</blockquote>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/498873270e5600b86269e66e65d25970/7383e/aws-cluster.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 18.067226890756302%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVQY0z2OW27EMAhFs/HurQvoHvrRj8k8lMTGBmN7dCojtUiIy+vAdn88UDXUDHentfYfm3to987onWrOkYSUUuysvpnyuiry88Xx+cF2u+0cx0kpFSkFs4ZICeDKly9tZrTm1Kr0Ba8VEWGMTlVFJFPyyZa1cRRnzDfFBPUaw7YgrXGlRB8jamOM8DlnxAUOHfkMxqY++X5VxhuSHSS74sN1fX217/dYfD5fqCreOzlnlhUpnOfFn63+L1iLNX1aKFIMAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/498873270e5600b86269e66e65d25970/24599/aws-cluster.webp 238w,
+/blog/static/498873270e5600b86269e66e65d25970/69f92/aws-cluster.webp 475w,
+/blog/static/498873270e5600b86269e66e65d25970/cebde/aws-cluster.webp 950w,
+/blog/static/498873270e5600b86269e66e65d25970/ab1e2/aws-cluster.webp 1425w,
+/blog/static/498873270e5600b86269e66e65d25970/33007/aws-cluster.webp 1535w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/498873270e5600b86269e66e65d25970/da2e6/aws-cluster.png 238w,
+/blog/static/498873270e5600b86269e66e65d25970/abae4/aws-cluster.png 475w,
+/blog/static/498873270e5600b86269e66e65d25970/68327/aws-cluster.png 950w,
+/blog/static/498873270e5600b86269e66e65d25970/fe5a5/aws-cluster.png 1425w,
+/blog/static/498873270e5600b86269e66e65d25970/7383e/aws-cluster.png 1535w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/498873270e5600b86269e66e65d25970/68327/aws-cluster.png"
+            alt="aws-az-cluster"
+            title="aws-az-cluster"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span>
+비용 문제로 <code class="language-text">instance2</code>는 코드 상에 주석 처리 되어 있는데 주석을 풀고 배포하면 위와 같이 2개의 인스턴스가 각자 다른 AZ에 Writer/Reader로 구분되어 배포되는것을 확인 할 수 있다.</p>
+<blockquote>
+<p>인스턴스를 늘리면 나머지 AZ에 자동으로 할당 되고, 반대로 인스턴스를 하나로 줄이면 한대로 하나의 인스턴스가 reader, writer 역할을 다 하게 된다. 하나의 인스턴스로 구성 할 경우, 이때 생성 된 <code class="language-text">reader-endpoint</code>로도 쓰기 작업이 가능했던걸로 기억하고 있다.</p>
+</blockquote>
+<p>이런 DB cluster에 외부에서 접근 할 수 있게 <code class="language-text">public subnet</code>에 베스천 서버(ec2)를 올리고 elastic ip를 꽂아 터널링하여 접근하는 방식이다.</p>
+<h2 id="주요-옵션-설명" style="position:relative;"><a href="#%EC%A3%BC%EC%9A%94-%EC%98%B5%EC%85%98-%EC%84%A4%EB%AA%85" aria-label="주요 옵션 설명 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>주요 옵션 설명</h2>
+<h3 id="cluster-버전-및-인스턴스-타입" style="position:relative;"><a href="#cluster-%EB%B2%84%EC%A0%84-%EB%B0%8F-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%ED%83%80%EC%9E%85" aria-label="cluster 버전 및 인스턴스 타입 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Cluster 버전 및 인스턴스 타입</h3>
+<p>서브넷 그룹은 위에서 <code class="language-text">다중 AZ</code>를 구성하면서 설명했으니 넘어가고 서버 인스턴스 타입은 <code class="language-text">db.t3.medium</code>로 구성하였는데, 제약사항이 존재하다. 해당 db는 테스트 용도니까 당연히 <code class="language-text">micro</code>나 <code class="language-text">small</code>로 구성하고 싶었지만 엔진 버전이 3이상 쓸려면 <code class="language-text">medium</code> 버전을 써야만 한다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/a2136967efb0dedc519d460f915dc021/ca019/db-support-type.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 10.504201680672269%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcklEQVQI102MSwoCMRBE5/4H8Caew507V6Mxf9Ah3ZJMfAMNggUPalGvlk0+PMubse+IKjkXUs54H1BVfplzGmMM24QY8SGQUrIeYzJvybcL1/MJ2V40ER7O4ZxjXe+EECmlUGu1sy/QezextWaIyB/KATXtmEuAUY4QAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/a2136967efb0dedc519d460f915dc021/24599/db-support-type.webp 238w,
+/blog/static/a2136967efb0dedc519d460f915dc021/69f92/db-support-type.webp 475w,
+/blog/static/a2136967efb0dedc519d460f915dc021/cebde/db-support-type.webp 950w,
+/blog/static/a2136967efb0dedc519d460f915dc021/6606d/db-support-type.webp 1070w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/a2136967efb0dedc519d460f915dc021/da2e6/db-support-type.png 238w,
+/blog/static/a2136967efb0dedc519d460f915dc021/abae4/db-support-type.png 475w,
+/blog/static/a2136967efb0dedc519d460f915dc021/68327/db-support-type.png 950w,
+/blog/static/a2136967efb0dedc519d460f915dc021/ca019/db-support-type.png 1070w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/a2136967efb0dedc519d460f915dc021/68327/db-support-type.png"
+            alt="aws-az-cluster"
+            title="aws-az-cluster"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p><a href="https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/AuroraUserGuide/Concepts.DBInstanceClass.html" target="_blank" rel="nofollow noopener noreferrer">인스턴스 클래스별 지원 버전</a></p>
+<p><a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.Updates.30Updates.html" target="_blank" rel="nofollow noopener noreferrer">mysql 버전 및 auroradb 버전 정보</a></p>
+<blockquote>
+<p>첫번째 링크에서 <code class="language-text">DB 인스턴스 클래스에 지원되는 DB 엔진</code>에서 확인 가능하고, 엔진 버전이 2를 쓰면 small도 사용가능하지만 구지 이전 버전을 테스트 용도라도 별로 쓰고 싶진 않았다. 근데 <code class="language-text">db.t3.medium</code> 타입은 performance insight를 사용 못하니깐 현업에서 실제로 구축 해야한다면 더 높은 타입을 써야한다.</p>
+</blockquote>
+<h3 id="cluster-parameter-group" style="position:relative;"><a href="#cluster-parameter-group" aria-label="cluster parameter group permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Cluster parameter group</h3>
+<p><code class="language-text">parameger group</code>은 <code class="language-text">cluster</code>에 적용 할수도 있고, <code class="language-text">cluster</code>의 <code class="language-text">instance</code>에 적용 할 수 있다. 일단 <code class="language-text">cluster</code>의 파라미터만 지정하였고, 일반적으로 자주 사용되고 언급되는 옵션은 아래와 같다</p>
+<ul>
+<li><code class="language-text">time_zone</code> -> DB time zone 지정.</li>
+<li><code class="language-text">long_query_time</code> -> slow query 기준 시간(단위 초)</li>
+<li><code class="language-text">slow_query_log</code> -> slow query를 log로 남길지 여부(0 비활성화, 1 활성화)</li>
+<li><code class="language-text">performance_schema</code> -> performance schema 활성화 여부. 활성화 하면 성능저하가 조금 있다</li>
+<li><code class="language-text">innodb_print_all_deadlocks</code> -> dead lock 쿼리를 error log로 남길지 여부</li>
+</ul>
+<p>개인적으론 위 옵션을 다 활성화 하는게 좋다고 생각되고 <code class="language-text">performance_schema</code>는 조금 고민해 볼 필요가 있다고 생각된다.</p>
+<h3 id="slow-query" style="position:relative;"><a href="#slow-query" aria-label="slow query permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>slow query</h3>
+<p><code class="language-text">long_query_time</code>와 <code class="language-text">slow_query_log</code>를 지정하면 slow query가 기록 되지만 이건 instance의 로그파일에서나 볼 수 있다. 좀더 범용적으로 보기 위해선 <code class="language-text">cloudwatch</code>로 보내는게 좋고, cluster에 <code class="language-text">enabled_cloudwatch_logs_exports</code>를 설정해야 <code class="language-text">slow query</code> 나 <code class="language-text">error</code> 로그들이 cloudwatch로 전송된다.</p>
+<h3 id="performance-insight" style="position:relative;"><a href="#performance-insight" aria-label="performance insight permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Performance insight</h3>
+<p><code class="language-text">performance_insights_enabled</code>이 옵션으로 활성화/비활성화가 가능하고, 이건 무조건 키는게 좋지만 (보존 기간 설정이 7일 까지는 무료) 인스턴스 타입에 따라 지원이 불가능 할 수도 있다. 실제 운영환경에선 성능이 좋은 타입을 선택 할 테니까 무조건 활성화 하고, 추가로 <code class="language-text">향상된 모니터링(Enhanced Monitoring)</code>도 돈이 더 들지만 운영 환경은 활성화 시키는걸 추천한다</p></div></div></div><div class="Post-module--footer--+HBcE"><div class="Meta-module--meta--2uCvT"><p class="Meta-module--date--TTDWL">Published<!-- --> <!-- -->Aug 14, 2024</p></div><div class="Tags-module--tags--GFiVM"><ul class="Tags-module--list--gq5ra"><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/aws/">aws</a></li><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/db/">db</a></li><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/auroradb/">auroradb</a></li></ul></div><div class="Author-module--author--HFjbH"><p class="Author-module--bio--CJUED"><a class="Author-module--twitter--kGR0t" href="https://github.com/qweasd147" rel="noopener noreferrer" target="_blank"><strong>Kim joohyung</strong> on Github</a></p></div></div><div class="Post-module--comments--07meJ"></div></div><div class="Layout-module--layout-doc-mask--qkYmG"></div><div class="SideButton-module--sides--sxqRm"><ul class="SideButton-module--sides-buttons--CcMjz SideButton-module--sides-buttons-hide--OdyhS"><li><a class="SideButton-module--sides-button--pA2tl">Up</a></li><li><a class="SideButton-module--sides-button--pA2tl"><svg class="Icon-module--icon--HX2j3" viewBox="0 0 16 16" style="width:2rem;height:auto"><title>arrowLeftShort</title><path d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path></svg></a></li></ul></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/posts/aws/aws-auroradb/";window.___webpackCompilationHash="b0ad3f5cb20b8017caa6";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-4f8c4c04526091b1ccaa.js"],"app":["/app-15348d03227d735910fd.js"],"component---cache-caches-gatsby-plugin-offline-app-shell-js":["/component---cache-caches-gatsby-plugin-offline-app-shell-js-0f5b8a073afc45a4d929.js"],"component---src-components-custompage-skills-skills-tsx":["/component---src-components-custompage-skills-skills-tsx-97fdc4b7a905ae978e10.js"],"component---src-components-custompage-total-search-total-search-tsx":["/component---src-components-custompage-total-search-total-search-tsx-df4aaf713a67ac36eba5.js"],"component---src-templates-categories-template-categories-template-tsx":["/component---src-templates-categories-template-categories-template-tsx-56a81cb5064530a23b5a.js"],"component---src-templates-category-template-category-template-tsx":["/component---src-templates-category-template-category-template-tsx-284a16fa141b6e040247.js"],"component---src-templates-index-template-index-template-tsx":["/component---src-templates-index-template-index-template-tsx-cadbf1134cccd9712170.js"],"component---src-templates-not-found-template-not-found-template-tsx":["/component---src-templates-not-found-template-not-found-template-tsx-a05c28eb455a9d539b08.js"],"component---src-templates-post-template-post-template-tsx":["/component---src-templates-post-template-post-template-tsx-b5210253965c870a7e20.js"],"component---src-templates-tag-template-tag-template-tsx":["/component---src-templates-tag-template-tag-template-tsx-1bee2a4f186c77fd728f.js"],"component---src-templates-tags-template-tags-template-tsx":["/component---src-templates-tags-template-tags-template-tsx-5415b22ee6795014eb8f.js"]};/*]]>*/</script><script src="/blog/polyfill-4f8c4c04526091b1ccaa.js" nomodule=""></script><script src="/blog/app-15348d03227d735910fd.js" async=""></script><script src="/blog/framework-5aab6d6db7fbdb045164.js" async=""></script><script src="/blog/webpack-runtime-56da672d410a6717c3ab.js" async=""></script></body></html>

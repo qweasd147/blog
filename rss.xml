@@ -1,4 +1,188 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Aug 2024 16:31:05 GMT</lastBuildDate><item><title><![CDATA[Terraform으로 구축하는 eks]]></title><description><![CDATA[Terraform으로 eks 구축 및 배포 실습, 자주 쓰는 명령어들 모음]]></description><link>https://qweasd147.github.io/posts/aws/aws-eks/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/aws/aws-eks/</guid><pubDate>Sat, 10 Aug 2024 16:27:52 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;terraform&lt;/code&gt;으로 구현한 내용은 &lt;a href=&quot;https://github.com/qweasd147/StudyNote/tree/master/terraform/eks_module&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;eks 예제&lt;/a&gt; 에서 확인 가능하다&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 14 Aug 2024 08:19:36 GMT</lastBuildDate><item><title><![CDATA[Terraform으로 구축하는 AWS Aurora DB]]></title><description><![CDATA[Terraform으로 aurora DB 구축 및 주요 옵션 설명]]></description><link>https://qweasd147.github.io/posts/aws/aws-auroradb/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/aws/aws-auroradb/</guid><pubDate>Wed, 14 Aug 2024 08:11:14 GMT</pubDate><content:encoded>&lt;p&gt;DB 구축을 주제로 blog를 쓰게 될 줄은 몰랐는데, 여지것 남이 구축 or 구축 된 환경에서만 개발하다가 막연히 어려울 것이 없을 줄 알고 딱히 관심도 없었는데 이번에 막상 구축해보니 생각보다 어렵고 삽질도 많이하게 되어 정리할 겸 쓰게 되었다. 역시 해봐야 깨닫게 되는거 같다(물론 다음에 한다면 훨씬 쉽게 구축이 가능 하리라 생각된다).&lt;/p&gt;
+&lt;h2 id=&quot;사전-준비&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84&quot; aria-label=&quot;사전 준비 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;사전 준비&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;terraform&lt;/li&gt;
+&lt;li&gt;awscli(계정 &amp;#x26; credentials 셋팅 포함)&lt;/li&gt;
+&lt;li&gt;aws key pair&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;key pair는 베스천 서버 구축을 위한 것으로(ec2 접속을 비밀번호가 아닌 ssh로 접속) 셋팅이 안되어 있다면 &lt;a href=&quot;https://github.com/qweasd147/StudyNote/tree/master/terraform/key_pair&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;여기&lt;/a&gt; 를 참고해서 privacy key를 aws에 등록 시켜놓는다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;구성&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B5%AC%EC%84%B1&quot; aria-label=&quot;구성 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;구성&lt;/h1&gt;
+&lt;p&gt;실행은 &lt;a href=&quot;https://github.com/qweasd147/StudyNote/tree/master/terraform/db&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;terraform auroradb(Mysql 8.0)&lt;/a&gt;에 다운로드 및 terraform init, apply 순서로 실행 시킨다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;$ terraform init
+$ terraform apply&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;최초 계정은 &lt;code class=&quot;language-text&quot;&gt;admin&lt;/code&gt;/&lt;code class=&quot;language-text&quot;&gt;admin1234!&lt;/code&gt; 로 생성 되며 필요에 따라 바꾸던가 &lt;code class=&quot;language-text&quot;&gt;terraform&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;random_password&lt;/code&gt;를 사용해서 개선하여 사용하는것도 좋은 방법이다.&lt;/p&gt;
+&lt;p&gt;프로비저닝이 끝나면 아래와 같은 구조로 클러스터가 만들어지는데
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 585px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 91.59663865546219%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACI0lEQVQ4y22TzW7bMAzH84B7xT1BgV53GHoa2gRbt7Ur0iK9tF2SzqutWLb8QYofGiQ56ZqN0MWkfyT1JzV79/7Lh7uXAcUBsyiJcjqi4XCyh94eJJ19XJXPDeRwCEF1goFk8AJekCST4a2x6Oxfl2hQDXag0mEzkgPJ/iOaRGfgY8wY8/DwYIzxJIjEzEz89XN1t7RBhTyjZwDcbNaPj4+IPsKss9zPCEBEwoyePDERDcN4u6yuvpcULfpjyvQxwbKHEb2mvnJ7RL4oiufnbVH8KopCJV47962qr3DWCfawhklYDWFETyyS/uO9YKoKCY6CeY6BfgQ3Ugvce+6Rk+ABvWdOUrM6YAfcYYwOgCLqOcGqARA74LJB21GPrCGOFyMd5RTRZqAXC7an0Yv3XjRMsGgAwBDk5np3/qnkyL7CuV0mXZyXV99MCAxwgCleDxGbxv58qm5+FI11QXWCiaMiAFVl7u9/X1+tra1F5FBZUmUoiqKsqpdkcTgRxgyPI1TGGLOrbb2zlg8wcrw6ybQ3SCI6qQ3okSgqmtabOI8jYsSKnEYlU0ysbU1d72rbtm55e/e03qqGnKUsTW0b57rDm3mz26raNo1tbNd1I4C1drPZONemwaJzrbV133d/r/fxw8gmIs51Z2dnFxcXfd/r8aP4H6x7W6/Xq9VqsVjM5/PlcrndbnPGoyz/r3x5eXlyclJVVV3Xp6en8/k8pz6q/AeyLBMgGwpSdgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/a675385763345267f0f3ba53b67a1a52/24599/multi-az-db-cluster.webp 238w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/69f92/multi-az-db-cluster.webp 475w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/b1df6/multi-az-db-cluster.webp 585w&quot;
+              sizes=&quot;(max-width: 585px) 100vw, 585px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/a675385763345267f0f3ba53b67a1a52/da2e6/multi-az-db-cluster.png 238w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/abae4/multi-az-db-cluster.png 475w,
+/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png 585w&quot;
+            sizes=&quot;(max-width: 585px) 100vw, 585px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/a675385763345267f0f3ba53b67a1a52/51d84/multi-az-db-cluster.png&quot;
+            alt=&quot;multi-az-cluster&quot;
+            title=&quot;multi-az-cluster&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;대표적으로 하나의 &lt;code class=&quot;language-text&quot;&gt;Writer DB Instance&lt;/code&gt;와 여러 &lt;code class=&quot;language-text&quot;&gt;Reader DB Instance&lt;/code&gt;가 각자 다른 &lt;code class=&quot;language-text&quot;&gt;AZ&lt;/code&gt;에 구축이 된다. 이는 &lt;code class=&quot;language-text&quot;&gt;subnet group&lt;/code&gt;에 영향을 받는 점 참고 하면 된다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;resource &quot;aws_db_subnet_group&quot; &quot;db-subnet-group&quot; {
+  name        = &quot;db-pri-subnet-group&quot;
+  subnet_ids  = var.pri-subnets-id
+  description = &quot;Private DB Subnet Group&quot;
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;이런식으로 여러 서브넷을 그룹으로 묶은 다음, &lt;code class=&quot;language-text&quot;&gt;cluster&lt;/code&gt;에 지정하면 알아서 Mutli AZ 구성이 끝나게 된다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;물론 subnet들의 az는 여러개로 구성되게 만들고, private subnet에 구성 하는걸 추천한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/498873270e5600b86269e66e65d25970/7383e/aws-cluster.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 18.067226890756302%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVQY0z2OW27EMAhFs/HurQvoHvrRj8k8lMTGBmN7dCojtUiIy+vAdn88UDXUDHentfYfm3to987onWrOkYSUUuysvpnyuiry88Xx+cF2u+0cx0kpFSkFs4ZICeDKly9tZrTm1Kr0Ba8VEWGMTlVFJFPyyZa1cRRnzDfFBPUaw7YgrXGlRB8jamOM8DlnxAUOHfkMxqY++X5VxhuSHSS74sN1fX217/dYfD5fqCreOzlnlhUpnOfFn63+L1iLNX1aKFIMAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/498873270e5600b86269e66e65d25970/24599/aws-cluster.webp 238w,
+/blog/static/498873270e5600b86269e66e65d25970/69f92/aws-cluster.webp 475w,
+/blog/static/498873270e5600b86269e66e65d25970/cebde/aws-cluster.webp 950w,
+/blog/static/498873270e5600b86269e66e65d25970/ab1e2/aws-cluster.webp 1425w,
+/blog/static/498873270e5600b86269e66e65d25970/33007/aws-cluster.webp 1535w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/498873270e5600b86269e66e65d25970/da2e6/aws-cluster.png 238w,
+/blog/static/498873270e5600b86269e66e65d25970/abae4/aws-cluster.png 475w,
+/blog/static/498873270e5600b86269e66e65d25970/68327/aws-cluster.png 950w,
+/blog/static/498873270e5600b86269e66e65d25970/fe5a5/aws-cluster.png 1425w,
+/blog/static/498873270e5600b86269e66e65d25970/7383e/aws-cluster.png 1535w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/498873270e5600b86269e66e65d25970/68327/aws-cluster.png&quot;
+            alt=&quot;aws-az-cluster&quot;
+            title=&quot;aws-az-cluster&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+비용 문제로 &lt;code class=&quot;language-text&quot;&gt;instance2&lt;/code&gt;는 코드 상에 주석 처리 되어 있는데 주석을 풀고 배포하면 위와 같이 2개의 인스턴스가 각자 다른 AZ에 Writer/Reader로 구분되어 배포되는것을 확인 할 수 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;인스턴스를 늘리면 나머지 AZ에 자동으로 할당 되고, 반대로 인스턴스를 하나로 줄이면 한대로 하나의 인스턴스가 reader, writer 역할을 다 하게 된다. 하나의 인스턴스로 구성 할 경우, 이때 생성 된 &lt;code class=&quot;language-text&quot;&gt;reader-endpoint&lt;/code&gt;로도 쓰기 작업이 가능했던걸로 기억하고 있다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이런 DB cluster에 외부에서 접근 할 수 있게 &lt;code class=&quot;language-text&quot;&gt;public subnet&lt;/code&gt;에 베스천 서버(ec2)를 올리고 elastic ip를 꽂아 터널링하여 접근하는 방식이다.&lt;/p&gt;
+&lt;h2 id=&quot;주요-옵션-설명&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%A3%BC%EC%9A%94-%EC%98%B5%EC%85%98-%EC%84%A4%EB%AA%85&quot; aria-label=&quot;주요 옵션 설명 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;주요 옵션 설명&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-버전-및-인스턴스-타입&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cluster-%EB%B2%84%EC%A0%84-%EB%B0%8F-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%ED%83%80%EC%9E%85&quot; aria-label=&quot;cluster 버전 및 인스턴스 타입 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Cluster 버전 및 인스턴스 타입&lt;/h3&gt;
+&lt;p&gt;서브넷 그룹은 위에서 &lt;code class=&quot;language-text&quot;&gt;다중 AZ&lt;/code&gt;를 구성하면서 설명했으니 넘어가고 서버 인스턴스 타입은 &lt;code class=&quot;language-text&quot;&gt;db.t3.medium&lt;/code&gt;로 구성하였는데, 제약사항이 존재하다. 해당 db는 테스트 용도니까 당연히 &lt;code class=&quot;language-text&quot;&gt;micro&lt;/code&gt;나 &lt;code class=&quot;language-text&quot;&gt;small&lt;/code&gt;로 구성하고 싶었지만 엔진 버전이 3이상 쓸려면 &lt;code class=&quot;language-text&quot;&gt;medium&lt;/code&gt; 버전을 써야만 한다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/a2136967efb0dedc519d460f915dc021/ca019/db-support-type.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 10.504201680672269%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAACCAYAAABYBvyLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAcklEQVQI102MSwoCMRBE5/4H8Caew507V6Mxf9Ah3ZJMfAMNggUPalGvlk0+PMubse+IKjkXUs54H1BVfplzGmMM24QY8SGQUrIeYzJvybcL1/MJ2V40ER7O4ZxjXe+EECmlUGu1sy/QezextWaIyB/KATXtmEuAUY4QAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/a2136967efb0dedc519d460f915dc021/24599/db-support-type.webp 238w,
+/blog/static/a2136967efb0dedc519d460f915dc021/69f92/db-support-type.webp 475w,
+/blog/static/a2136967efb0dedc519d460f915dc021/cebde/db-support-type.webp 950w,
+/blog/static/a2136967efb0dedc519d460f915dc021/6606d/db-support-type.webp 1070w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/a2136967efb0dedc519d460f915dc021/da2e6/db-support-type.png 238w,
+/blog/static/a2136967efb0dedc519d460f915dc021/abae4/db-support-type.png 475w,
+/blog/static/a2136967efb0dedc519d460f915dc021/68327/db-support-type.png 950w,
+/blog/static/a2136967efb0dedc519d460f915dc021/ca019/db-support-type.png 1070w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/a2136967efb0dedc519d460f915dc021/68327/db-support-type.png&quot;
+            alt=&quot;aws-az-cluster&quot;
+            title=&quot;aws-az-cluster&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/AuroraUserGuide/Concepts.DBInstanceClass.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;인스턴스 클래스별 지원 버전&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.aws.amazon.com/AmazonRDS/latest/AuroraMySQLReleaseNotes/AuroraMySQL.Updates.30Updates.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;mysql 버전 및 auroradb 버전 정보&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;첫번째 링크에서 &lt;code class=&quot;language-text&quot;&gt;DB 인스턴스 클래스에 지원되는 DB 엔진&lt;/code&gt;에서 확인 가능하고, 엔진 버전이 2를 쓰면 small도 사용가능하지만 구지 이전 버전을 테스트 용도라도 별로 쓰고 싶진 않았다. 근데 &lt;code class=&quot;language-text&quot;&gt;db.t3.medium&lt;/code&gt; 타입은 performance insight를 사용 못하니깐 현업에서 실제로 구축 해야한다면 더 높은 타입을 써야한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;cluster-parameter-group&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cluster-parameter-group&quot; aria-label=&quot;cluster parameter group permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Cluster parameter group&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;parameger group&lt;/code&gt;은 &lt;code class=&quot;language-text&quot;&gt;cluster&lt;/code&gt;에 적용 할수도 있고, &lt;code class=&quot;language-text&quot;&gt;cluster&lt;/code&gt;의 &lt;code class=&quot;language-text&quot;&gt;instance&lt;/code&gt;에 적용 할 수 있다. 일단 &lt;code class=&quot;language-text&quot;&gt;cluster&lt;/code&gt;의 파라미터만 지정하였고, 일반적으로 자주 사용되고 언급되는 옵션은 아래와 같다&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;time_zone&lt;/code&gt; -&gt; DB time zone 지정.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;long_query_time&lt;/code&gt; -&gt; slow query 기준 시간(단위 초)&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;slow_query_log&lt;/code&gt; -&gt; slow query를 log로 남길지 여부(0 비활성화, 1 활성화)&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;performance_schema&lt;/code&gt; -&gt; performance schema 활성화 여부. 활성화 하면 성능저하가 조금 있다&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;innodb_print_all_deadlocks&lt;/code&gt; -&gt; dead lock 쿼리를 error log로 남길지 여부&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;개인적으론 위 옵션을 다 활성화 하는게 좋다고 생각되고 &lt;code class=&quot;language-text&quot;&gt;performance_schema&lt;/code&gt;는 조금 고민해 볼 필요가 있다고 생각된다.&lt;/p&gt;
+&lt;h3 id=&quot;slow-query&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#slow-query&quot; aria-label=&quot;slow query permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;slow query&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;long_query_time&lt;/code&gt;와 &lt;code class=&quot;language-text&quot;&gt;slow_query_log&lt;/code&gt;를 지정하면 slow query가 기록 되지만 이건 instance의 로그파일에서나 볼 수 있다. 좀더 범용적으로 보기 위해선 &lt;code class=&quot;language-text&quot;&gt;cloudwatch&lt;/code&gt;로 보내는게 좋고, cluster에 &lt;code class=&quot;language-text&quot;&gt;enabled_cloudwatch_logs_exports&lt;/code&gt;를 설정해야 &lt;code class=&quot;language-text&quot;&gt;slow query&lt;/code&gt; 나 &lt;code class=&quot;language-text&quot;&gt;error&lt;/code&gt; 로그들이 cloudwatch로 전송된다.&lt;/p&gt;
+&lt;h3 id=&quot;performance-insight&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#performance-insight&quot; aria-label=&quot;performance insight permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Performance insight&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;performance_insights_enabled&lt;/code&gt;이 옵션으로 활성화/비활성화가 가능하고, 이건 무조건 키는게 좋지만 (보존 기간 설정이 7일 까지는 무료) 인스턴스 타입에 따라 지원이 불가능 할 수도 있다. 실제 운영환경에선 성능이 좋은 타입을 선택 할 테니까 무조건 활성화 하고, 추가로 &lt;code class=&quot;language-text&quot;&gt;향상된 모니터링(Enhanced Monitoring)&lt;/code&gt;도 돈이 더 들지만 운영 환경은 활성화 시키는걸 추천한다&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Terraform으로 구축하는 eks]]></title><description><![CDATA[Terraform으로 eks 구축 및 배포 실습, 자주 쓰는 명령어들 모음]]></description><link>https://qweasd147.github.io/posts/aws/aws-eks/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/aws/aws-eks/</guid><pubDate>Sat, 10 Aug 2024 16:27:52 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;terraform&lt;/code&gt;으로 구현한 내용은 &lt;a href=&quot;https://github.com/qweasd147/StudyNote/tree/master/terraform/eks_module&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;eks 예제&lt;/a&gt; 에서 확인 가능하다&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;외부 모듈을 안쓰고 바닐라로 구현하고 싶었는데 잘 안되서 포기&lt;/p&gt;
 &lt;/blockquote&gt;
