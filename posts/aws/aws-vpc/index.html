@@ -63,7 +63,7 @@
 <li>aws 클라우드에서 논리적으로 격리된 공간</li>
 <li>가상 네트워크 공간이라 생각하면 됨</li>
 </ul>
-<h2 id="az" style="position:relative;"><a href="#az" aria-label="az permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>AZ</h2>
+<h2 id="azavailability-zone" style="position:relative;"><a href="#azavailability-zone" aria-label="azavailability zone permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>AZ(availability zone)</h2>
 <ul>
 <li>물리적으로 분리 되어있는 인프라가 모여있는 데이터 센터</li>
 <li>하나의 리전은 2개 이상의 AZ이 구성되어 있음</li>
@@ -77,11 +77,12 @@
 </ul>
 <h2 id="internet-gatewayigw" style="position:relative;"><a href="#internet-gatewayigw" aria-label="internet gatewayigw permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Internet Gateway(IGW)</h2>
 <ul>
-<li>인터넷으로 나가는 통로</li>
+<li>인터넷으로 나가는 통로. 이게 없으면 vpc는 외부와 아예 격리되게 된다.</li>
 <li>고가용성이 확보되어 있음</li>
 <li>IGW 로 연결되어 있지 않은 서브넷 = Private Subnet</li>
 <li>Route Table에서 연결 해줘야하</li>
-<li>하나의 vpc에만 연결 가능</li>
+<li>하나의 vpc에만 연결 가능 (vpc는 하나의 IGW를 갖는다)</li>
+<li>IGW가 없으면 실질적으로 전부 private subnet이 된다고 생각하면 된다(내부에서 인터넷을 못씀).</li>
 </ul>
 <h2 id="nacl--security-group" style="position:relative;"><a href="#nacl--security-group" aria-label="nacl  security group permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NACL / Security Group</h2>
 <ul>
@@ -96,6 +97,64 @@
 <li>기본적으로 vpc 생성 시 만들어줌</li>
 <li>local에 해당하는 아이피는 말그대로 자기한테서 찾고 그 외의 대역은 다른 igw(or nat gateway)에서 찾도록 셋팅 가능</li>
 </ul>
+<p><code class="language-text">pub &amp; pri subnet</code> 별 Route table 사용 예시를 보자면</p>
+<h4 id="public-subnet" style="position:relative;"><a href="#public-subnet" aria-label="public subnet permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>public subnet</h4>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Target</th>
+<th>구분</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0/16</td>
+<td>local</td>
+<td>case 1</td>
+</tr>
+<tr>
+<td>0.0.0.0/0</td>
+<td>igw</td>
+<td>case 2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="private-subnet" style="position:relative;"><a href="#private-subnet" aria-label="private subnet permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>private subnet</h4>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Target</th>
+<th>구분</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0/16</td>
+<td>local</td>
+<td>(똑같으므로 생략)</td>
+</tr>
+<tr>
+<td>0.0.0.0/0</td>
+<td>nat-gateway</td>
+<td>case 3</td>
+</tr>
+</tbody>
+</table>
+<p>이렇게 <code class="language-text">pub &amp; pri subnet</code> 에 <code class="language-text">route table</code>을 셋팅하였다고 가정</p>
+<p><strong>case 1</strong></p>
+<p><code class="language-text">Destination</code> === <code class="language-text">vpc cidr block</code> vpc 범위 내 있는 내부로 보내는 트래픽이란 뜻으로 내부에서 처리 된다.</p>
+<blockquote>
+<p>이게 있어야 서브넷 끼리 통신이 가능하다.</p>
+</blockquote>
+<h4 id="case-2" style="position:relative;"><a href="#case-2" aria-label="case 2 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>case 2</h4>
+<p><code class="language-text">public subnet</code>내부로 보내는 트래픽이 아닌 그 외 모든 트래픽은 외부로 보내는 트래픽이라는 뜻으로 전부 igw(<code class="language-text">internet gateway</code>)로 보내 외부와 통신이 가능하도록 처리한다. 이게 없으면 내부 subnet에서 이미지나 소스를 다운 받는등의 인터넷 사용이 불가능하다.</p>
+<h4 id="case-3" style="position:relative;"><a href="#case-3" aria-label="case 3 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>case 3</h4>
+<p>public subnet에 리소스(ec2 등)가 있으면 <code class="language-text">public ip</code>도 부여받고 바로 <code class="language-text">igw</code>로 나갈 수 있지만 <code class="language-text">private subnet</code>에 위치하면 바로 <code class="language-text">igw</code>로 빠져 나갈 수가 없다. <code class="language-text">public subnet</code>에 위치한 <code class="language-text">nat-gateway</code>를 통해 <code class="language-text">igw</code>로 나가라고 정의 해놓은 것이다.</p>
+<blockquote>
+<p>이 설정이 없으면 <code class="language-text">private subnet</code>에 위치한 리소스(ec2 등)은 인터넷 사용이 불가능하다. <code class="language-text">nat-gateway</code>를 통해 내부에서 외부 인터넷 접속은 가능해도 외부에선 바로 <code class="language-text">private subnet</code>에 위치한 리소스로 들어올 수는 없다.</p>
+</blockquote>
 <h2 id="nat-gateway" style="position:relative;"><a href="#nat-gateway" aria-label="nat gateway permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>NAT Gateway</h2>
 <ul>
 <li>private instance가 외부의 인터넷과 통신하기 위한 통로</li>
@@ -103,6 +162,13 @@
 <li>하나의 공인 ip 를 가짐</li>
 <li>public subnet에 있어야함</li>
 </ul>
+<p><code class="language-text">route table</code>에서 필요한 설명은 다 했고, 하나의 공인 ip를 가진다고 했는데 public subnet에 위치시켜 <code class="language-text">elastic ip</code>를 부여 받도록 처리 해야한다.</p>
+<blockquote>
+<p>public subnet에 위치하면 언제 바뀔지 모르긴 하지만(ec2 재부팅하면 날라감) public ip를 부여 받지만 private subnet은 그렇지 못하니까 하나의 public ip로 사용된다고 생각하면 된다.</p>
+</blockquote>
+<blockquote>
+<p>public ip를 가져야만 인터넷 통신이 가능하다.</p>
+</blockquote>
 <hr>
 <p>여기까지가 aws에 종속된 서비스. 이 이하는 추가적으로 함께 이해하면 좋은 네트워크 관련 내용</p>
 <h2 id="cidrclassless-inter-domain-routing" style="position:relative;"><a href="#cidrclassless-inter-domain-routing" aria-label="cidrclassless inter domain routing permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cidr(Classless Inter Domain Routing)</h2>
