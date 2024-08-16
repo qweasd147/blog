@@ -1,5 +1,5 @@
 ---
-title: "Terraform으로 구축하는 eks"
+title: "Terraform으로 구축하는 EKS"
 date: "2024-08-10T16:27:52.350Z"
 template: "post"
 draft: false
@@ -8,7 +8,7 @@ tags:
   - "aws"
   - "eks"
   - "kubernetes"
-description: "Terraform으로 eks 구축 및 배포 실습, 자주 쓰는 명령어들 모음"
+description: "Terraform으로 EKS 구축 및 배포 실습, 자주 쓰는 명령어들 모음"
 ---
 
 `terraform`으로 구현한 내용은 [eks 예제](https://github.com/qweasd147/StudyNote/tree/master/terraform/eks_module) 에서 확인 가능하다

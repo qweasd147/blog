@@ -16,7 +16,7 @@ description: "AWS 기본적인 네트워크 용어 정리"
 - aws 클라우드에서 논리적으로 격리된 공간
 - 가상 네트워크 공간이라 생각하면 됨
 
-## AZ
+## AZ(availability zone)
 
 - 물리적으로 분리 되어있는 인프라가 모여있는 데이터 센터
 - 하나의 리전은 2개 이상의 AZ이 구성되어 있음
@@ -30,11 +30,12 @@ description: "AWS 기본적인 네트워크 용어 정리"
 
 ## Internet Gateway(IGW)
 
-- 인터넷으로 나가는 통로
+- 인터넷으로 나가는 통로. 이게 없으면 vpc는 외부와 아예 격리되게 된다.
 - 고가용성이 확보되어 있음
 - IGW 로 연결되어 있지 않은 서브넷 = Private Subnet
 - Route Table에서 연결 해줘야하
-- 하나의 vpc에만 연결 가능
+- 하나의 vpc에만 연결 가능 (vpc는 하나의 IGW를 갖는다)
+- IGW가 없으면 실질적으로 전부 private subnet이 된다고 생각하면 된다(내부에서 인터넷을 못씀).
 
 ## NACL / Security Group
 
@@ -49,12 +50,52 @@ description: "AWS 기본적인 네트워크 용어 정리"
 - 기본적으로 vpc 생성 시 만들어줌
 - local에 해당하는 아이피는 말그대로 자기한테서 찾고 그 외의 대역은 다른 igw(or nat gateway)에서 찾도록 셋팅 가능
 
+`pub & pri subnet` 별 Route table 사용 예시를 보자면
+
+#### public subnet
+
+| Destination | Target | 구분   |
+| ----------- | ------ | ------ |
+| 10.0.0.0/16 | local  | case 1 |
+| 0.0.0.0/0   | igw    | case 2 |
+
+#### private subnet
+
+| Destination | Target      | 구분              |
+| ----------- | ----------- | ----------------- |
+| 10.0.0.0/16 | local       | (똑같으므로 생략) |
+| 0.0.0.0/0   | nat-gateway | case 3            |
+
+이렇게 `pub & pri subnet` 에 `route table`을 셋팅하였다고 가정
+
+**case 1**
+
+`Destination` === `vpc cidr block` vpc 범위 내 있는 내부로 보내는 트래픽이란 뜻으로 내부에서 처리 된다.
+
+> 이게 있어야 서브넷 끼리 통신이 가능하다.
+
+#### case 2
+
+`public subnet`내부로 보내는 트래픽이 아닌 그 외 모든 트래픽은 외부로 보내는 트래픽이라는 뜻으로 전부 igw(`internet gateway`)로 보내 외부와 통신이 가능하도록 처리한다. 이게 없으면 내부 subnet에서 이미지나 소스를 다운 받는등의 인터넷 사용이 불가능하다.
+
+#### case 3
+
+public subnet에 리소스(ec2 등)가 있으면 `public ip`도 부여받고 바로 `igw`로 나갈 수 있지만 `private subnet`에 위치하면 바로 `igw`로 빠져 나갈 수가 없다. `public subnet`에 위치한 `nat-gateway`를 통해 `igw`로 나가라고 정의 해놓은 것이다.
+
+> 이 설정이 없으면 `private subnet`에 위치한 리소스(ec2 등)은 인터넷 사용이 불가능하다. `nat-gateway`를 통해 내부에서 외부 인터넷 접속은 가능해도 외부에선 바로 `private subnet`에 위치한 리소스로 들어올 수는 없다.
+
 ## NAT Gateway
 
 - private instance가 외부의 인터넷과 통신하기 위한 통로
 - 내부 사설망이 있는 private 인스턴스들이 외부 인터넷과 통신을 위해 생성 된 일종의 통로
 - 하나의 공인 ip 를 가짐
 - public subnet에 있어야함
+
+`route table`에서 필요한 설명은 다 했고, 하나의 공인 ip를 가진다고 했는데 public subnet에 위치시켜 `elastic ip`를 부여 받도록 처리 해야한다.
+
+> public subnet에 위치하면 언제 바뀔지 모르긴 하지만(ec2 재부팅하면 날라감) public ip를 부여 받지만 private subnet은 그렇지 못하니까 하나의 public ip로 사용된다고 생각하면 된다.
+
+> public ip를 가져야만 인터넷 통신이 가능하다.
 
 ---
 
