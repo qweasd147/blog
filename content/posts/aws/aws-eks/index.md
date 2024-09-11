@@ -80,6 +80,8 @@ $ terraform apply
 
 > `aws load balancer controller`란 aws에서 관리형 k8s가 eks이라서(의존관계가 `eks` -> `k8s`) 일반적으로 k8s에서 elb를 만들 수가 없지만 이를 가능하게 해주는게 `aws load balancer controller`로, eks 위에 설치하면 `ingress`나 `service`를 만들때 `elb`도 자동으로 프로비저닝 되도록 구축 할 수가 있다(`alb`도 가능)
 
+> terraform으로 설치만 하면 설치를 시도한 IAM계정에 `EKS API`인증모드로 `EKS` 마스터 권한인 `AmazonEKSAdminPolicy`이 부여 된다.(`ConfigMap(aws-auth)`가 아닌 `EKS-API`이다) 만약 aws 콘솔로 로그인한 계정과 다르다면 해당 계정으로 권한을 추가해야 콘솔에서 eks 리소스들 확인이 가능하다.
+
 ## 2. kubectl 셋팅 및 확인
 
 ### 2.1 eks context 업데이트
@@ -180,7 +182,7 @@ $ kubectl get {pod, deployment, svc, ingress 등등} -n joo -o wide # namespace(
 - -n : namespace
 - -o wide : 상세 정보 확인
 
-### 2. pod 접근 및 url 요청
+### 2. pod 접근, url 요청 및 로그 확인
 
 get 명령어로 pod name 및 private id 확인
 
@@ -198,6 +200,12 @@ $ kubectl exec -it {pod_name} -- /bin/sh
 
 ```sh
 $ kubectl exec -it {pod_name} -- curl http://{pod_ip}
+```
+
+특정 pod의 로그 보기
+
+```sh
+$ kubectl logs -f {pod_name}
 ```
 
 ### 3. k8s 리소스 자세한 설명(에러 날 때 유용)
