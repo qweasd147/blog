@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta data-react-helmet="true" name="twitter:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" name="twitter:description" content="Terraform으로 IGW 부터 ELB까지 구축 및 설계"/><meta data-react-helmet="true" name="twitter:title" content="Terraform으로 구축하는 AWS 기본 설계 - Blog by joohyung"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" property="og:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" property="og:site_name" content="Terraform으로 구축하는 AWS 기본 설계 - Blog by joohyung"/><meta data-react-helmet="true" name="description" content="Terraform으로 IGW 부터 ELB까지 구축 및 설계"/><meta name="theme-color" content="hsl(31, 92%, 62%)"/><meta name="generator" content="Gatsby 4.17.0"/><style data-href="/blog/styles.a9ca0bb346ac43a02f40.css" data-identity="gatsby-global-css">html{font-size:100}body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizelegibility;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#212121;font-size:16px;line-height:1.625;margin:0 0 0 calc(100vw - 100%)}body,h1,h2,h3,h4,h5,h6{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif}h1,h2,h3,h4,h5,h6{font-weight:600}h1{font-size:40px;line-height:52px;margin-bottom:26px;margin-top:104px}h2{font-size:27px;line-height:39px}h2,h3{margin-bottom:13px;margin-top:52px}h3{font-size:22px;line-height:26px}h4{font-size:19.2px;margin-top:39px}h4,h5{line-height:26px;margin-bottom:13px}h5,h6{font-size:16px;margin-top:65px}h6{line-height:26px;margin-bottom:13px}img{max-width:100%}hr,img{border:0;display:block}hr{background-image:linear-gradient(180deg,transparent 1px,transparent 11px,#212121 0,#212121 15px,transparent 0,transparent 26px);background-size:100% 26px;color:#212121;height:26px;margin:52px auto;width:100px}a{color:#5c92ff;text-decoration:none}a:active,a:focus,a:hover{color:#f7a145}b,strong{font-weight:600}ul{list-style:square;margin-bottom:26px}ul li{margin-bottom:10px;padding:0 5px}p{line-height:26px;margin-bottom:26px}blockquote{border-left:5px solid #39f;font-style:italic;padding:0}blockquote>p{padding-left:15px}blockquote>p>code[class*=language-]{overflow-wrap:break-word}figure{display:block;height:auto;width:100%}figcaption{color:#212121;font-size:14px;font-style:italic;line-height:19.5px;margin-bottom:0;margin-top:6.5px;text-align:center}.anchor{margin-left:-30px!important;padding-right:14px!important}@media screen and (min-width:685px){figure.float-left,figure.float-right{max-width:310px;padding:0 26px}.float-right{float:right}.float-left{float:left}}body :not(pre)>code.language-text{background-color:rgba(27,31,35,.05);color:#000;display:inline-block;max-width:100%;white-space:inherit}body :not(pre)>code.language-text::selection{background-color:#d2d8fb}body code[class*=language-],body pre[class*=language-]{background-color:#000;color:#dcdcdc}body code[class*=language-] ::selection,body pre[class*=language-] ::selection{background-color:#d2d8fb;color:#fff}body .token.atrule,body .token.attr-value,body .token.keyword{color:#39f}body .token.punctuation{color:#dcdcdc}table{border-collapse:collapse;border-top:1px solid #444;width:100%}td,th{border-bottom:1px solid #444;padding:10px;text-align:center}a{overflow-wrap:break-word}code[class*=language-],pre[class*=language-]{word-wrap:normal;color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;-o-tab-size:4;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{border-radius:.3em;margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{background:#073642}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{background:#eee8d5;color:#657b83;cursor:help}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.Content-module--content--uGfLc{margin:0 auto;max-width:1100px;padding:0 15px}.Content-module--content__title--P67He{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content__body--ESt1v figure{margin-bottom:26px}.Content-module--content__body--ESt1v figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content__body--ESt1v figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content__body--ESt1v a{text-decoration:underline}.Content-module--content__body--ESt1v *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content__body--ESt1v img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--uGfLc{padding:0}.Content-module--content__title--P67He{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content__body--ESt1v,.Content-module--content__body--ESt1v p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}}.Skills-module--skills-layout__back-button--WtT2H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 24px;text-align:center}.Skills-module--skills-layout__back-button--WtT2H:focus,.Skills-module--skills-layout__back-button--WtT2H:hover{color:#5c92ff}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-column-gap:3px;grid-row-gap:2px;display:grid;grid-template-columns:none}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills--HhddO{align-items:flex-start;border-left:1px solid #e1e1e1;display:flex;flex-direction:column;flex-wrap:wrap;margin-bottom:15px;padding-left:25px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__header--6ce4u{color:#5d686f;display:block;margin-top:5px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT{padding-left:40px;padding-top:8px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul{margin-bottom:5px;margin-top:0;padding-left:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li{list-style-type:disc;margin-bottom:2px;margin-left:30px;margin-top:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li span{color:#5d686f}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD{color:#5d686f;margin:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD:not(:first-child){margin-top:0}@media screen and (min-width:960px){.Skills-module--skills-layout__back-button--WtT2H{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-template-columns:repeat(3,1fr)}}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v{margin-bottom:32.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v:last-child{margin-bottom:13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66{font-size:27px;line-height:39px;margin-bottom:13px;margin-top:0}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D{color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:hover{border-bottom:1px solid #212121;color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--description--VzSOs{font-size:16px;line-height:26px;margin-bottom:19.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--time--coZK5{color:#212121;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--divider--gaGDJ{margin:0 13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D{color:#f7a145;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:hover{color:#5c92ff}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA{color:#5c92ff;font-size:16px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Icon-module--icon--HX2j3{fill:currentcolor;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;speak:none;stroke:currentcolor;stroke-width:0;display:inline-block;font-style:normal;font-variant:normal;font-weight:400;height:1em;line-height:1em;text-align:center;text-transform:none;width:1em}.SideButton-module--sides--sxqRm{margin-bottom:26px}.SideButton-module--sides-buttons--CcMjz{bottom:10px;display:flex;flex-direction:column;list-style:none;margin:0;padding:0;position:fixed;right:15px;transition:all .5s ease-in-out}.SideButton-module--sides-buttons-hide--OdyhS{bottom:-180px!important}.SideButton-module--sides-button--pA2tl{align-items:center;background-color:#fff;border:1px solid #ebebeb;border-radius:50%;color:#212121;cursor:pointer;display:flex;height:50px;justify-content:center;line-height:50px;margin:0;padding:0;text-align:center;width:50px}.SideButton-module--sides-button--pA2tl:focus,.SideButton-module--sides-button--pA2tl:hover{color:#5c92ff}@media screen and (min-width:960px){.SideButton-module--sides--sxqRm ul{bottom:100px;right:70px}}.Layout-module--layout--LJM9v{margin-left:auto;margin-right:auto;max-width:1200px;position:relative}.Layout-module--layout--LJM9v:before{content:"";display:table}.Layout-module--layout--LJM9v:after{clear:both;content:"";display:table}.Layout-module--layout-doc-mask--qkYmG{height:30%;position:absolute;top:70%}.Page-module--page--JOA3M{margin-bottom:52px}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:26px 19.5px 0}.Page-module--page--JOA3M .Page-module--title--kDOIG{font-size:40px;font-weight:600;line-height:52px;margin-bottom:37.7px;margin-top:0}.Page-module--page--JOA3M .Page-module--body--VhxOl{font-size:16px;line-height:26px;margin:0 0 26px}@media screen and (min-width:685px){.Page-module--page--JOA3M{width:calc(58.275% - 12.5px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(12n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(12n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:32.5px 19.5px 0}}@media screen and (min-width:960px){.Page-module--page--JOA3M{width:calc(66.6% - 10px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(3n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(3n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:39px 26px 0}}.Pagination-module--pagination--1hy6\+{display:flex;margin-top:52px}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M{text-align:left;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy{text-align:right;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Author-module--author--y9MUW .Author-module--photo--l4ewo{background-clip:padding-box;border-radius:50%;display:inline-block;height:75px;margin-bottom:0;width:75px}.Author-module--author--y9MUW .Author-module--title--z35RG{font-size:18px;font-weight:600;line-height:29.25px;margin:13px 0}.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:focus,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:hover{color:#212121}.Author-module--author--y9MUW .Author-module--subtitle--huxcU{color:#878787;line-height:26px;margin-bottom:26px}.Contacts-module--contacts--CReI-{margin-bottom:26px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q{display:flex;flex-flow:row wrap;flex-grow:0;flex-shrink:0;list-style:none;margin:13px 0;max-width:150px;padding:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa{align-content:center;align-items:center;border:1px solid #ebebeb;border-radius:50%;display:flex;height:35px;justify-content:center;line-height:35px;margin:6.5px;padding:0;text-align:center;width:35px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa:nth-child(3n+1){margin-left:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4{border:0;color:#212121;display:flex}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:focus,.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:hover{color:#5c92ff}.Copyright-module--copyright--LGAkk{color:#999;font-size:14px}.Menu-module--menu--ETqdK{margin-bottom:26px}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z{list-style:none;margin:0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw{margin:13px 0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj{border:0;color:#212121;font-size:16px;font-weight:400}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:focus,.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj.Menu-module--active--bLdMz{border-bottom:1px solid #212121;color:#212121}.Sidebar-module--sidebar--G-oUa{width:100%}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:26px 19.5px 0;position:relative}@media screen and (min-width:685px){.Sidebar-module--sidebar--G-oUa{width:calc(41.625% - 17.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:32.5px 19.5px 0}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo:after{background:#e6e6e6;background:linear-gradient(180deg,#e6e6e6 0,#e6e6e6 48%,#fff);bottom:0;content:"";height:540px;position:absolute;right:-10px;top:30px;width:1px}}@media screen and (min-width:960px){.Sidebar-module--sidebar--G-oUa{width:calc(24.975% - 22.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:39px}}.TotalSearch-module--search--aZIhb{background-color:#fff;display:flex;padding:16px 0;position:-webkit-sticky;position:sticky;top:0}.TotalSearch-module--search-keyword--iOIAR{border:1px solid gray;border-radius:4px;font-size:16px;font-weight:400;height:48px;padding:0 16px;width:100%}@media screen and (min-width:960px){.TotalSearch-module--skills-layout__back-button--YjdJg{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.TotalSearch-module--skills-layout--9u5bv .TotalSearch-module--skills-wrap--mebnz{grid-template-columns:repeat(3,1fr)}}.Author-module--author--HFjbH{border-top:1px solid #e6e6e6;line-height:26px;margin-bottom:52px;margin-top:26px;max-width:950px;padding-top:26px}.Author-module--author--HFjbH .Author-module--bio--CJUED .Author-module--twitter--kGR0t{display:block;text-decoration:underline}@media screen and (min-width:685px){.Author-module--author--HFjbH{margin-left:auto;margin-right:auto}}.Content-module--content--gNWBo{margin:0 auto;max-width:1100px;padding:0 13px}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure{margin-bottom:26px}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi a{text-decoration:underline}.Content-module--content--gNWBo .Content-module--body--cmwhi *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{visibility:hidden}.Content-module--content--gNWBo .Content-module--body--cmwhi img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--gNWBo{padding:0}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content--gNWBo .Content-module--body--cmwhi,.Content-module--content--gNWBo .Content-module--body--cmwhi p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{padding-right:26px;visibility:unset}}.Meta-module--meta--2uCvT .Meta-module--date--TTDWL{font-style:italic}.Tags-module--tags--GFiVM{margin-bottom:13px}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra{list-style:none;padding:0}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ{display:inline-block;margin:13px 3.25px}@media screen and (min-width:685px){.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ:first-child{margin-left:0;padding-left:0}}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1{border:1px solid #e6e6e6;border-radius:20px;color:#212121;display:inline-block;height:35px;line-height:35px;padding:0 19.5px;text-decoration:none}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:focus,.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:hover{color:#5c92ff}.Post-module--post--OplAV .Post-module--content--PG5Wp{margin:0 auto}.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{margin:0 auto;max-width:950px;padding:0 13px}.Post-module--post--OplAV .Post-module--button--Ufj7H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 26px;text-align:center}.Post-module--post--OplAV .Post-module--button--Ufj7H:focus,.Post-module--post--OplAV .Post-module--button--Ufj7H:hover{color:#5c92ff}@media screen and (min-width:960px){.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{padding:0}.Post-module--post--OplAV .Post-module--button--Ufj7H{left:30px;margin:0;max-width:none;position:fixed;top:30px}}.Tags-module--tags--KfLu\+{grid-gap:11px 20px;display:flex;flex-wrap:wrap}.Tags-module--tags__tag--nij2v{align-items:center;background:#f1f3f5;border-radius:20px;color:#0ca678;cursor:pointer;display:inline-flex;height:35px;padding:0 10px}</style><link rel="alternate" type="application/rss+xml" title="Blog by joohyung" href="/blog/rss.xml"/><style type="text/css">
+    .anchor.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      padding-right: 4px;
+    }
+    .anchor.after {
+      display: inline-block;
+      padding-left: 4px;
+    }
+    h1 .anchor svg,
+    h2 .anchor svg,
+    h3 .anchor svg,
+    h4 .anchor svg,
+    h5 .anchor svg,
+    h6 .anchor svg {
+      visibility: hidden;
+    }
+    h1:hover .anchor svg,
+    h2:hover .anchor svg,
+    h3:hover .anchor svg,
+    h4:hover .anchor svg,
+    h5:hover .anchor svg,
+    h6:hover .anchor svg,
+    h1 .anchor:focus svg,
+    h2 .anchor:focus svg,
+    h3 .anchor:focus svg,
+    h4 .anchor:focus svg,
+    h5 .anchor:focus svg,
+    h6 .anchor:focus svg {
+      visibility: visible;
+    }
+  </style><script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var hash = window.decodeURI(location.hash.replace('#', ''))
+      if (hash !== '') {
+        var element = document.getElementById(hash)
+        if (element) {
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - 0)
+          }), 0)
+        }
+      }
+    })
+  </script><link rel="preconnect" href="https://www.googletagmanager.com"/><link rel="dns-prefetch" href="https://www.googletagmanager.com"/><script async="" src="https://www.googletagmanager.com/gtag/js?id="></script><script>
+      
+      
+      if(true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '', {"send_page_view":false});
+      }
+      </script><link rel="sitemap" type="application/xml" href="/blog/sitemap/sitemap-index.xml"/><link rel="icon" href="/blog/favicon-32x32.png?v=a0e002f394141892bab003cbb7dcfd9b" type="image/png"/><link rel="manifest" href="/blog/manifest.webmanifest" crossorigin="anonymous"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png?v=a0e002f394141892bab003cbb7dcfd9b"/><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><title data-react-helmet="true">Terraform으로 구축하는 AWS 기본 설계 - Blog by joohyung</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--LJM9v"><div class="Post-module--post--OplAV"><a class="Post-module--button--Ufj7H">뒤로가기</a><div class="Post-module--content--PG5Wp"><div class="Content-module--content--gNWBo"><h1 class="Content-module--title--CVBL0">Terraform으로 구축하는 AWS 기본 설계</h1><div class="Content-module--body--cmwhi"><p>aws를 기본적인 사용을 위해 가장 기본적이면서 기초적인 aws 설계 내용을 terraform으로 구현하고 무엇인지 설명</p>
+<h2 id="사전-준비" style="position:relative;"><a href="#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84" aria-label="사전 준비 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>사전 준비</h2>
+<ul>
+<li>terraform</li>
+<li>awscli(계정 &#x26; credentials 셋팅 포함)</li>
+<li>aws key pair</li>
+</ul>
+<blockquote>
+<p>key pair는 베스천 서버 구축을 위한 것으로(ec2 접속을 비밀번호가 아닌 ssh로 접속) 셋팅이 안되어 있다면 <a href="https://github.com/qweasd147/StudyNote/tree/master/terraform/key_pair" target="_blank" rel="nofollow noopener noreferrer">여기</a> 를 참고해서 privacy key를 aws에 등록 시켜놓는다.</p>
+</blockquote>
+<h1 id="모듈-별-구성-및-설명" style="position:relative;"><a href="#%EB%AA%A8%EB%93%88-%EB%B3%84-%EA%B5%AC%EC%84%B1-%EB%B0%8F-%EC%84%A4%EB%AA%85" aria-label="모듈 별 구성 및 설명 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>모듈 별 구성 및 설명</h1>
+<h2 id="1-networks" style="position:relative;"><a href="#1-networks" aria-label="1 networks permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. networks</h2>
+<p>실행은 <a href="https://github.com/qweasd147/StudyNote/tree/master/terraform/vpc_ec2" target="_blank" rel="nofollow noopener noreferrer">terraform vpc_ec2</a>에서 pull 받고 하나씩 실행한다.</p>
+<p>먼저 위의 프로젝트를 <code class="language-text">pull</code>받고 기본적인 <code class="language-text">network</code>먼저 구축한다.</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ terraform init
+$ terraform apply</code></pre></div>
+<p>프로비저닝이 끝나면 아래 이미지 처럼 가장 기본적인 네트워크가 구축 된다.
+<span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/a2ed6a913c9a3e540207f9b69499918e/bab36/networks.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 52.94117647058824%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACCElEQVQoz22SW2sUQRCF5///DQ24GyPkxSAI+uJTQCEPKknMJrtz2Z3ZufS9e26fTJvECBZ9qO6uqlPdh0rmeWYBy4qYmabpGeM4Rq+1QghJmhX/5DzFn3gSHu3b1RUfPn1ECIGQEq01xhqsczjvaRuJ9w5jLVIppJJoo7HOxrwnS9qmRaqWX98rLj/XtFKw3RURZdXiB9BqIL3tcGHC+pHq2HEoGzphcGGmaRVd11LXNcl6tWb99oSHH5qrLzWXP9dkaUGabTkccqQWGGeRnaaSGV9vzunalk7U1HWJdio2X6/XrFYrkmNZIqoKKyUhdAy9pMoM4zhFXf3g6acQv+MGSz9IhjDRlT5qHoKlKkqOWY7sOpK2bQneoWuJaAT75kC+T2PnfvSY3hDGPhKq4CmtRBnJw/aeYCVaNlTpnraq8N6TvL+44M3rV1S7glw5Tm9veEh3bLIUN/R0wWOHMRLea83J9TV3mzu2+xzXB1Qf2NznnJ+e8u7sjGSf5+yLHCktup+ZlsrpcYYAP07PhIuflvsX8TDNFJXgUBQsXAnDwGwMphGITuHGfpGOcZ6YmTHDgB2HWPxy/xzvA1WtFjFZuJKyLKmPR1SnUHpEuhHtJ7SbMH5C2DGOBgPx3NoB5f7kLRCmZ7dJye7ucMaQNG0XX7QIqrRBLlAvoA1GW4yx0ev/wfwd7N/KC0cDeOXelgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/a2ed6a913c9a3e540207f9b69499918e/24599/networks.webp 238w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/69f92/networks.webp 475w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/cebde/networks.webp 950w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/ab1e2/networks.webp 1425w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/97775/networks.webp 1900w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/57d79/networks.webp 1906w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/a2ed6a913c9a3e540207f9b69499918e/da2e6/networks.png 238w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/abae4/networks.png 475w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/68327/networks.png 950w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/fe5a5/networks.png 1425w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/a7a60/networks.png 1900w,
+/blog/static/a2ed6a913c9a3e540207f9b69499918e/bab36/networks.png 1906w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/a2ed6a913c9a3e540207f9b69499918e/68327/networks.png"
+            alt="aws netowkrs"
+            title="aws netowkrs"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h3 id="11-vpcvirtual-private-cloud" style="position:relative;"><a href="#11-vpcvirtual-private-cloud" aria-label="11 vpcvirtual private cloud permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.1 VPC(Virtual Private Cloud)</h3>
+<p>이미지의 보라색 테두리 영역으로 영어 그대로 사설 네트워크 공간을 말한다. 즉 개인만의 네트워크 공간을 구축하고 하위에 리소스들을 프로비저닝 할 수 있는 네트워크 공간이 만들어 진것이다.</p>
+<h3 id="12-region--availity-zone" style="position:relative;"><a href="#12-region--availity-zone" aria-label="12 region  availity zone permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.2 Region / Availity ZONE</h3>
+<ul>
+<li>Region : 보통 나라 별 데이터 센터 클러스터링 단위. <code class="language-text">AZ(Availity ZONE)</code>을 <code class="language-text">grouping</code> 한거라고 생각하면 된다 (서울, 도쿄 리전 등)</li>
+<li>Availity ZONE : 물리적으로 분리 되어있는 인프라가 모여있는 Region 내 데이터 센터</li>
+</ul>
+<blockquote>
+<p>쉽게 생각하면 나라별 데이터 센터(AZ)가 있고, 각각 데이터 센터를 묶어 Region을 만든다고 생각하면 된다(정확한 설명은 아님).</p>
+</blockquote>
+<h3 id="13-subnet" style="position:relative;"><a href="#13-subnet" aria-label="13 subnet permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.3 Subnet</h3>
+<p><code class="language-text">VPC</code>를 자잘하게 나눈 <code class="language-text">networks</code> 영역. 하나의 서브넷은 하나의 <code class="language-text">AZ</code>에서만 존재 가능하고, <code class="language-text">subnet</code>을 구성하는 속성으로 <code class="language-text">public subnet</code> 또는 <code class="language-text">private subnet</code> 한 가지를 선택 하여야 한다.</p>
+<ul>
+<li>public subnet : 이 <code class="language-text">subnet</code>에 만든건 외부에서 직접 통신이 가능하도록 만들기 위해 사용됨. 또 이 subnet에 만든건 public ip를 바로 부여하도록 셋팅이 가능하다</li>
+<li>private subnet : 이 <code class="language-text">subnet</code>에 만든 resource들은 외부와 직접 통신이 불가능하고 중간 다리 역할을 하는 resource를 거쳐야 한다. 자동으로 public ip 부여 x</li>
+</ul>
+<h3 id="14-routing-table" style="position:relative;"><a href="#14-routing-table" aria-label="14 routing table permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.4 Routing Table</h3>
+<p>트래픽이 어디로 가야하는지(갈 수 있는지) 정의 한 테이블. 이하 <code class="language-text">RT</code></p>
+<p><strong>사용 예시</strong></p>
+<ul>
+<li><code class="language-text">public</code> 서브넷의 <code class="language-text">RT</code>의 구성은 목적지가 <code class="language-text">vpc cidr block</code>과 같으면 내부에서 처리 하는 트래픽, 그게 아니라면 무조건 <code class="language-text">IGW</code>로 보내도록 셋팅한다.
+<blockquote>
+<p>내부에서 내부로 요청하는건 내부에서 처리, 내부에서 외부로 요청하는거면 <code class="language-text">IGW</code>로 보냄</p>
+</blockquote>
+</li>
+<li><code class="language-text">private</code> 서브넷의 <code class="language-text">RT</code>의 구성은 목적지가 <code class="language-text">vpc cidr block</code>과 같으면 내부에서 처리 하는 트래픽, 그게 아니라면 <code class="language-text">Nat Gateway</code>로 보낸다.
+<blockquote>
+<p>내부에서 내부로 요청하는건 내부에서 처리, 내부에서 외부로 요청하는거면 <code class="language-text">Nat Gateway</code>로 보냄(직접 외부로 보내는건 불가능)</p>
+</blockquote>
+</li>
+</ul>
+<p><code class="language-text">RT</code>이 존재해야 <code class="language-text">subnet</code>이 달라도 같은 <code class="language-text">vpc</code>안에 구성되어 있다면 <code class="language-text">subnet</code> 간 통신이 가능하다.</p>
+<h3 id="15-nat-gateway" style="position:relative;"><a href="#15-nat-gateway" aria-label="15 nat gateway permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.5 Nat Gateway</h3>
+<p><code class="language-text">private instance</code>가 외부의 인터넷과 통신하기 위한 통로로 사용되며, 하나의 공인 <code class="language-text">ip</code>를 부여 할 수 있다(<code class="language-text">elastic ip(EIP)</code>로 부여함). <code class="language-text">Nat Gateway</code>는 고가용성 확보를 위해 여러 서브넷이 만들 수도, 아님 하나의 서브넷에 만들어 같이 사용 할 수도 있다. 물론 하나만 사용하면 해당 <code class="language-text">AZ</code>이 문제가 되면 내부망은 외부와 통신 할 수가 없게 된다.</p>
+<p><code class="language-text">Nat Gateway</code>는 <code class="language-text">public subnet</code>에 있어야 하고, 부여 된 공인 IP를 통해 외부와 통신하게 되므로 외부의 인터넷에선 해당 IP로 요청을 보낸것으로 간주된다.</p>
+<h3 id="16-internet-gatewayigw" style="position:relative;"><a href="#16-internet-gatewayigw" aria-label="16 internet gatewayigw permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.6 Internet Gateway(IGW)</h3>
+<ul>
+<li>인터넷으로 나가는 통로. 이게 없으면 <code class="language-text">vpc</code>는 외부와 아예 격리되게 된다.</li>
+<li>기본적인 고가용성이 확보되어 있음(2개 안만들어도 됨)</li>
+<li>IGW 로 연결되어 있지 않은 서브넷 = <code class="language-text">Private Subnet</code></li>
+<li>하나의 <code class="language-text">vpc</code>에만 연결 가능 (<code class="language-text">vpc</code>는 하나의 <code class="language-text">IGW</code>를 갖는다)</li>
+<li>IGW가 없으면 실질적으로 전부 <code class="language-text">private subnet</code>이 된다고 생각하면 된다(내부에서 인터넷을 못씀).</li>
+</ul>
+<h3 id="17-cidr-block" style="position:relative;"><a href="#17-cidr-block" aria-label="17 cidr block permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1.7 cidr block</h3>
+<p>그냥 <code class="language-text">vpc</code> 또는 <code class="language-text">subnet</code>별 사용 할 수 있는 <code class="language-text">private ip</code>범위라고 이해하는게 제일 편하다. <code class="language-text">private network</code>에서 여러 ip 부여 및 관리를 위해 만들어졌다.</p>
+<p><code class="language-text">terraform</code>코드에선 vpc의 <code class="language-text">cidr block</code>값을 <code class="language-text">10.0.0.0/16</code> 이렇게 정하였고, 이 vpc에 만들어지는 <code class="language-text">private ip</code>는 모두 <code class="language-text">10.0.x.x</code>으로 시작하게 된다.</p>
+<blockquote>
+<p>16의미 -> 앞의 16비트를 네트워크 주소로 사용, 나머지 16비트를 호스트 주소로 사용</p>
+</blockquote>
+<p>또 <code class="language-text">AZ1</code>에 배치한 <code class="language-text">private subnet</code>인 <code class="language-text">private subnet-2a</code>는 <code class="language-text">cidr block</code>값으로 <code class="language-text">10.0.101.0/24</code>를 부여했는데, 이 서브넷에 생성되는 ec2 등은 <code class="language-text">private ip</code>는 모두 <code class="language-text">10.0.101.x</code>로 시작하게 된다.</p>
+<p>반대로 생각하면 부여받은 <code class="language-text">private ip</code>값으로 어느 서브넷, AZ에 배치되는지 확인이 가능하다.</p>
+<h2 id="2-ec2-web-server" style="position:relative;"><a href="#2-ec2-web-server" aria-label="2 ec2 web server permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. ec2-web-server</h2>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/df264/ec2.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 54.20168067226891%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACGUlEQVQoz02SW2vbQBCF9f9/R0prBZpCoYVCIU99yUNLCqGkiR1fZUu2tPeLVtJXJDuhA4fZszucnbM72TAMjBhjTBPve/oLuq6bsjEaKSWbbTEV/n8+9GeNERmX+Pn7nm+335FKIpXCWIN1Fuc9PniaWhGCxzqH0hqlzzXOO5xzrzJkTSNQRvD8UHF3e6RRitW6mFBWDSGB1onNs8THHh86qqPgUNYIafFxoGkUQgjquibLZzn59TuWD5r7Hyfu/uRsNwW77YryUCCNxHqHFIZSrvn19BnRCIQ8cTqVWG94We6YzWbkeU52LEtkWeKkIraC1CqOhcecDnTBE7uWtouTHd9aUtK0sUdUYXrzEB1VUXLc7tBSjpYbgnfoo0I2kn19YH/YstmtMFbikyOmdhJU0VM5hTaS5eqF6BRG1VSbPU1VEUMg+/L1Kx+urihXOwrjuX76y3KzYlkUhL5HxIDruklwrg3vHx95XsxZHfb4NqLbyHyx5VOec/Pxhmy/27HfFyjpsGmgZ5wdoEswdtcPuJQmwddMitCef3a8tKgkh6KYkJESvTWYk0RJjb/Yk+JEXSxQMeIvHZrU4rse1ZTUhyX9MGDbSHVUECOjVlaWJfXpiG40xnYo32FCj7QJaTuES4Q4MCSm/ZE3pqU2aaqVtmU9X7NbLPDOkdWNmByGENDGokZoO61fuTXuDWbM9gxz4cbat8H+B0sLRY98St7XAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/24599/ec2.webp 238w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/69f92/ec2.webp 475w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/cebde/ec2.webp 950w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/ab1e2/ec2.webp 1425w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/7bcab/ec2.webp 1878w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/da2e6/ec2.png 238w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/abae4/ec2.png 475w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/68327/ec2.png 950w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/fe5a5/ec2.png 1425w,
+/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/df264/ec2.png 1878w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/57ef2f09beb9fcf3479cbd4c6df06a20/68327/ec2.png"
+            alt="ec2 web server"
+            title="ec2 web server"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>네트워크를 구성 한 후, 각 <code class="language-text">private subnet</code>에 웹서버로 사용 할 <code class="language-text">ec2</code>를 올리고, 하나의 <code class="language-text">public subnet</code>에 <code class="language-text">bastion server</code>로 사용 할 <code class="language-text">ec2</code>까지 올린 형태이다. <code class="language-text">bastion server</code>에 <code class="language-text">EIP</code>를 부여하면 고정된 ip 사용이 가능하겠지만, <code class="language-text">EIP</code>가 저렴한 서비스는 아니니까 그냥 그때그때 생성되는 ip를 사용해도 무방하다.</p>
+<p>앞서 terraform을 사용해서 프로비저닝 하면 아래와 같은 내용이 출력 될 것이다.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">alb_dns_name = "xxxx.elb.amazonaws.com"
+bastion-public-ip = "{배스천 ec2 public ip}"
+server-private-ip = {
+  "web-2a" = "{웹서버 private ip1}"
+  "web-2c" = "{웹서버 private ip2}"
+}</code></pre></div>
+<p>ssh 접근에 필요한 key 파일값이 <code class="language-text">~/.ssh</code>위치에 있다는 가정하에</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ ssh -i ~/.ssh/{private key 파일명} ec2-user@{배스천 ec2 public ip}</code></pre></div>
+<p>이런 식으로 베스천 서버에 접근 하거나 아님 <code class="language-text">~/.ssh/config</code> 파일에 아래와 같은 bastion 서버 정보를 입력 후,</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">Host aws-bastion
+    HostName {배스천 ec2 public ip}
+    Port 22
+    User ec2-user
+    IdentityFile ~/.ssh/{private key 파일명}</code></pre></div>
+<p><code class="language-text">$ ssh aws-bastion</code> 명령어 만으로도 <code class="language-text">bastion</code> 서버 ssh 접속이 가능하게 구성 할 수도 있다. 아무튼 베스천 서버에 접석 한 이후엔 aws 네트워크에 접속 한 것이고, <code class="language-text">RT</code>도 다 구축하였으니 다른 서브넷에 위치한 웹서버들로도 요청을 보내 볼 수도 있다.</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh"># 베스천 서버로 접속 이후 실행
+$ curl {웹서버 private ip1}
+$ curl {웹서버 private ip2}</code></pre></div>
+<p>이런 식으로 프로비저닝 된 각 웹서버들로 요청을 보내고 값을 전달 받을 수도 있다.</p>
+<blockquote>
+<p>terraform에 해당 모듈에 <code class="language-text">init-script.sh</code>스크립트를 보면 apache 웹서버를 설치하고 시작 하는 내용을 확인 할 수있다. 이 스크립트를 프로비저닝이 완료 된 후 실행되도록 셋팅하여, 80포트가 open 되어 있는것이다.</p>
+</blockquote>
+<blockquote>
+<p>보안 관련 Security Group 관련 설명은 생략</p>
+</blockquote>
+<h2 id="2-alb" style="position:relative;"><a href="#2-alb" aria-label="2 alb permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. alb</h2>
+<p>아래 이미지는 <code class="language-text">ELB</code>까지 사용하여 최종 완성 된 형태이다.
+<span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/0ad51d82aba132098526ef881ccbf283/c0ee7/elb.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 54.20168067226891%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACHklEQVQoz12Si2rUQBSG8/5vIa2VlqLUUp9AxUIVKrSgbeluNtlsbjuXzC3XTxK7RRz4mTm3/xzO/NE0Tcw4nMUeJ8ZxXDAMw3JbaxBCku3yJe/f+IFjRnQg+nZzw+frryitUFpjrME6i/OeEAL7Wiyks083zQJj57jDe/86UDR3tU5z92PL9y8l2ljSbcEmyalqRTuAki3bZ03bgw8jRSnIS4HSDt9OCKGRUiClJDo5eceHj+fE9z0/r3Ou789I4pQ0XZNlCY3VWBeoKkkuV9w+XqGkQsiKui5wreXpKeHo+IiLiwuifLtF5AVOarpB4r2k3gW8LBnagO8t3g+oEmynCa2g9RN63zFOE943VFnFbr1GK0WklFoKm0KhpWBXZWR5SpysME5RuZJm3pMLFE6y0TlKC+J4Rec1jSqptxVqXy+fFF1eXnJ+eopISzbG8v7xgVW8JikKwjSRGcnwooJfWvPm7pbn1TNJkeO6gO46nn6vOHt7zKerK6J0syFNE5RyuHGkHyeY64ceOkvlDf04LoS27zGdg9bC0C0+N8yfpNjEMdl2S8SsI2toSkVjGnz/N1HLmjx9oHDNsqu5y0yoWk+ZrxBVtkyugkfuDbSBmSsqigKxr2mEwbge7QZMGFG2R9kB6Qa6Dqaexa/9gJ79tsf4EWU64sc12XpNGwJRvRfLRLM4G2MXHerGLu+DbYzDGof5P9a8xK17FfYf3WlEd9GBtZkAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/0ad51d82aba132098526ef881ccbf283/24599/elb.webp 238w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/69f92/elb.webp 475w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/cebde/elb.webp 950w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/ab1e2/elb.webp 1425w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/cfe61/elb.webp 1870w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/0ad51d82aba132098526ef881ccbf283/da2e6/elb.png 238w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/abae4/elb.png 475w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/68327/elb.png 950w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/fe5a5/elb.png 1425w,
+/blog/static/0ad51d82aba132098526ef881ccbf283/c0ee7/elb.png 1870w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/0ad51d82aba132098526ef881ccbf283/68327/elb.png"
+            alt="alb"
+            title="alb"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p><code class="language-text">ELB(ALB)</code>를 생성하여 <code class="language-text">Target Group</code>에 연결하고, 이 <code class="language-text">Target Group</code>은 생성한 웹서버들을 연결 시키면 <code class="language-text">ALB</code>로 요청이 들어오면 각 웹서버들로 트래픽이 가도록 셋팅 한 것이다.
+해당 모듈은 SG 설정은 처음하는 사람한텐 조금 헤깔릴 수 있지만 개념자체는 어려운 개념이 아니니 추가 설명은 생략</p></div></div></div><div class="Post-module--footer--+HBcE"><div class="Meta-module--meta--2uCvT"><p class="Meta-module--date--TTDWL">Published<!-- --> <!-- -->Dec 29, 2024</p></div><div class="Tags-module--tags--GFiVM"><ul class="Tags-module--list--gq5ra"><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/aws/">aws</a></li><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/db/">db</a></li><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/auroradb/">auroradb</a></li></ul></div><div class="Author-module--author--HFjbH"><p class="Author-module--bio--CJUED"><a class="Author-module--twitter--kGR0t" href="https://github.com/qweasd147" rel="noopener noreferrer" target="_blank"><strong>Kim joohyung</strong> on Github</a></p></div></div><div class="Post-module--comments--07meJ"></div></div><div class="Layout-module--layout-doc-mask--qkYmG"></div><div class="SideButton-module--sides--sxqRm"><ul class="SideButton-module--sides-buttons--CcMjz SideButton-module--sides-buttons-hide--OdyhS"><li><a class="SideButton-module--sides-button--pA2tl">Up</a></li><li><a class="SideButton-module--sides-button--pA2tl"><svg class="Icon-module--icon--HX2j3" viewBox="0 0 16 16" style="width:2rem;height:auto"><title>arrowLeftShort</title><path d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path></svg></a></li></ul></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/posts/aws/aws-networks/";window.___webpackCompilationHash="b0ad3f5cb20b8017caa6";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-4f8c4c04526091b1ccaa.js"],"app":["/app-15348d03227d735910fd.js"],"component---cache-caches-gatsby-plugin-offline-app-shell-js":["/component---cache-caches-gatsby-plugin-offline-app-shell-js-0f5b8a073afc45a4d929.js"],"component---src-components-custompage-skills-skills-tsx":["/component---src-components-custompage-skills-skills-tsx-97fdc4b7a905ae978e10.js"],"component---src-components-custompage-total-search-total-search-tsx":["/component---src-components-custompage-total-search-total-search-tsx-df4aaf713a67ac36eba5.js"],"component---src-templates-categories-template-categories-template-tsx":["/component---src-templates-categories-template-categories-template-tsx-56a81cb5064530a23b5a.js"],"component---src-templates-category-template-category-template-tsx":["/component---src-templates-category-template-category-template-tsx-284a16fa141b6e040247.js"],"component---src-templates-index-template-index-template-tsx":["/component---src-templates-index-template-index-template-tsx-cadbf1134cccd9712170.js"],"component---src-templates-not-found-template-not-found-template-tsx":["/component---src-templates-not-found-template-not-found-template-tsx-a05c28eb455a9d539b08.js"],"component---src-templates-post-template-post-template-tsx":["/component---src-templates-post-template-post-template-tsx-b5210253965c870a7e20.js"],"component---src-templates-tag-template-tag-template-tsx":["/component---src-templates-tag-template-tag-template-tsx-1bee2a4f186c77fd728f.js"],"component---src-templates-tags-template-tags-template-tsx":["/component---src-templates-tags-template-tags-template-tsx-5415b22ee6795014eb8f.js"]};/*]]>*/</script><script src="/blog/polyfill-4f8c4c04526091b1ccaa.js" nomodule=""></script><script src="/blog/app-15348d03227d735910fd.js" async=""></script><script src="/blog/framework-5aab6d6db7fbdb045164.js" async=""></script><script src="/blog/webpack-runtime-56da672d410a6717c3ab.js" async=""></script></body></html>
