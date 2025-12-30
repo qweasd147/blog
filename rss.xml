@@ -1,4 +1,573 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 29 Dec 2024 16:04:40 GMT</lastBuildDate><item><title><![CDATA[Terraform으로 구축하는 AWS 기본 설계]]></title><description><![CDATA[Terraform으로 IGW 부터 ELB까지 구축 및 설계]]></description><link>https://qweasd147.github.io/posts/aws/aws-networks/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/aws/aws-networks/</guid><pubDate>Sun, 29 Dec 2024 15:56:13 GMT</pubDate><content:encoded>&lt;p&gt;aws를 기본적인 사용을 위해 가장 기본적이면서 기초적인 aws 설계 내용을 terraform으로 구현하고 무엇인지 설명&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Blog by joohyung]]></title><description><![CDATA[Blog by joohyung]]></description><link>http://github.com/dylang/node-rss</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 30 Dec 2025 15:10:06 GMT</lastBuildDate><item><title><![CDATA[IntelliJ Async Profiler]]></title><description><![CDATA[IntelliJ에서 Async Profiler(IntelliJ Profiler)를 통한 성능 측정]]></description><link>https://qweasd147.github.io/posts/java/java-async-profiler/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/java/java-async-profiler/</guid><pubDate>Tue, 30 Dec 2025 14:57:49 GMT</pubDate><content:encoded>&lt;h1 id=&quot;async-profiler&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#async-profiler&quot; aria-label=&quot;async profiler permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Async Profiler&lt;/h1&gt;
+&lt;p&gt;서비스를 운영하다 보면 병목이나 특정 메소드에서 서버 리소스를 많이 사용하는 부분이 생길 수도 있다. 이러한 지점을 찾기 위한 도구로, 어느 구간에서 cpu를 많이 사용하는지, 어느 구간에서 메모리(&lt;code class=&quot;language-text&quot;&gt;heap&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;native memory&lt;/code&gt;)를 많이 쓰는지를 시각화 하여 보여준다.
+&lt;a href=&quot;https://github.com/async-profiler/async-profiler&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;해당 서비스&lt;/a&gt;에선 아래와 같은 항목들 추적이 가능하다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What can be profiled:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU time&lt;/li&gt;
+&lt;li&gt;Allocations in Java Heap&lt;/li&gt;
+&lt;li&gt;Native memory allocations and leaks&lt;/li&gt;
+&lt;li&gt;Contended locks&lt;/li&gt;
+&lt;li&gt;Hardware and software performance counters like cache misses, page faults, context switches&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이러한 항목들을 샘플링 방식으로 스레드 단위로 수집하여 어떠한 스레드가 리소스를 많이 사용한건지 확인 가능하며, 오버헤드도 상당히 낮은 수준으로 수집하여 필요하면 운영환경에서도 사용하도록 제공해주고 있다.&lt;/p&gt;
+&lt;h1 id=&quot;intellij-profiler&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#intellij-profiler&quot; aria-label=&quot;intellij profiler permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;IntelliJ Profiler&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;IntelliJ&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;Async Profiler&lt;/code&gt; 비스무리하게 만들어 제공해주는 기능으로 앞서 소개한 항목에 추가로 &lt;code class=&quot;language-text&quot;&gt;total time&lt;/code&gt;도 함께 제공해주고 있어, 병목지점까지 한눈에 볼 수 있게 제공해주고 있다.&lt;/p&gt;
+&lt;h2 id=&quot;1-cpu-사용량을-통한-병목지점-확인&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#1-cpu-%EC%82%AC%EC%9A%A9%EB%9F%89%EC%9D%84-%ED%86%B5%ED%95%9C-%EB%B3%91%EB%AA%A9%EC%A7%80%EC%A0%90-%ED%99%95%EC%9D%B8&quot; aria-label=&quot;1 cpu 사용량을 통한 병목지점 확인 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;1. CPU 사용량을 통한 병목지점 확인&lt;/h2&gt;
+&lt;p&gt;예를들어 아래와 같은 예시가 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;kotlin&quot;&gt;&lt;pre class=&quot;language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// CpuTest.kt&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; first &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IntArray&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;100_000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Random&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;nextInt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; seconds &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IntArray&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;50_000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Random&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;nextInt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;countSameNumberUsingList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;first&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; seconds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;countSameNumberUsingList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;first&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Int&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; seconds&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Int&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; elapsed &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measureTimeMillis &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; count &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;x &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; first&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;x &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; seconds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                count&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-literal singleline&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;공통 숫자 개수=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;count&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-literal singleline&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;List 걸린시간(ms)=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;elapsed&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;두 리스트 &lt;code class=&quot;language-text&quot;&gt;first&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;seconds&lt;/code&gt;에서 랜덤하게 숫자를 채우고, 같은 숫자 개수를 구하는 내용이다.
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 580px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/11695b6f576ab65dca53b1f5cd9619b9/12f38/intellij-profiler1.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 45.378151260504204%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1ElEQVQoz3XSbWvTYBTG8XyPDVybdm1W2Jxbnu/cSbosbdNmyfpgW8HpWrs3gg6ZykSF+oTg0I/8l8ayN9IXPzic69XhOoorA1wZbuavNPHCE3pJwnCYMRrlTCZ9sqyNDC1k5CB9G+lZKMIPkdJFSgfpOfj+el4TwsK2dYTnIPO3xE9/0Ln4hj/5ijv8gpl/wMzfYJ2/x8o/oxiWi//4lmR+R3d2x9niN735HcnlL7LFHzrPfhJOv+MmM+x4TvZ8yWixJLlYIvq3mN1XWN0rrPQlVnqDUlardAcvGMw+kl9+Yny1JHnyjrD/mmh0TTS8Jh7fIFpTXEcnjpu02xHxqY/nGnjCxBM2nrDwhIFSqVTpndq02006nZg07RAEAscxcBxzzcAVDiI4oZf16eUrA5I0J4haeGGEDKMiV1S1Qhi16GXnRK2kKMDxgiIsFIVEmLagUq1Sq9Wp1etoe3vUNY3d3VqxV6s1jnUdZRUIGXCW92kl3ULcTliV9e8DgmI2bAdVLVMu/09VVUqlEo90E2X/4AAZnjAaT0nSjKjVKax2XtAsrM6xhaTRaGykaRq1uoayUypxpJuYtsvhkX7vSDfuHRsW+w8P2d7e3mhra4vSzgP+Ai3iOdBz/8jdAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/11695b6f576ab65dca53b1f5cd9619b9/24599/intellij-profiler1.webp 238w,
+/blog/static/11695b6f576ab65dca53b1f5cd9619b9/69f92/intellij-profiler1.webp 475w,
+/blog/static/11695b6f576ab65dca53b1f5cd9619b9/2af67/intellij-profiler1.webp 580w&quot;
+              sizes=&quot;(max-width: 580px) 100vw, 580px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/11695b6f576ab65dca53b1f5cd9619b9/da2e6/intellij-profiler1.png 238w,
+/blog/static/11695b6f576ab65dca53b1f5cd9619b9/abae4/intellij-profiler1.png 475w,
+/blog/static/11695b6f576ab65dca53b1f5cd9619b9/12f38/intellij-profiler1.png 580w&quot;
+            sizes=&quot;(max-width: 580px) 100vw, 580px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/11695b6f576ab65dca53b1f5cd9619b9/12f38/intellij-profiler1.png&quot;
+            alt=&quot;intellij-profile1&quot;
+            title=&quot;intellij-profile1&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt; 버튼을 누르면 해당 프로그램을 &lt;code class=&quot;language-text&quot;&gt;IntelliJ Profiler&lt;/code&gt;로 실행 된다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;주황색 아이콘은 VisualVM 버튼으로 IntelliJ와 연동해서 사용하고 있는데, AsyncProfiler와 무관하니 무시&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Profiling started
+공통 숫자 개수=2
+List 걸린시간(ms)=2443&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;프로그램이 종료 되고, &lt;code class=&quot;language-text&quot;&gt;Show Results&lt;/code&gt; 버튼을 누르면 아래와 같은 화면이 출력된다.
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/b4ad3/intellij-profiler2.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 41.1764705882353%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABSklEQVQoz5WQXU/CMBRA+VcqbG3XbWygYxsIDlQIigsa5EMQHjQ++MeP6RwGiS8+nNy2tzn3o3I+eCG6XqHbc6zoCe2HKNfD8epI7VKzJTWhfrCkg3BcbKVRro8fNvGCRnE3VNJ+TpJNUI0MEXSxlUv1QGIEf533mL8Gk7OEQ6UeBgSNEO25SKWQ2iuSplrx6Z9U9hWqtiokRnhStTit2VRtcdDdEaLk560UHtrNvhwvIOlcEbd7+OEFUvtYUh+N6vxJMfJ+LyaeWYJmFDNfblisNuTTGZe9AVFyScuQdonTLq2kQxS3uWilKK2xpUSUXf4SnlqCJD7nYzvlfZPztn5gtxizm49YTgc8T3os8ozZXYfpMOJx2GIyCLnvB4yzEOnoY6EkjXw+133eZ21eJ3W2DwHrsWZxa39z8x2XQ1EiWY0ky6HC912+AAj8JwZDYmILAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/24599/intellij-profiler2.webp 238w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/69f92/intellij-profiler2.webp 475w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/cebde/intellij-profiler2.webp 950w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/5c666/intellij-profiler2.webp 1080w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/da2e6/intellij-profiler2.png 238w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/abae4/intellij-profiler2.png 475w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/68327/intellij-profiler2.png 950w,
+/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/b4ad3/intellij-profiler2.png 1080w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/de41b4d6f1e8531150cb67e7143f7ba0/68327/intellij-profiler2.png&quot;
+            alt=&quot;intellij-profile2&quot;
+            title=&quot;intellij-profile2&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&quot;왼쪽-상단-메뉴&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%99%BC%EC%AA%BD-%EC%83%81%EB%8B%A8-%EB%A9%94%EB%89%B4&quot; aria-label=&quot;왼쪽 상단 메뉴 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;왼쪽 상단 메뉴&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Flame Graph&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;왼쪽엔 실행 된 스레드명을 나열하고 오른쪽엔 호출된 call stack별로 메소드들을 확인 할 수 있다. x축이 넓을수록 리소스를 많이 사용한 부분이고, y축은 call stack기준으로 메소드들을 보여준다. 갈색은 java 코딩한 메소드, 회색은 라이브러리를 보여준다.&lt;/p&gt;
+&lt;p&gt;이미지를 기준으로 보자면 &lt;code class=&quot;language-text&quot;&gt;DestroyJavaVM&lt;/code&gt;이란 스레드가 대부분의 cpu를 사용했고, &lt;code class=&quot;language-text&quot;&gt;countSameNumberUsingList&lt;/code&gt; -&gt; &lt;code class=&quot;language-text&quot;&gt;measureTimeMillis&lt;/code&gt; -&gt; &lt;code class=&quot;language-text&quot;&gt;ArrayList.contains&lt;/code&gt; 메소드가 대부분의 cpu를 사용했다는 점을 확인 할 수 있다.
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 899px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/6320c3cbcd3799b6346197a14eaf5835/f7121/intellij-profiler3.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 26.89075630252101%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAABGElEQVQY013PbU+CYBTGcT6UFhTiE4jADTeiZs75UIYaolm5pDU326qtT/1v2rLVi9+u8+LsXDtKu9MjnqWMJwnD6wlhs4uQrX/a1L0Qqy6oOf4hixULo2xSrJjHeU/p9gbM0xWzZMH0NmVfIBsXyKhD+KN5+S3q4AiJkBFCNrDqHqbtYrs+vmwSNNoo6bTP527F28uC9+2SXZbwmiXsnmKy5ZDNon90fxPiOLXD0aARHdS9ANMySa8kD5MIJRl4fKzbbOcBWVzjeWKTxRabcYn1yOBxWDhaD3WEa+KHLcKohSP8w5umVeWuX2A9KqAYxQK6rnF+pqKe5n6peTTt5A9VzaEbRRwRYLseFcvGKFcxSmU0db+T5wvXp8PZflUoOAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/6320c3cbcd3799b6346197a14eaf5835/24599/intellij-profiler3.webp 238w,
+/blog/static/6320c3cbcd3799b6346197a14eaf5835/69f92/intellij-profiler3.webp 475w,
+/blog/static/6320c3cbcd3799b6346197a14eaf5835/fc12c/intellij-profiler3.webp 899w&quot;
+              sizes=&quot;(max-width: 899px) 100vw, 899px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/6320c3cbcd3799b6346197a14eaf5835/da2e6/intellij-profiler3.png 238w,
+/blog/static/6320c3cbcd3799b6346197a14eaf5835/abae4/intellij-profiler3.png 475w,
+/blog/static/6320c3cbcd3799b6346197a14eaf5835/f7121/intellij-profiler3.png 899w&quot;
+            sizes=&quot;(max-width: 899px) 100vw, 899px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/6320c3cbcd3799b6346197a14eaf5835/f7121/intellij-profiler3.png&quot;
+            alt=&quot;intellij-profile3&quot;
+            title=&quot;intellij-profile3&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt; 그래프 우클릭을 통해 해당 코드로 이동하거나 선택한 메소드를 기준으로 하위 메소드들만 &lt;code class=&quot;language-text&quot;&gt;Call tree&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;Method List&lt;/code&gt;을 볼 수가 있다.&lt;/p&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;Call Tree&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 856px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/527bd6c0ca047bab552b80d193bd25c4/1712d/intellij-profiler4.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.23529411764706%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsTAAALEwEAmpwYAAABlklEQVQoz3XRyXITMRDG8XkpDPEskjVaRrNIs3hsYyCESlEUJx4AJyFw46X/VBRy4MDhd2p166vuzDjPTttEGZdI/aRB1ub/lEa7ljYuie1i6stmbZj2B07n98zrkabrkbZHuki1qymlIq/kPwqxI68EwgXMeouarunOX+iXt2Sr0vTdkIbFec8474nTzDgvTMtKOwRq21DtNEI9S5+UgsoF6v0tcryme/eVYX8mG2vNoA1+iAwh0odIGKfEdwPaNSl1077okLWmqCqEG6iXT6j5Bn+4oQ0jmVaG/d+dGd9j2wHbBlwb2GlHKWsKobgqJdtyl+TieQ2iGdHrZ+T4ARtPKUB2tTzSnn8iDw+I9YI+XaiP31HHC9vlkTfzD15P92zGOzbxwibesRnveRUuVIdHzMffbMYH8vUXdv1G5voF5QaMjxgfUjrTzZh+Qbcz2o8I3ZKbidKtFDqyFZpcOgrlKaRlKyyl8uhmIHPeUxuDtg7nW0zjqX3A9DPavdQstbGI2lI9Xd8GCqkoKpGunVcVpZTpzR/cDCoPIw4e1AAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/527bd6c0ca047bab552b80d193bd25c4/24599/intellij-profiler4.webp 238w,
+/blog/static/527bd6c0ca047bab552b80d193bd25c4/69f92/intellij-profiler4.webp 475w,
+/blog/static/527bd6c0ca047bab552b80d193bd25c4/8d208/intellij-profiler4.webp 856w&quot;
+              sizes=&quot;(max-width: 856px) 100vw, 856px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/527bd6c0ca047bab552b80d193bd25c4/da2e6/intellij-profiler4.png 238w,
+/blog/static/527bd6c0ca047bab552b80d193bd25c4/abae4/intellij-profiler4.png 475w,
+/blog/static/527bd6c0ca047bab552b80d193bd25c4/1712d/intellij-profiler4.png 856w&quot;
+            sizes=&quot;(max-width: 856px) 100vw, 856px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/527bd6c0ca047bab552b80d193bd25c4/1712d/intellij-profiler4.png&quot;
+            alt=&quot;intellij-profile4&quot;
+            title=&quot;intellij-profile4&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+말 그대로 메소드에서 호출한 구조를 계층형으로 보여준다. 퍼센트 단위로 어느 구간에서 cpu를 많이 썻는지 직관적으로 확인이 가능하며 &lt;code class=&quot;language-text&quot;&gt;Flame Graph&lt;/code&gt;에서 원하는 메소드를 우클릭 -&gt; &lt;code class=&quot;language-text&quot;&gt;Focus on method in Call Tree&lt;/code&gt;를 개인적으로 가장 많이 사용하고 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;선택한 메소드를 기준으로 Call Tree를 보여준다&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;그 외 항목들은 다 직관적이고 위 두 기능만 알면 얼추 감이 잡혀 써보면 바로 이해할 것이다.&lt;/p&gt;
+&lt;p&gt;결과적으로 위 코드에선 List를 이중으로 순회하면서 값을 찾는 부분(&lt;code class=&quot;language-text&quot;&gt;ArrayList.contains&lt;/code&gt;)에서 가장 많은 리소스를 사용하고 있다. 이를 아래와 같이 &lt;code class=&quot;language-text&quot;&gt;HashSet&lt;/code&gt;을 사용하여 해시키 기반으로 찾도록 개선이 가능하다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;해시키 기반으로 찾으므로 훨씬 더 효율적으로 검색이 가능하다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;kotlin&quot;&gt;&lt;pre class=&quot;language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;countSameNumberUsingSet&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;first&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Int&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; seconds&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Int&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; secondsSet &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; seconds&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toHashSet&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; elapsed &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measureTimeMillis &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; count &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;x &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; first&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;x &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; secondsSet&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                count&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-literal singleline&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;공통 숫자 개수=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;count&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-literal singleline&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Set 걸린시간(ms)=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;elapsed&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;두 메소드들을 아래와 같이 병렬로 실행하고 결과를 보면&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;kotlin&quot;&gt;&lt;pre class=&quot;language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; threadPool &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Executors&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;newFixedThreadPool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; first &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IntArray&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;100_000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Random&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;nextInt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; seconds &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IntArray&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;50_000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Random&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;nextInt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    threadPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;submit&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;countSameNumberUsingList&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;first&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; seconds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    threadPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;submit&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;countSameNumberUsingSet&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;first&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; seconds&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    threadPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    threadPool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;awaitTermination&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;30L&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; TimeUnit&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;SECONDS&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// Profiling started&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// 공통 숫자 개수=2&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// Set 걸린시간(ms)=7&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// 공통 숫자 개수=2&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// List 걸린시간(ms)=2458&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/38cdf4ef0018e9649dabec066e9a1ced/09504/intellij-profiler5.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 35.29411764705882%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAAA/ElEQVQoz23Py27CMBCF4TwWNBfP2LETSEggIApVkUBVJVTx/tu/Im0hgS6+heWZ4+MorT6wqy9MeyFtLoifI9ZhXCCxxUAgzpQ4kxFxOdYXZOpIjBItNu90uxNadqR5SyqOODODJTMg/dLfXfIQfhXNqppF05B7j3UOYx0v6TjgTgb0SR/48w29LYvzWF/iQomx/nfwP4/tboH3167N1AW69ZZu/cps3iAaUFfc2YCox2j+5Bo6CpymQlnknI8d5+Oaz8OS077isAnsV5a3zrFrhW2dsl1kT1SFKBk2zATnLMs6Z1l72iqnChlBp3iZ9IJO+vPYBK9TkiTmG+Fb+XV1HMEcAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/38cdf4ef0018e9649dabec066e9a1ced/24599/intellij-profiler5.webp 238w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/69f92/intellij-profiler5.webp 475w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/cebde/intellij-profiler5.webp 950w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/53f84/intellij-profiler5.webp 1240w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/38cdf4ef0018e9649dabec066e9a1ced/da2e6/intellij-profiler5.png 238w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/abae4/intellij-profiler5.png 475w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/68327/intellij-profiler5.png 950w,
+/blog/static/38cdf4ef0018e9649dabec066e9a1ced/09504/intellij-profiler5.png 1240w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/38cdf4ef0018e9649dabec066e9a1ced/68327/intellij-profiler5.png&quot;
+            alt=&quot;intellij-profile5&quot;
+            title=&quot;intellij-profile5&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;오른쪽에 &lt;code class=&quot;language-text&quot;&gt;pool-1-thread-1&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;pool-1-thread-2&lt;/code&gt; 두 스레드 단위로 얼마나 리소스를 사용했는지 or 원하는 스레드만 선택하여 확인도 가능하다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;단순 두 방법이 얼마나 큰차이가 생기는지만 보여주고 각 방법 별로 왜 개선 된 건지는 그냥 자료구조이므로 자세한 설명은 생략한다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;2-total-time-통한-병목지점-확인&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#2-total-time-%ED%86%B5%ED%95%9C-%EB%B3%91%EB%AA%A9%EC%A7%80%EC%A0%90-%ED%99%95%EC%9D%B8&quot; aria-label=&quot;2 total time 통한 병목지점 확인 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2. Total time 통한 병목지점 확인&lt;/h2&gt;
+&lt;p&gt;또 다른 예시로 아래와 같은 전체코드가 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;kotlin&quot;&gt;&lt;pre class=&quot;language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; increaseBySynchronized &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IncreaseBySynchronized&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; increaseByLongAdder &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;IncreaseByLongAdder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token function&quot;&gt;incrementCheck&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;increaseBySynchronized&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;incrementCheck&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;increaseByLongAdder&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;incrementCheck&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;increaseTest&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; IncreaseTest&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; threads &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; pool &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Executors&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;newFixedThreadPool&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;threads&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; latch &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;CountDownLatch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;threads&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; elapsed &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measureTimeMillis &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;repeat&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;threads&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            pool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;submit&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token function&quot;&gt;repeat&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2_000_000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    increaseTest&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;increase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+                latch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;countDown&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        latch&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;await&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    pool&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;shutdown&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-literal singleline&quot;&gt;&lt;span class=&quot;token string&quot;&gt;&quot;counter=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;increaseTest&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;, elapsed(ms)=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;elapsed&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;, className=&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;token expression&quot;&gt;increaseTest&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;javaClass&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;simpleName&lt;/span&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; IncreaseTest &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;increase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Long
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; IncreaseBySynchronized &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; IncreaseTest &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; counter &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0L&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; lock&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Any &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;Any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;increase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token function&quot;&gt;synchronized&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;lock&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            counter&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Long &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; counter
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; IncreaseByLongAdder &lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; IncreaseTest &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;val&lt;/span&gt; counter &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;LongAdder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;increase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        counter&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;increment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; Long &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; counter&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// counter=20000000, elapsed(ms)=819, className=IncreaseBySynchronized&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// counter=20000000, elapsed(ms)=54, className=IncreaseByLongAdder&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;10개의 스레드가 동시에 공통변수의 숫자를 하나씩 2,000,000번 증가시키는 코드인데 thread safe를 보장하기 위해 첫번째 방법은 &lt;code class=&quot;language-text&quot;&gt;synchronized&lt;/code&gt;을 사용하고 두번째 방법은 &lt;code class=&quot;language-text&quot;&gt;LongAdder&lt;/code&gt;를 사용해서 thread safe를 보장하였다. 앞서 사용한 방식과 동일하게 &lt;code class=&quot;language-text&quot;&gt;IntelliJ Profiler&lt;/code&gt;를 돌리면 &lt;code class=&quot;language-text&quot;&gt;Intellij&lt;/code&gt; 코드에 아래와 같이 메소드별 걸린 시간도 표기해준다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 838px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/0591a/intellij-profiler9.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 66.38655462184873%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAAAsTAAALEwEAmpwYAAACNUlEQVQ4y22S246jOBBA8w3zsOoE21xsjG0wEEg6aUgy0/Ow0kgrzcvs/3/KWUGzrentfSgjFXDquKp21lr+us58P1/QpqRtG+b5zO32zHy7cHq58Xx/5XJ/5TTdOU936hgpy5Ll3//GLkkSjm1HF1uUUhiTE6MnRrc+XdMS+hN1f6IdrzhXoxJJkgiklAghPsRugSRCsIBzbdFlhXMGHyp8tVg4TBUojGVfCJ6sRPiMosgRiVglfo/dUiWRAiEFKs3Q/sg4f2X6+o3zt5k4Xan7nn7oCUdPcw74oabuB4ytkPIjdJcqxbGsqHWJlAlKB9xxJnQjRVtjrwPtNHJ9XJgeD8ZxpCwKjPVrzxehD8C9SGiNpTElKlWozNB0Pffvr4zXifkx0zSOymq01gipOBwOyK1nC+R36G4KDT+PJy4uoNJ0TWaZwoWa8/XMnz9e+fnrF8PLM+PlyHDqMca8Qz4Z3urI36crc2gQSpKu0HStbkqDiYH+MRFfznTHhmFoqSqLEPLTQN6v/GX/xB/J4Q22WRZZRuYdOjhqp4m1Wwvt94cPV/1kuByDdcSlwUqxDMkGj609duvb+nGq/tfok+FyPDtPX9oVaBaA0eTO4r19G8SyxEJuiyzfzcQWy4D+za17+JQkHLZkWTnarmXoPF2sKYqCVG9R5GhdkGUZeZZR5Nn6Pi/0lkvfDNNNN89zKmdpu5rYeLqlf7VHdw1FHyljIMaALQ3RWZqqpA6e0I/YyhFKzT+lsHW0vxeUUAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/24599/intellij-profiler9.webp 238w,
+/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/69f92/intellij-profiler9.webp 475w,
+/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/25dae/intellij-profiler9.webp 838w&quot;
+              sizes=&quot;(max-width: 838px) 100vw, 838px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/da2e6/intellij-profiler9.png 238w,
+/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/abae4/intellij-profiler9.png 475w,
+/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/0591a/intellij-profiler9.png 838w&quot;
+            sizes=&quot;(max-width: 838px) 100vw, 838px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/838d30ac3f8c1a714a4e4c907de1b73c/0591a/intellij-profiler9.png&quot;
+            alt=&quot;intellij-profile9&quot;
+            title=&quot;intellij-profile9&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;이 상태에서 화면 아래 우측에 &lt;code class=&quot;language-text&quot;&gt;Show&lt;/code&gt;를 Total Time으로 바꾸면 아래와 같이 출력 된다.&lt;/p&gt;
+&lt;h3 id=&quot;21-total-time---flame-graph&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#21-total-time---flame-graph&quot; aria-label=&quot;21 total time   flame graph permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.1 total time - Flame Graph&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/64b545508b4399a0afe5173d1e4b04af/312cc/intellij-profiler6.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 23.10924369747899%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAFCAYAAABFA8wzAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAwElEQVQY053P2w7BQBAG4H0tPexRt9SZUqUHKcENesONePZf2rCIxIWLL7P5Z7KZIcwLYFP+N5dLKM+H0j4cJkBsl5lmFTzZFfriMP4gPufePh+FMYhFBSzKaw2HGpbLTW64v7ctNluQW7nA9RjVLvsBzrs+ztsuTrnCMRM4pAJlLrCOJFRT1idSob5U+bVMQIoswiqdocjmWKURlvMxkniCOOwhHGhMh36tencCH0xqSK8NpdumKh1Aei2sFx3cASuCtmbxta2eAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/64b545508b4399a0afe5173d1e4b04af/24599/intellij-profiler6.webp 238w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/69f92/intellij-profiler6.webp 475w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/cebde/intellij-profiler6.webp 950w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/e457a/intellij-profiler6.webp 1182w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/64b545508b4399a0afe5173d1e4b04af/da2e6/intellij-profiler6.png 238w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/abae4/intellij-profiler6.png 475w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/68327/intellij-profiler6.png 950w,
+/blog/static/64b545508b4399a0afe5173d1e4b04af/312cc/intellij-profiler6.png 1182w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/64b545508b4399a0afe5173d1e4b04af/68327/intellij-profiler6.png&quot;
+            alt=&quot;intellij-profile6&quot;
+            title=&quot;intellij-profile6&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+메소드별 걸린 시간을 그래프로 표현&lt;/p&gt;
+&lt;h3 id=&quot;22-total-time---call-tree&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#22-total-time---call-tree&quot; aria-label=&quot;22 total time   call tree permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.2 total time - Call Tree&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/f5766647e2eb95e5d571598428dabe29/cc5fa/intellij-profiler7.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 37.39495798319328%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAAAsTAAALEwEAmpwYAAABLElEQVQoz22O607bQBgF/UhQ1JLE9t6v9jp2HJvSqu//GlNlAQFSfoy+PUfa0Wl0KpxM5FkYnoXlKF3lZ2/4VbHv92v+5Kg8nU3YPKHCQCOEJfiBsv9lXF+Ztj8M629cWdHpTGsTBxU5qMBBR55azeNR8Xh64+Eg+dFZ+vM/zLDQOOMY88CyXrluO+u2M5aC8QkdCtJGhDIIpe8jFdI4ehvxKdM4F4h5JOSROBRiLthYkPGMiCudzbRS0wp1h7e+045TrzA+0hjrmaaZ7eWVdX9hmGZ8ntAu0ClDVz9KOqnru3uX1Sw/ha00uJBobnNTHpmWC8u6MV+uzOvOdNnqaj8uCBu+Sb5Se2XrWntbeBPakGrwMWNDxKQZE0tdKVymd4VO+7vSj+52lXH8B6Af+Zi9weB9AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/f5766647e2eb95e5d571598428dabe29/24599/intellij-profiler7.webp 238w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/69f92/intellij-profiler7.webp 475w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/cebde/intellij-profiler7.webp 950w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/145c7/intellij-profiler7.webp 1188w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/f5766647e2eb95e5d571598428dabe29/da2e6/intellij-profiler7.png 238w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/abae4/intellij-profiler7.png 475w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/68327/intellij-profiler7.png 950w,
+/blog/static/f5766647e2eb95e5d571598428dabe29/cc5fa/intellij-profiler7.png 1188w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/f5766647e2eb95e5d571598428dabe29/68327/intellij-profiler7.png&quot;
+            alt=&quot;intellij-profile7&quot;
+            title=&quot;intellij-profile7&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+메소드별 걸린 시간을 계층 구조로 표현&lt;/p&gt;
+&lt;h3 id=&quot;23-total-time---method-list&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#23-total-time---method-list&quot; aria-label=&quot;23 total time   method list permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;2.3 total time - Method List&lt;/h3&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/blog/static/e0ecf7c36a611d1092fe22a117356899/08158/intellij-profiler8.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 18.907563025210084%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVQY02XP7W6CQBCFYa6rwjK7y36BqBUiIIT0/m/ibVy1adofT85kkjPJFDb2VGKystZUD/Irf2bzT60tMbWkrqfxEbENxXRfGaeF8bYQ2h7jY2Z9yt6zbgJiPdK8WI/2LaYbSKcBk86E4yfFtn8xLSvzurFsO8Nt5nwd6U4X7OO4CzmVtvmDsjZPSqhsRNKVcLxQikW7SHHfdsZpJnZ9LruQEOty+aBqPqqng5I/akrjUa7FxTbvlBi+Aa20kUO8f/kQAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;picture&gt;
+          &lt;source
+              srcset=&quot;/blog/static/e0ecf7c36a611d1092fe22a117356899/24599/intellij-profiler8.webp 238w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/69f92/intellij-profiler8.webp 475w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/cebde/intellij-profiler8.webp 950w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/632a5/intellij-profiler8.webp 1195w&quot;
+              sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+              type=&quot;image/webp&quot;
+            /&gt;
+          &lt;source
+            srcset=&quot;/blog/static/e0ecf7c36a611d1092fe22a117356899/da2e6/intellij-profiler8.png 238w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/abae4/intellij-profiler8.png 475w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/68327/intellij-profiler8.png 950w,
+/blog/static/e0ecf7c36a611d1092fe22a117356899/08158/intellij-profiler8.png 1195w&quot;
+            sizes=&quot;(max-width: 950px) 100vw, 950px&quot;
+            type=&quot;image/png&quot;
+          /&gt;
+          &lt;img
+            class=&quot;gatsby-resp-image-image&quot;
+            src=&quot;/blog/static/e0ecf7c36a611d1092fe22a117356899/68327/intellij-profiler8.png&quot;
+            alt=&quot;intellij-profile8&quot;
+            title=&quot;intellij-profile8&quot;
+            loading=&quot;lazy&quot;
+            decoding=&quot;async&quot;
+            style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+          /&gt;
+        &lt;/picture&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+메소드별 걸린 시간을 표현(한번 메소드 이름으로 정렬하였다)&lt;/p&gt;
+&lt;p&gt;이런식으로 두가지 방법(&lt;code class=&quot;language-text&quot;&gt;synchronized&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;LongAdder&lt;/code&gt;)을 그래프, call tree, 메소드별 걸린 시간을 구간구간 확인하여 개선 포인트를 찾는게 훨씬 쉬워진다.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;IntelliJ Profiler&lt;/code&gt;를 사용해서 대표적으로 &lt;code class=&quot;language-text&quot;&gt;cpu 사용시간&lt;/code&gt;/&lt;code class=&quot;language-text&quot;&gt;total time&lt;/code&gt;을 프로파일링하여 하나씩 확인하였다.&lt;/p&gt;
+&lt;p&gt;하지만 실제 운영 환경에서 고려해야 할 점은 사실 서버는 cpu를 많이 안쓴다는 점이다. 설명한 예시 두개 다 외부 연동없이 java 코드만 돌리는 것이라 &lt;code class=&quot;language-text&quot;&gt;total time&lt;/code&gt;이 &lt;code class=&quot;language-text&quot;&gt;cpu time&lt;/code&gt;과 크게 연관 있지만 서버에선 &lt;code class=&quot;language-text&quot;&gt;DB&lt;/code&gt;, 외부 api, &lt;code class=&quot;language-text&quot;&gt;redis&lt;/code&gt; 등등 요청하고 대기하는 로직이 많아 실제 cpu는 얼마 안쓰는데 걸린시간은 길 수도 있고, 아님 &lt;code class=&quot;language-text&quot;&gt;GC&lt;/code&gt; 오버헤드로 인해 엉뚱한 곳에서 &lt;code class=&quot;language-text&quot;&gt;total time&lt;/code&gt;이 크게 늘어 날 수도 있다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;서버에서 cpu를 과도하게 많이 사용된다면 먼저 파일처리, GC 퍼포먼스를 의심해보자&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;마지막으로 &lt;code class=&quot;language-text&quot;&gt;Spring&lt;/code&gt;을 쓰면 상상 이상으로 &lt;code class=&quot;language-text&quot;&gt;call stack&lt;/code&gt;이 길어 질 수 있는데 어차피 다 자바 코드이고 하나씩 천천히 따라가면 다 똑같으니 괜히 겁먹을 필요는 없다.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Terraform으로 구축하는 AWS 기본 설계]]></title><description><![CDATA[Terraform으로 IGW 부터 ELB까지 구축 및 설계]]></description><link>https://qweasd147.github.io/posts/aws/aws-networks/</link><guid isPermaLink="false">https://qweasd147.github.io/posts/aws/aws-networks/</guid><pubDate>Sun, 29 Dec 2024 15:56:13 GMT</pubDate><content:encoded>&lt;p&gt;aws를 기본적인 사용을 위해 가장 기본적이면서 기초적인 aws 설계 내용을 terraform으로 구현하고 무엇인지 설명&lt;/p&gt;
 &lt;h2 id=&quot;사전-준비&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%82%AC%EC%A0%84-%EC%A4%80%EB%B9%84&quot; aria-label=&quot;사전 준비 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;사전 준비&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;terraform&lt;/li&gt;
