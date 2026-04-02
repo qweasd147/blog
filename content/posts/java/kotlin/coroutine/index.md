@@ -204,7 +204,7 @@ fun main() {
 
 > 스레드 풀을 넘겨주지 않으면 현재 스레드를 기본으로 사용되는데, 위의 코드에선 스레드풀(`newSingleThreadExecutor`)로 Dispatcher로 지정하였지만 그냥 명시하지 않아도 똑같은 결과가 나오게 된다.
 
-만약 `delay` 함수가 아닌 `Thread.sleep`를 사용한다면 대략적으로 `5 * 0.5초 * 2` 라는 시간이 걸리게 된다.
+> 만약 `delay` 함수가 아닌 `Thread.sleep`를 사용한다면 대략적으로 `5 * 0.5초 * 2` 라는 시간이 걸리게 된다.
 
-> `Thread.sleep`은 `block` 방식으로 처리 되며, 당연히 `suspend` 함수가 아니다.
+> `Thread.sleep`은 `blocking` 방식으로 처리 되며, 당연히 `suspend` 함수가 아니다.
 > `Dispatcher`는 어느 스레드 환경에서 실행 될 지, 결정 할 수 있는데 차후에 추가로 설명 예정.
