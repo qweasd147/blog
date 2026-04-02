@@ -1,0 +1,375 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta data-react-helmet="true" name="twitter:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" name="twitter:description" content="k6를 사용해서 성능, 부하 테스트를 하고 싶을때"/><meta data-react-helmet="true" name="twitter:title" content="k6를 사용한 성능 테스트 - Blog by joohyung"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" property="og:image" content="https://qweasd147.github.io"/><meta data-react-helmet="true" property="og:site_name" content="k6를 사용한 성능 테스트 - Blog by joohyung"/><meta data-react-helmet="true" name="description" content="k6를 사용해서 성능, 부하 테스트를 하고 싶을때"/><meta name="theme-color" content="hsl(31, 92%, 62%)"/><meta name="generator" content="Gatsby 4.17.0"/><style data-href="/blog/styles.a9ca0bb346ac43a02f40.css" data-identity="gatsby-global-css">html{font-size:100}body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizelegibility;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#212121;font-size:16px;line-height:1.625;margin:0 0 0 calc(100vw - 100%)}body,h1,h2,h3,h4,h5,h6{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif}h1,h2,h3,h4,h5,h6{font-weight:600}h1{font-size:40px;line-height:52px;margin-bottom:26px;margin-top:104px}h2{font-size:27px;line-height:39px}h2,h3{margin-bottom:13px;margin-top:52px}h3{font-size:22px;line-height:26px}h4{font-size:19.2px;margin-top:39px}h4,h5{line-height:26px;margin-bottom:13px}h5,h6{font-size:16px;margin-top:65px}h6{line-height:26px;margin-bottom:13px}img{max-width:100%}hr,img{border:0;display:block}hr{background-image:linear-gradient(180deg,transparent 1px,transparent 11px,#212121 0,#212121 15px,transparent 0,transparent 26px);background-size:100% 26px;color:#212121;height:26px;margin:52px auto;width:100px}a{color:#5c92ff;text-decoration:none}a:active,a:focus,a:hover{color:#f7a145}b,strong{font-weight:600}ul{list-style:square;margin-bottom:26px}ul li{margin-bottom:10px;padding:0 5px}p{line-height:26px;margin-bottom:26px}blockquote{border-left:5px solid #39f;font-style:italic;padding:0}blockquote>p{padding-left:15px}blockquote>p>code[class*=language-]{overflow-wrap:break-word}figure{display:block;height:auto;width:100%}figcaption{color:#212121;font-size:14px;font-style:italic;line-height:19.5px;margin-bottom:0;margin-top:6.5px;text-align:center}.anchor{margin-left:-30px!important;padding-right:14px!important}@media screen and (min-width:685px){figure.float-left,figure.float-right{max-width:310px;padding:0 26px}.float-right{float:right}.float-left{float:left}}body :not(pre)>code.language-text{background-color:rgba(27,31,35,.05);color:#000;display:inline-block;max-width:100%;white-space:inherit}body :not(pre)>code.language-text::selection{background-color:#d2d8fb}body code[class*=language-],body pre[class*=language-]{background-color:#000;color:#dcdcdc}body code[class*=language-] ::selection,body pre[class*=language-] ::selection{background-color:#d2d8fb;color:#fff}body .token.atrule,body .token.attr-value,body .token.keyword{color:#39f}body .token.punctuation{color:#dcdcdc}table{border-collapse:collapse;border-top:1px solid #444;width:100%}td,th{border-bottom:1px solid #444;padding:10px;text-align:center}a{overflow-wrap:break-word}code[class*=language-],pre[class*=language-]{word-wrap:normal;color:#657b83;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;-o-tab-size:4;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{border-radius:.3em;margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background-color:#fdf6e3}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{background:#073642}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#93a1a1}.token.punctuation{color:#586e75}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#268bd2}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string,.token.url{color:#2aa198}.token.entity{background:#eee8d5;color:#657b83;cursor:help}.token.atrule,.token.attr-value,.token.keyword{color:#859900}.token.class-name,.token.function{color:#b58900}.token.important,.token.regex,.token.variable{color:#cb4b16}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.Content-module--content--uGfLc{margin:0 auto;max-width:1100px;padding:0 15px}.Content-module--content__title--P67He{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content__body--ESt1v figure{margin-bottom:26px}.Content-module--content__body--ESt1v figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content__body--ESt1v figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content__body--ESt1v a{text-decoration:underline}.Content-module--content__body--ESt1v *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content__body--ESt1v img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--uGfLc{padding:0}.Content-module--content__title--P67He{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content__body--ESt1v,.Content-module--content__body--ESt1v p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}}.Skills-module--skills-layout__back-button--WtT2H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 24px;text-align:center}.Skills-module--skills-layout__back-button--WtT2H:focus,.Skills-module--skills-layout__back-button--WtT2H:hover{color:#5c92ff}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-column-gap:3px;grid-row-gap:2px;display:grid;grid-template-columns:none}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills--HhddO{align-items:flex-start;border-left:1px solid #e1e1e1;display:flex;flex-direction:column;flex-wrap:wrap;margin-bottom:15px;padding-left:25px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__header--6ce4u{color:#5d686f;display:block;margin-top:5px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT{padding-left:40px;padding-top:8px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul{margin-bottom:5px;margin-top:0;padding-left:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li{list-style-type:disc;margin-bottom:2px;margin-left:30px;margin-top:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__container--QeGTT ul li span{color:#5d686f}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD{color:#5d686f;margin:0}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF .Skills-module--skills__subtitle--1BtKD:not(:first-child){margin-top:0}@media screen and (min-width:960px){.Skills-module--skills-layout__back-button--WtT2H{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.Skills-module--skills-layout--ni4Gs .Skills-module--skills-wrap--K9NpF{grid-template-columns:repeat(3,1fr)}}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v{margin-bottom:32.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v:last-child{margin-bottom:13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66{font-size:27px;line-height:39px;margin-bottom:13px;margin-top:0}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D{color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--title--8lL66 .Feed-module--link--YSO-D:hover{border-bottom:1px solid #212121;color:#212121}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--description--VzSOs{font-size:16px;line-height:26px;margin-bottom:19.5px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--time--coZK5{color:#212121;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--divider--gaGDJ{margin:0 13px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D{color:#f7a145;font-size:14px;font-weight:600;text-transform:uppercase}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--meta--JQwiD .Feed-module--category--WfWA4 .Feed-module--link--YSO-D:hover{color:#5c92ff}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA{color:#5c92ff;font-size:16px}.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:focus,.Feed-module--feed--piBJn .Feed-module--item--x6Y5v .Feed-module--more--UaTkA:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Icon-module--icon--HX2j3{fill:currentcolor;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;speak:none;stroke:currentcolor;stroke-width:0;display:inline-block;font-style:normal;font-variant:normal;font-weight:400;height:1em;line-height:1em;text-align:center;text-transform:none;width:1em}.SideButton-module--sides--sxqRm{margin-bottom:26px}.SideButton-module--sides-buttons--CcMjz{bottom:10px;display:flex;flex-direction:column;list-style:none;margin:0;padding:0;position:fixed;right:15px;transition:all .5s ease-in-out}.SideButton-module--sides-buttons-hide--OdyhS{bottom:-180px!important}.SideButton-module--sides-button--pA2tl{align-items:center;background-color:#fff;border:1px solid #ebebeb;border-radius:50%;color:#212121;cursor:pointer;display:flex;height:50px;justify-content:center;line-height:50px;margin:0;padding:0;text-align:center;width:50px}.SideButton-module--sides-button--pA2tl:focus,.SideButton-module--sides-button--pA2tl:hover{color:#5c92ff}@media screen and (min-width:960px){.SideButton-module--sides--sxqRm ul{bottom:100px;right:70px}}.Layout-module--layout--LJM9v{margin-left:auto;margin-right:auto;max-width:1200px;position:relative}.Layout-module--layout--LJM9v:before{content:"";display:table}.Layout-module--layout--LJM9v:after{clear:both;content:"";display:table}.Layout-module--layout-doc-mask--qkYmG{height:30%;position:absolute;top:70%}.Page-module--page--JOA3M{margin-bottom:52px}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:26px 19.5px 0}.Page-module--page--JOA3M .Page-module--title--kDOIG{font-size:40px;font-weight:600;line-height:52px;margin-bottom:37.7px;margin-top:0}.Page-module--page--JOA3M .Page-module--body--VhxOl{font-size:16px;line-height:26px;margin:0 0 26px}@media screen and (min-width:685px){.Page-module--page--JOA3M{width:calc(58.275% - 12.5px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(12n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(12n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:32.5px 19.5px 0}}@media screen and (min-width:960px){.Page-module--page--JOA3M{width:calc(66.6% - 10px)}.Page-module--page--JOA3M:nth-child(1n){clear:none;float:left;margin-right:30px}.Page-module--page--JOA3M:last-child{margin-right:0}.Page-module--page--JOA3M:nth-child(3n){float:right;margin-right:0}.Page-module--page--JOA3M:nth-child(3n+1){clear:both}.Page-module--page--JOA3M .Page-module--inner--SzHbJ{padding:39px 26px 0}}.Pagination-module--pagination--1hy6\+{display:flex;margin-top:52px}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M{text-align:left;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--previous--Sna5M .Pagination-module--previousLink--VZDX6.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy{text-align:right;width:50%}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W{color:#f7a145;font-size:26px;font-weight:700}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:focus,.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W:hover{color:#5c92ff}.Pagination-module--pagination--1hy6\+ .Pagination-module--next--HKuPy .Pagination-module--nextLink--Uy-6W.Pagination-module--disable--fhBRq{color:#9b9b9b;pointer-events:none}.Author-module--author--y9MUW .Author-module--photo--l4ewo{background-clip:padding-box;border-radius:50%;display:inline-block;height:75px;margin-bottom:0;width:75px}.Author-module--author--y9MUW .Author-module--title--z35RG{font-size:18px;font-weight:600;line-height:29.25px;margin:13px 0}.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:focus,.Author-module--author--y9MUW .Author-module--title--z35RG .Author-module--link--CcF2i:hover{color:#212121}.Author-module--author--y9MUW .Author-module--subtitle--huxcU{color:#878787;line-height:26px;margin-bottom:26px}.Contacts-module--contacts--CReI-{margin-bottom:26px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q{display:flex;flex-flow:row wrap;flex-grow:0;flex-shrink:0;list-style:none;margin:13px 0;max-width:150px;padding:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa{align-content:center;align-items:center;border:1px solid #ebebeb;border-radius:50%;display:flex;height:35px;justify-content:center;line-height:35px;margin:6.5px;padding:0;text-align:center;width:35px}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa:nth-child(3n+1){margin-left:0}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4{border:0;color:#212121;display:flex}.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:focus,.Contacts-module--contacts--CReI- .Contacts-module--list--lnC5q .Contacts-module--item--\+csDa .Contacts-module--link--3h4H4:hover{color:#5c92ff}.Copyright-module--copyright--LGAkk{color:#999;font-size:14px}.Menu-module--menu--ETqdK{margin-bottom:26px}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z{list-style:none;margin:0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw{margin:13px 0;padding:0}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj{border:0;color:#212121;font-size:16px;font-weight:400}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:focus,.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj:hover{border-bottom:1px solid #5c92ff;color:#5c92ff}.Menu-module--menu--ETqdK .Menu-module--list--4a49Z .Menu-module--item--i2edw .Menu-module--link--pvAqj.Menu-module--active--bLdMz{border-bottom:1px solid #212121;color:#212121}.Sidebar-module--sidebar--G-oUa{width:100%}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:26px 19.5px 0;position:relative}@media screen and (min-width:685px){.Sidebar-module--sidebar--G-oUa{width:calc(41.625% - 17.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(12n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:32.5px 19.5px 0}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo:after{background:#e6e6e6;background:linear-gradient(180deg,#e6e6e6 0,#e6e6e6 48%,#fff);bottom:0;content:"";height:540px;position:absolute;right:-10px;top:30px;width:1px}}@media screen and (min-width:960px){.Sidebar-module--sidebar--G-oUa{width:calc(24.975% - 22.5px)}.Sidebar-module--sidebar--G-oUa:nth-child(1n){clear:none;float:left;margin-right:30px}.Sidebar-module--sidebar--G-oUa:last-child{margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n){float:right;margin-right:0}.Sidebar-module--sidebar--G-oUa:nth-child(4n+1){clear:both}.Sidebar-module--sidebar--G-oUa .Sidebar-module--inner--NE0Oo{padding:39px}}.TotalSearch-module--search--aZIhb{background-color:#fff;display:flex;padding:16px 0;position:-webkit-sticky;position:sticky;top:0}.TotalSearch-module--search-keyword--iOIAR{border:1px solid gray;border-radius:4px;font-size:16px;font-weight:400;height:48px;padding:0 16px;width:100%}@media screen and (min-width:960px){.TotalSearch-module--skills-layout__back-button--YjdJg{left:30px;margin:0;max-width:auto;position:fixed;top:30px}.TotalSearch-module--skills-layout--9u5bv .TotalSearch-module--skills-wrap--mebnz{grid-template-columns:repeat(3,1fr)}}.Author-module--author--HFjbH{border-top:1px solid #e6e6e6;line-height:26px;margin-bottom:52px;margin-top:26px;max-width:950px;padding-top:26px}.Author-module--author--HFjbH .Author-module--bio--CJUED .Author-module--twitter--kGR0t{display:block;text-decoration:underline}@media screen and (min-width:685px){.Author-module--author--HFjbH{margin-left:auto;margin-right:auto}}.Content-module--content--gNWBo{margin:0 auto;max-width:1100px;padding:0 13px}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:32px;font-weight:600;line-height:42.9px;margin:26px auto 0;max-width:950px;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure{margin-bottom:26px}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote{font-style:italic;margin-top:0;padding:26px 0;text-align:center}.Content-module--content--gNWBo .Content-module--body--cmwhi figure blockquote p{font-size:26.9072px;line-height:39px;margin-bottom:26px;margin-top:0;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi a{text-decoration:underline}.Content-module--content--gNWBo .Content-module--body--cmwhi *{margin-left:auto;margin-right:auto;max-width:950px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{visibility:hidden}.Content-module--content--gNWBo .Content-module--body--cmwhi img{max-width:100%}@media screen and (min-width:960px){.Content-module--content--gNWBo{padding:0}.Content-module--content--gNWBo .Content-module--title--CVBL0{font-size:48px;line-height:58.5px;margin-bottom:39px;margin-top:58.5px}.Content-module--content--gNWBo .Content-module--body--cmwhi,.Content-module--content--gNWBo .Content-module--body--cmwhi p{font-size:18px;line-height:29.25px;margin-bottom:29.25px}.Content-module--content--gNWBo .Content-module--body--cmwhi h2>a{padding-right:26px;visibility:unset}}.Meta-module--meta--2uCvT .Meta-module--date--TTDWL{font-style:italic}.Tags-module--tags--GFiVM{margin-bottom:13px}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra{list-style:none;padding:0}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ{display:inline-block;margin:13px 3.25px}@media screen and (min-width:685px){.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ:first-child{margin-left:0;padding-left:0}}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1{border:1px solid #e6e6e6;border-radius:20px;color:#212121;display:inline-block;height:35px;line-height:35px;padding:0 19.5px;text-decoration:none}.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:focus,.Tags-module--tags--GFiVM .Tags-module--list--gq5ra .Tags-module--item--UgFWJ .Tags-module--link--5O4-1:hover{color:#5c92ff}.Post-module--post--OplAV .Post-module--content--PG5Wp{margin:0 auto}.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{margin:0 auto;max-width:950px;padding:0 13px}.Post-module--post--OplAV .Post-module--button--Ufj7H{border:1px solid #e6e6e6;border-radius:20px;color:#212121;cursor:pointer;display:block;font-size:16px;font-weight:400;height:35px;line-height:35px;margin-left:auto;margin-right:auto;margin-top:26px;max-width:90px;padding:0 26px;text-align:center}.Post-module--post--OplAV .Post-module--button--Ufj7H:focus,.Post-module--post--OplAV .Post-module--button--Ufj7H:hover{color:#5c92ff}@media screen and (min-width:960px){.Post-module--post--OplAV .Post-module--comments--07meJ,.Post-module--post--OplAV .Post-module--footer--\+HBcE{padding:0}.Post-module--post--OplAV .Post-module--button--Ufj7H{left:30px;margin:0;max-width:none;position:fixed;top:30px}}.Tags-module--tags--KfLu\+{grid-gap:11px 20px;display:flex;flex-wrap:wrap}.Tags-module--tags__tag--nij2v{align-items:center;background:#f1f3f5;border-radius:20px;color:#0ca678;cursor:pointer;display:inline-flex;height:35px;padding:0 10px}</style><link rel="alternate" type="application/rss+xml" title="Blog by joohyung" href="/blog/rss.xml"/><style type="text/css">
+    .anchor.before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      padding-right: 4px;
+    }
+    .anchor.after {
+      display: inline-block;
+      padding-left: 4px;
+    }
+    h1 .anchor svg,
+    h2 .anchor svg,
+    h3 .anchor svg,
+    h4 .anchor svg,
+    h5 .anchor svg,
+    h6 .anchor svg {
+      visibility: hidden;
+    }
+    h1:hover .anchor svg,
+    h2:hover .anchor svg,
+    h3:hover .anchor svg,
+    h4:hover .anchor svg,
+    h5:hover .anchor svg,
+    h6:hover .anchor svg,
+    h1 .anchor:focus svg,
+    h2 .anchor:focus svg,
+    h3 .anchor:focus svg,
+    h4 .anchor:focus svg,
+    h5 .anchor:focus svg,
+    h6 .anchor:focus svg {
+      visibility: visible;
+    }
+  </style><script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var hash = window.decodeURI(location.hash.replace('#', ''))
+      if (hash !== '') {
+        var element = document.getElementById(hash)
+        if (element) {
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - 0)
+          }), 0)
+        }
+      }
+    })
+  </script><link rel="preconnect" href="https://www.googletagmanager.com"/><link rel="dns-prefetch" href="https://www.googletagmanager.com"/><script async="" src="https://www.googletagmanager.com/gtag/js?id="></script><script>
+      
+      
+      if(true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer && window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '', {"send_page_view":false});
+      }
+      </script><link rel="sitemap" type="application/xml" href="/blog/sitemap/sitemap-index.xml"/><link rel="icon" href="/blog/favicon-32x32.png?v=a0e002f394141892bab003cbb7dcfd9b" type="image/png"/><link rel="manifest" href="/blog/manifest.webmanifest" crossorigin="anonymous"/><link rel="apple-touch-icon" sizes="48x48" href="/blog/icons/icon-48x48.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="72x72" href="/blog/icons/icon-72x72.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="96x96" href="/blog/icons/icon-96x96.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="144x144" href="/blog/icons/icon-144x144.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="192x192" href="/blog/icons/icon-192x192.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="256x256" href="/blog/icons/icon-256x256.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="384x384" href="/blog/icons/icon-384x384.png?v=a0e002f394141892bab003cbb7dcfd9b"/><link rel="apple-touch-icon" sizes="512x512" href="/blog/icons/icon-512x512.png?v=a0e002f394141892bab003cbb7dcfd9b"/><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><title data-react-helmet="true">k6를 사용한 성능 테스트 - Blog by joohyung</title></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div class="Layout-module--layout--LJM9v"><div class="Post-module--post--OplAV"><a class="Post-module--button--Ufj7H">뒤로가기</a><div class="Post-module--content--PG5Wp"><div class="Content-module--content--gNWBo"><h1 class="Content-module--title--CVBL0">k6를 사용한 성능 테스트</h1><div class="Content-module--body--cmwhi"><p>사용한 서버랑 k6 코드는 아래서 확인 가능하다</p>
+<ul>
+<li><a href="https://github.com/qweasd147/StudyNote/tree/master/springboot/PerformanceTest" target="_blank" rel="nofollow noopener noreferrer">서버 코드</a></li>
+<li><a href="https://github.com/qweasd147/StudyNote/tree/master/k6/performance2" target="_blank" rel="nofollow noopener noreferrer">k6 코드</a></li>
+</ul>
+<ol>
+<li>mac 기준 <code class="language-text">brew install k6</code>명령어로 <code class="language-text">k6</code> 설치</li>
+<li>위 <code class="language-text">서버 코드</code> 올린다.</li>
+<li><code class="language-text">k6 코드</code>에서 <code class="language-text">k6 run k6script.js</code> 실행</li>
+</ol>
+<p>이런 단계로 진행하면 실행화면 결과를 볼 수 있다.</p>
+<h1 id="k6를-사용한-성능-테스트" style="position:relative;"><a href="#k6%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%84%B1%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8" aria-label="k6를 사용한 성능 테스트 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>k6를 사용한 성능 테스트</h1>
+<p><code class="language-text">k6</code>는 성능&#x26;부하 테스트를 위해 많이 사용하는 도구이다.
+HTTP API에 대해 얼마나 많은 요청을 처리할 수 있는지, 응답 시간은 어느 정도인지, 요청이 실패하지는 않는지 등을 스크립트 기반으로 확인할 수 있다.</p>
+<p>특히 아래와 같은 상황에서 간단하게 사용하기 좋다.</p>
+<ul>
+<li>특정 API가 동시에 여러 요청을 받았을 때 얼마나 버티는지 확인</li>
+<li>응답 시간이 어느 정도 수준으로 유지되는지 확인</li>
+<li>코드 수정 전후로 성능 차이를 비교</li>
+<li>DB 락, 외부 API 호출, 캐시 적용 여부 등에 따라 어떤 차이가 나는지 비교</li>
+</ul>
+<blockquote>
+<p>개인적으로도 일할 때 로컬 환경에선 <code class="language-text">k6</code>와 이전에 작성한 <code class="language-text">async-profiler</code> 조합으로 성능&#x26;부하 테스트를 진행한다.</p>
+</blockquote>
+<p><code class="language-text">k6</code>의 장점은 테스트 코드를 <code class="language-text">javascript</code> 문법으로 비교적 단순하게 작성할 수 있다는 점이다.
+복잡한 테스트 도구를 바로 도입하기 부담스러울 때, 로컬 환경이나 개발 서버를 대상으로 빠르게 부하를 걸어보며 감을 잡기 좋다.</p>
+<p>맨 위의 <code class="language-text">서버 코드</code> 기준 아래 API가 구현되어 있는데, 이걸 기준으로 <code class="language-text">k6</code>를 사용해서 부하 테스트를 해보면서 정리한 내용이다.</p>
+<ul>
+<li><code class="language-text">http://localhost:8081/normal/detail/1/optimistic-lock</code></li>
+<li><code class="language-text">http://localhost:8081/normal/detail/2/shared-lock</code></li>
+</ul>
+<p>일단 가장 단순한 스크립트부터 만들고, 내 기준 헤깔렸던 개념들 위주로 무슨 의미인지 하나씩 정리해본다.</p>
+<h2 id="1-가장-단순한-예제" style="position:relative;"><a href="#1-%EA%B0%80%EC%9E%A5-%EB%8B%A8%EC%88%9C%ED%95%9C-%EC%98%88%EC%A0%9C" aria-label="1 가장 단순한 예제 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. 가장 단순한 예제</h2>
+<p>아래처럼 두 API를 각각 다른 <code class="language-text">group()</code>으로 묶어서 테스트를 만들 수 있다.</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">import</span> http <span class="token keyword">from</span> <span class="token string">"k6/http"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> check<span class="token punctuation">,</span> group<span class="token punctuation">,</span> sleep <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"k6"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">BASE_URL</span> <span class="token operator">=</span> <span class="token string">"http://localhost:8081"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> options <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">stages</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"20s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">20</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">thresholds</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">http_req_failed</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"rate&lt;0.01"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">http_req_duration</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"p(95)&lt;1000"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">group</span><span class="token punctuation">(</span><span class="token string">"normal detail optimistic lock"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> res <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">BASE_URL</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/normal/detail/1/optimistic-lock</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">tags</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">api_group</span><span class="token operator">:</span> <span class="token string">"optimistic_lock"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">check</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string-property property">"optimistic lock status is 200"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">r</span><span class="token punctuation">)</span> <span class="token operator">=></span> r<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">group</span><span class="token punctuation">(</span><span class="token string">"normal detail shared lock"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> res <span class="token operator">=</span> http<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">BASE_URL</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/normal/detail/2/shared-lock</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">tags</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token literal-property property">api_group</span><span class="token operator">:</span> <span class="token string">"shared_lock"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">check</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      <span class="token string-property property">"shared lock status is 200"</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">r</span><span class="token punctuation">)</span> <span class="token operator">=></span> r<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>실행은 아래처럼 하면 된다.</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ k6 run k6script.js</code></pre></div>
+<h2 id="2-stages는-무엇인가" style="position:relative;"><a href="#2-stages%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80" aria-label="2 stages는 무엇인가 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. <code class="language-text">stages</code>는 무엇인가</h2>
+<p><code class="language-text">stages</code>는 <strong>가상 사용자 수(VU, Virtual Users)를 시간에 따라 어떻게 변화시킬지 정의하는 옵션</strong>이다.</p>
+<p>예를 들어 아래 설정은</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token literal-property property">stages</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"20s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">20</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre></div>
+<p>이런 의미를 가진다.</p>
+<ol>
+<li>처음 5초 동안 VU를 5명까지 증가</li>
+<li>다음 20초 동안 VU를 20명까지 증가</li>
+<li>마지막 5초 동안 VU를 0명까지 감소</li>
+</ol>
+<p>여기서 주의할 점은 두 번째 구간이 “20초 동안 20명을 유지”가 아니라, <strong>5명에서 20명으로 점진적으로 증가</strong>한다는 점이다.</p>
+<p>즉 <code class="language-text">stages</code>는 정확한 요청 개수를 보장하는 옵션이 아니다.
+실제 요청 수는 아래 요소들에 따라 달라진다.</p>
+<ul>
+<li>응답 속도</li>
+<li>코드 내부의 <code class="language-text">sleep()</code></li>
+<li>현재 시점의 VU 수</li>
+<li><code class="language-text">default function</code> 안에서 호출하는 API 개수</li>
+</ul>
+<h2 id="3-가상-사용자vu" style="position:relative;"><a href="#3-%EA%B0%80%EC%83%81-%EC%82%AC%EC%9A%A9%EC%9E%90vu" aria-label="3 가상 사용자vu permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3. 가상 사용자(VU)</h2>
+<p><code class="language-text">VU 1명</code>은 실제 사람 1명이라기보다, <code class="language-text">default function</code>을 반복 실행하는 독립 실행 단위라고 이해하는게 더 정확하다.</p>
+<p>현재 코드 기준으로 VU 한 명은 아래 순서로 움직인다.</p>
+<ol>
+<li>첫 번째 그룹 실행</li>
+<li><code class="language-text">optimistic-lock</code> API 호출</li>
+<li>응답 수신</li>
+<li><code class="language-text">sleep(0.5)</code></li>
+<li>두 번째 그룹 실행</li>
+<li><code class="language-text">shared-lock</code> API 호출</li>
+<li>응답 수신</li>
+<li><code class="language-text">sleep(0.5)</code></li>
+<li>한 바퀴 종료</li>
+<li>테스트가 끝나지 않았다면 다시 반복</li>
+</ol>
+<p>지금 구조는 ‘사용자 한 명이 두 API를 순서대로 호출하는 흐름’을 여러 개의 VU가 동시에 반복하는 구조이다.</p>
+<blockquote>
+<p>가상 사용자는 그냥 사용자 한명이 테스트하는 개념으로, 보통 사이트에서 하나 누르고 잠시 있다가(<code class="language-text">sleep</code>) 다른거 누르는 시나리오를 생각해서 만들어낸 개념이다.</p>
+</blockquote>
+<h2 id="4-group과-tag" style="position:relative;"><a href="#4-group%EA%B3%BC-tag" aria-label="4 group과 tag permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4. <code class="language-text">group</code>과 <code class="language-text">tag</code></h2>
+<h3 id="41-group" style="position:relative;"><a href="#41-group" aria-label="41 group permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.1 <code class="language-text">group</code></h3>
+<p><code class="language-text">group</code>은 <strong>테스트 코드의 구조를 나누는 기능</strong>이다.</p>
+<p>예를 들어</p>
+<ul>
+<li>로그인</li>
+<li>상품 조회</li>
+<li>결제</li>
+</ul>
+<p>같은 흐름 단위로 묶을 때 사용한다(<code class="language-text">group</code> 안에 또 다른 <code class="language-text">group</code>을 넣는 중첩 구조도 가능).</p>
+<h3 id="42-tag" style="position:relative;"><a href="#42-tag" aria-label="42 tag permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.2 <code class="language-text">tag</code></h3>
+<p><code class="language-text">tag</code>는 <strong>결과 데이터에 붙이는 라벨</strong>이다.</p>
+<p>예를 들어 아래처럼</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token literal-property property">tags</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">api_group</span><span class="token operator">:</span> <span class="token string">"optimistic_lock"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>붙여두면 결과 메트릭에 <code class="language-text">api_group=optimistic_lock</code> 같은 분류 정보가 같이 저장된다. 이렇게 tag를 붙이고 통과 기준(<code class="language-text">thresholds</code>)을 태그별로 다르게 적용하거나 나중에 필터링 or 집계하기 위한 메타데이터라고 보면 된다.</p>
+<h3 id="43-tag-활용법" style="position:relative;"><a href="#43-tag-%ED%99%9C%EC%9A%A9%EB%B2%95" aria-label="43 tag 활용법 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4.3 <code class="language-text">tag</code> 활용법</h3>
+<ol>
+<li>태그별 threshold 추가</li>
+<li>JSON output으로 결과 저장</li>
+</ol>
+<p>예를 들어 threshold를 아래처럼 걸 수 있다.</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token literal-property property">thresholds</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token string-property property">"http_req_duration{api_group:optimistic_lock}"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"p(95)&lt;1000"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token string-property property">"http_req_duration{api_group:shared_lock}"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"p(95)&lt;1000"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>이렇게 하면 결과에 태그가 반영된 threshold 단위로 구분해서 볼 수 있다. 아니면 아래처럼 JSON으로 저장하면</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh">$ k6 run --out json=result.json k6script.js</code></pre></div>
+<p>실제 메트릭 포인트 안에 <code class="language-text">group</code>, <code class="language-text">api_group</code>, <code class="language-text">url</code>, <code class="language-text">status</code> 같은 태그들이 포함되어 있는걸 확인할 수 있다.</p>
+<h2 id="5-stages-scenarios-iterations" style="position:relative;"><a href="#5-stages-scenarios-iterations" aria-label="5 stages scenarios iterations permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5. <code class="language-text">stages</code>, <code class="language-text">scenarios</code>, <code class="language-text">iterations</code></h2>
+<p>헷갈리는 옵션들인데, 셋 다 “부하를 어떻게 줄 것인가”와 관련 있지만 초점이 조금씩 다르다.</p>
+<h3 id="51-stages" style="position:relative;"><a href="#51-stages" aria-label="51 stages permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.1 <code class="language-text">stages</code></h3>
+<p><code class="language-text">stages</code>는 시간의 흐름에 따라 <code class="language-text">VU</code> 수를 변화시키는 방식이다.
+즉 “몇 명의 사용자가 점점 늘어나거나 줄어드는가”를 표현할 때 사용한다.</p>
+<p>예를 들어 아래 설정은</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token literal-property property">stages</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"20s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">20</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span> <span class="token literal-property property">duration</span><span class="token operator">:</span> <span class="token string">"5s"</span><span class="token punctuation">,</span> <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre></div>
+<p>이런 식으로 해석할 수 있다.</p>
+<ol>
+<li>처음 5초 동안 사용자를 5명까지 증가</li>
+<li>다음 20초 동안 사용자를 20명까지 증가</li>
+<li>마지막 5초 동안 사용자를 0명까지 감소</li>
+</ol>
+<p>즉 <code class="language-text">stages</code>는 “부하를 점진적으로 올리고 내리는 테스트”에 적합하다. 예를 들어 트래픽이 몰릴 때 어느 구간부터 응답 시간이 급격히 느려지는지, 에러가 언제부터 증가하는지 확인할 때 많이 사용한다.</p>
+<p>반대로 <code class="language-text">stages</code>는 정확한 요청 개수를 맞추는 용도는 아니다.
+응답 속도, <code class="language-text">sleep</code>, <code class="language-text">default function</code>의 수행 시간에 따라 실제 요청 수는 계속 달라진다.</p>
+<h3 id="52-scenarios" style="position:relative;"><a href="#52-scenarios" aria-label="52 scenarios permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.2 <code class="language-text">scenarios</code></h3>
+<p><code class="language-text">scenarios</code>는 여러 종류의 테스트 흐름을 분리해서 실행하고 싶을 때 사용하는 방식이다.</p>
+<p>예를 들어 아래처럼 생각할 수 있다.</p>
+<ul>
+<li>첫 번째 API는 100번 호출</li>
+<li>두 번째 API는 50번 호출</li>
+<li>로그인 API는 짧게 워밍업만 수행</li>
+<li>주문 API는 더 많은 사용자로 집중 테스트</li>
+</ul>
+<p>이런 식으로 <strong>각기 다른 실행 조건을 가진 테스트를 하나의 스크립트 안에서 분리해서 운영</strong>할 수 있다.</p>
+<p>즉 <code class="language-text">scenarios</code>는 “테스트 구조를 여러 실행 단위로 나누는 기능”에 가깝다.
+그리고 각 시나리오 안에서는 <code class="language-text">executor</code>를 통해 어떤 방식으로 실행할지도 지정할 수 있다.</p>
+<p>예시를 들면 아래와 같은 형태가 된다.</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token literal-property property">scenarios</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">optimistic_lock_test</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">executor</span><span class="token operator">:</span> <span class="token string">"shared-iterations"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">vus</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">iterations</span><span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">exec</span><span class="token operator">:</span> <span class="token string">"optimisticLock"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">shared_lock_test</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">executor</span><span class="token operator">:</span> <span class="token string">"shared-iterations"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">vus</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">iterations</span><span class="token operator">:</span> <span class="token number">50</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">exec</span><span class="token operator">:</span> <span class="token string">"sharedLock"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>이 경우에는 각 시나리오가 서로 분리되어 실행되므로, 지금처럼 <code class="language-text">default function</code> 하나 안에서 순서대로 두 API를 호출하는 구조와는 의미가 다르다.</p>
+<p>즉 <code class="language-text">scenarios</code>는 여러 API 또는 여러 사용자 흐름을 독립적으로 테스트하고 싶을 때 유용하다.</p>
+<p>여기서 자주 보게 되는 <code class="language-text">executor</code>가 <code class="language-text">shared-iterations</code>, <code class="language-text">per-vu-iterations</code>이다.</p>
+<h4 id="shared-iterations" style="position:relative;"><a href="#shared-iterations" aria-label="shared iterations permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code class="language-text">shared-iterations</code></h4>
+<p>전체 반복 횟수를 여러 <code class="language-text">VU</code>가 나눠서 처리하는 방식이다.</p>
+<p>예를 들어 아래처럼 설정하면</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token literal-property property">executor</span><span class="token operator">:</span> <span class="token string">"shared-iterations"</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">vus</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">iterations</span><span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>전체 100번을 <code class="language-text">VU 5명</code>이 나눠서 수행한다.
+즉 누가 몇 번 실행할지는 내부적으로 분배되며, 중요한 건 <strong>총합이 100번</strong>이라는 점이다.</p>
+<h4 id="per-vu-iterations" style="position:relative;"><a href="#per-vu-iterations" aria-label="per vu iterations permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code class="language-text">per-vu-iterations</code></h4>
+<p>이건 이름 그대로 <code class="language-text">VU</code>마다 정해진 횟수만큼 반복하는 방식이다.</p>
+<p>예를 들어 아래 설정은</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token literal-property property">executor</span><span class="token operator">:</span> <span class="token string">"per-vu-iterations"</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">vus</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">iterations</span><span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>각 <code class="language-text">VU</code>가 100번씩 실행하므로 전체 실행 횟수는 <code class="language-text">500번</code>이 된다.</p>
+<p>즉 같은 <code class="language-text">iterations: 100</code>이어도 의미가 완전히 다르다.</p>
+<ul>
+<li><code class="language-text">shared-iterations</code>: 전체 합계가 100번</li>
+<li><code class="language-text">per-vu-iterations</code>: 각 사용자당 100번</li>
+</ul>
+<p>그래서 “전체 요청 수를 정확히 100번으로 맞추고 싶다”면 <code class="language-text">shared-iterations</code>가 더 직관적이고,
+“가상 사용자 1명당 같은 횟수로 반복시키고 싶다”면 <code class="language-text">per-vu-iterations</code>가 더 적합하다.</p>
+<h3 id="53-iterations" style="position:relative;"><a href="#53-iterations" aria-label="53 iterations permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.3 <code class="language-text">iterations</code></h3>
+<p><code class="language-text">iterations</code>는 테스트 함수를 총 몇 번 실행할지 지정하는 옵션이다.
+즉 “정확히 몇 번 반복할 것인가”에 초점이 있다.</p>
+<p>예를 들어 아래처럼 설정하면</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">const</span> options <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">vus</span><span class="token operator">:</span> <span class="token number">5</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">iterations</span><span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre></div>
+<p><code class="language-text">default function</code>이 총 100번 실행된다.</p>
+<p>현재 예제처럼 <code class="language-text">default function</code> 안에 API가 2개 있다면</p>
+<ul>
+<li>첫 번째 API 100번</li>
+<li>두 번째 API 100번</li>
+<li>총 요청 수 200번</li>
+</ul>
+<p>이 된다.</p>
+<p>여기서 <code class="language-text">vus</code>는 그 100번의 작업을 몇 명이 나눠서 동시에 처리할지를 의미한다.
+즉 <code class="language-text">iterations</code>는 총 작업량, <code class="language-text">vus</code>는 동시성 수준이라고 보면 된다.</p>
+<p>그래서 <code class="language-text">iterations</code>는 아래 같은 상황에 적합하다.</p>
+<ul>
+<li>정확히 몇 번 호출되는지 맞추고 싶을 때</li>
+<li>같은 횟수로 전후 성능 비교를 하고 싶을 때</li>
+<li>데이터 생성이나 반복 호출 테스트를 일정 횟수로 제한하고 싶을 때</li>
+</ul>
+<h3 id="54-차이점-정리" style="position:relative;"><a href="#54-%EC%B0%A8%EC%9D%B4%EC%A0%90-%EC%A0%95%EB%A6%AC" aria-label="54 차이점 정리 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5.4 차이점 정리</h3>
+<p>간단히 정리하면 아래와 같이 이해하면 편하다.</p>
+<ul>
+<li><code class="language-text">stages</code>: 시간에 따라 사용자 수를 어떻게 변화시킬지</li>
+<li><code class="language-text">iterations</code>: 총 몇 번 실행할지</li>
+<li><code class="language-text">scenarios</code>: 서로 다른 테스트 흐름을 어떻게 분리할지</li>
+</ul>
+<p>즉 “점점 부하를 올려보는 테스트”면 <code class="language-text">stages</code>,
+“정확히 몇 번 호출”이 중요하면 <code class="language-text">iterations</code>,
+“API별로 다른 조건으로 따로 테스트”하고 싶으면 <code class="language-text">scenarios</code>가 더 잘 맞는다.</p>
+<h2 id="6-결과-화면" style="position:relative;"><a href="#6-%EA%B2%B0%EA%B3%BC-%ED%99%94%EB%A9%B4" aria-label="6 결과 화면 permalink" class="anchor before"><svg aria-hidden="true" focusable="false" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>6. 결과 화면</h2>
+<p>그냥 별다른 옵션 없이 실행하면 화면에만 나오지만 아래 명령어로 실행하면 결과 화면을 <code class="language-text">html</code>파일로 만들어줘서 별다른 작업없이 로컬에서도 확인 가능하다</p>
+<div class="gatsby-highlight" data-language="sh"><pre class="language-sh"><code class="language-sh"># 보통 k6 run k6script.js
+# 상세히 볼때(그룹별 그룹핑) k6 run --summary-mode=full k6script.js
+$ K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=html-report.html k6 run k6script.js</code></pre></div>
+<p>이러면 동일한 경로에 <code class="language-text">html-report.html</code>파일이 생긴다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 950px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/blog/static/3892cb3cff023466c4868bb7bca33663/f2abb/k6_html.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 32.773109243697476%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABDUlEQVQoz5WR2U7DMBBF8/9fCGrL0gWaPfE6tuMc5BQhiniAKx2NPLKv5nqq8/nM5XJBRFjXlZzznygq939STdNEwTm3mYYQ7ogx/tr7MuFelTF6MysE8fxb36Yrk1dBBB8S1zky2oTxC2nJ5CWzlJpXlmXBhYARj3KOyVkGa+iNptUztZp4n0d6paictThJPLXCrvEcGsc4auZZIV7oZ8vDtebQNuw/2bU1u6be6qFrNvZdQz2NVCklnEReWs3j28BrqzHaIxJIMdFPln2teO1uPF0Hjp3i1CtOg+a5HnhpRo7dzKgtVcl++wso8QvFSGJEaYN4j4SEcx7vPNZaYoh4I9u5pFjzur0vW/4ArDIfAxbdWBAAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/blog/static/3892cb3cff023466c4868bb7bca33663/24599/k6_html.webp 238w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/69f92/k6_html.webp 475w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/cebde/k6_html.webp 950w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/ab1e2/k6_html.webp 1425w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/97775/k6_html.webp 1900w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/d98bf/k6_html.webp 2832w"
+              sizes="(max-width: 950px) 100vw, 950px"
+              type="image/webp"
+            />
+          <source
+            srcset="/blog/static/3892cb3cff023466c4868bb7bca33663/da2e6/k6_html.png 238w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/abae4/k6_html.png 475w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/68327/k6_html.png 950w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/fe5a5/k6_html.png 1425w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/a7a60/k6_html.png 1900w,
+/blog/static/3892cb3cff023466c4868bb7bca33663/f2abb/k6_html.png 2832w"
+            sizes="(max-width: 950px) 100vw, 950px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/blog/static/3892cb3cff023466c4868bb7bca33663/68327/k6_html.png"
+            alt="k6_html"
+            title="k6_html"
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>특별한 상세 내역(그룹핑, 태그 등)은 없고 단순한 시간흐름에 따른 결과만 보여주는 점은 쫌 아쉽다.</p></div></div></div><div class="Post-module--footer--+HBcE"><div class="Meta-module--meta--2uCvT"><p class="Meta-module--date--TTDWL">Published<!-- --> <!-- -->Apr 2, 2026</p></div><div class="Tags-module--tags--GFiVM"><ul class="Tags-module--list--gq5ra"><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/k6/">k6</a></li><li class="Tags-module--item--UgFWJ"><a class="Tags-module--link--5O4-1" href="/blog/tag/test/">test</a></li></ul></div><div class="Author-module--author--HFjbH"><p class="Author-module--bio--CJUED"><a class="Author-module--twitter--kGR0t" href="https://github.com/qweasd147" rel="noopener noreferrer" target="_blank"><strong>Kim joohyung</strong> on Github</a></p></div></div><div class="Post-module--comments--07meJ"></div></div><div class="Layout-module--layout-doc-mask--qkYmG"></div><div class="SideButton-module--sides--sxqRm"><ul class="SideButton-module--sides-buttons--CcMjz SideButton-module--sides-buttons-hide--OdyhS"><li><a class="SideButton-module--sides-button--pA2tl">Up</a></li><li><a class="SideButton-module--sides-button--pA2tl"><svg class="Icon-module--icon--HX2j3" viewBox="0 0 16 16" style="width:2rem;height:auto"><title>arrowLeftShort</title><path d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"></path></svg></a></li></ul></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/posts/etc/k6/";window.___webpackCompilationHash="f7ceba86d6bc97962329";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-4f8c4c04526091b1ccaa.js"],"app":["/app-15348d03227d735910fd.js"],"component---cache-caches-gatsby-plugin-offline-app-shell-js":["/component---cache-caches-gatsby-plugin-offline-app-shell-js-0f5b8a073afc45a4d929.js"],"component---src-components-custompage-skills-skills-tsx":["/component---src-components-custompage-skills-skills-tsx-97fdc4b7a905ae978e10.js"],"component---src-components-custompage-total-search-total-search-tsx":["/component---src-components-custompage-total-search-total-search-tsx-df4aaf713a67ac36eba5.js"],"component---src-templates-categories-template-categories-template-tsx":["/component---src-templates-categories-template-categories-template-tsx-56a81cb5064530a23b5a.js"],"component---src-templates-category-template-category-template-tsx":["/component---src-templates-category-template-category-template-tsx-284a16fa141b6e040247.js"],"component---src-templates-index-template-index-template-tsx":["/component---src-templates-index-template-index-template-tsx-cadbf1134cccd9712170.js"],"component---src-templates-not-found-template-not-found-template-tsx":["/component---src-templates-not-found-template-not-found-template-tsx-a05c28eb455a9d539b08.js"],"component---src-templates-post-template-post-template-tsx":["/component---src-templates-post-template-post-template-tsx-b5210253965c870a7e20.js"],"component---src-templates-tag-template-tag-template-tsx":["/component---src-templates-tag-template-tag-template-tsx-1bee2a4f186c77fd728f.js"],"component---src-templates-tags-template-tags-template-tsx":["/component---src-templates-tags-template-tags-template-tsx-5415b22ee6795014eb8f.js"]};/*]]>*/</script><script src="/blog/polyfill-4f8c4c04526091b1ccaa.js" nomodule=""></script><script src="/blog/app-15348d03227d735910fd.js" async=""></script><script src="/blog/framework-5aab6d6db7fbdb045164.js" async=""></script><script src="/blog/webpack-runtime-36a02749d8af4d2cacdd.js" async=""></script></body></html>
