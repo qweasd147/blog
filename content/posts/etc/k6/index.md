@@ -100,7 +100,7 @@ export default function () {
 $ k6 run k6script.js
 ```
 
-## 2. `stages`는 무엇인가
+## 2. `stages`
 
 `stages`는 **가상 사용자 수(VU, Virtual Users)를 시간에 따라 어떻게 변화시킬지 정의하는 옵션**이다.
 
