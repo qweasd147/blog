@@ -29,9 +29,9 @@ jobs:
       - run: rm -rf ./public/blog/
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4.1.0
         with:
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           full_commit_message: 'updates'
           user_name: 'joohyung'
